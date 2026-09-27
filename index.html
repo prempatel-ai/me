@@ -1,38 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prem Patel | Machine Learning Engineer &amp; Full-Stack AI Developer</title>
+  <title>Prem Patel — Machine Learning Engineer &amp; Full-Stack AI Developer</title>
   <meta name="description" content="Prem Patel — Final-year Computer Engineering student building production-ready LLM agents, RAG systems, and deterministic backend architectures.">
-  <meta name="keywords" content="Prem Patel, AI Engineer, LLM Agents, RAG, Machine Learning, Python, FastAPI, LangGraph, Sankalchand Patel University">
   <meta name="author" content="Premkumar M. Patel">
-
-  <!-- OpenGraph / Social Meta -->
-  <meta property="og:title" content="Prem Patel | ML Engineer &amp; Full-Stack AI Developer">
-  <meta property="og:description" content="Exploring Deep Learning, LLM agents, RAG, and reliable backend architectures.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://prempatel-ai.github.io/">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 
-  <!-- Google Fonts: JetBrains Mono -->
+  <!-- JetBrains Mono Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="./styles.css">
 
-  <!-- Prevent flash of unstyled theme -->
   <script>
     (function() {
       try {
         var saved = localStorage.getItem('theme');
-        var theme = (saved === 'dark' || saved === 'light') ? saved : 
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {
@@ -43,543 +33,340 @@
 </head>
 <body>
 
-  <!-- ========================================================================
-       Fixed Top Header (J Rosser + Minimal Light style)
-       ======================================================================== -->
-  <header id="main-header">
+  <!-- Header -->
+  <header id="header">
     <div class="container header-inner">
-      <!-- Monogram Brand Logo -->
-      <a href="#" class="logo-group" aria-label="Prem Patel - Home">
-        <div class="logo-icon">
-          <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
-            <rect width="100" height="100" rx="20" fill="currentColor" opacity="0.1"/>
-            <text x="50" y="68" font-family="'JetBrains Mono', monospace" font-size="52" font-weight="800" fill="var(--accent-primary)" text-anchor="middle">P</text>
-          </svg>
-        </div>
-        <span>Prem <span class="logo-text-accent">Patel</span></span>
+      <a href="#" class="brand">
+        Prem Patel<span class="brand-dot">.</span>
       </a>
 
-      <!-- Desktop Navigation Anchors -->
-      <nav aria-label="Main Navigation">
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#resume">Résumé</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Résumé</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
       </nav>
 
-      <!-- Action Controls: Print PDF & Theme Switcher -->
-      <div class="header-actions">
-        <!-- Print / Save as PDF Button -->
-        <button class="action-btn print-cv-btn" title="Download / Print Resume (Ctrl+P)" aria-label="Download CV">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 6 2 18 2 18 9"></polyline>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-            <rect x="6" y="14" width="12" height="8"></rect>
-          </svg>
-          <span>PDF CV</span>
+      <div class="nav-actions">
+        <button class="btn-minimal print-btn" title="Print or save as clean PDF">
+          Print CV
         </button>
-
-        <!-- Theme Toggle Button -->
-        <button id="theme-toggle" class="action-btn btn-icon-only" aria-label="Toggle theme">
-          <span id="theme-icon">
-            <!-- Icon dynamically inserted by script.js -->
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="5"></circle>
-            </svg>
-          </span>
-        </button>
-
-        <!-- Mobile Menu Toggle Button -->
-        <button id="mobile-menu-toggle" class="action-btn btn-icon-only mobile-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-text">light</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ========================================================================
-       Main Content Container
-       ======================================================================== -->
   <main class="container">
 
-    <!-- ----------------------------------------------------------------------
-         Hero Profile & Narrative Bio Section (#about)
-         ---------------------------------------------------------------------- -->
-    <section id="about" class="hero-section">
-      <div class="hero-profile">
-        <!-- Avatar with Active Indicator -->
-        <div class="avatar-wrapper">
-          <img src="./assets/avatar.svg" alt="Prem Patel" class="avatar-img" width="112" height="112">
-          <span class="status-indicator" title="Open to AI/ML &amp; Software Engineering roles"></span>
-        </div>
+    <!-- Hero / About -->
+    <section id="about" class="hero">
+      <div class="hero-top">
+        <img src="./assets/avatar.png" alt="Prem Patel" class="avatar">
+        
+        <div class="hero-intro">
+          <h1>Hi, I'm Prem</h1>
+          <p class="hero-headline">Machine Learning Engineer &amp; Full-Stack AI Developer · Ahmedabad, India</p>
 
-        <!-- Header Content -->
-        <div class="hero-header">
-          <div class="greeting-row">
-            <h1 class="hero-title">Hi, I'm Prem!</h1>
-            <span class="role-badge">
-              <span class="pulse-dot"></span>
-              Exploring Deep Learning
-            </span>
-          </div>
-
-          <p class="hero-subtitle">Machine Learning Engineer &amp; Full-Stack AI Developer</p>
-
-          <div class="hero-meta">
-            <span class="meta-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              Ahmedabad, Gujarat, India
-            </span>
-            <span class="meta-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-              </svg>
-              Sankalchand Patel University (B.Tech '27)
-            </span>
-          </div>
-
-          <!-- Social / Contact Links -->
-          <div class="social-links">
-            <!-- 1-Click Copy Email -->
-            <button class="social-pill copy-email-btn" data-email="prempatel7740@gmail.com" title="Click to copy email">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span>Email</span>
-            </button>
-
-            <!-- Personal Portfolio -->
-            <a href="https://prem-opal.vercel.app/" target="_blank" rel="noopener noreferrer" class="social-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-              <span>Portfolio</span>
-            </a>
-
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer" class="social-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-              <span>LinkedIn</span>
-            </a>
-
-            <!-- GitHub -->
-            <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="social-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-              </svg>
-              <span>GitHub</span>
-            </a>
+          <div class="links-row">
+            <button class="copy-email-btn" data-email="prempatel7740@gmail.com" title="Click to copy email">prempatel7740@gmail.com</button>
+            <span class="sep">/</span>
+            <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="sep">/</span>
+            <a href="https://linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <span class="sep">/</span>
+            <a href="https://prem-opal.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
+            <span class="sep">/</span>
+            <a href="#" class="print-btn">CV (PDF)</a>
           </div>
         </div>
       </div>
 
-      <!-- Narrative Bio -->
-      <div class="bio-prose">
+      <div class="bio">
         <p>
-          I’m a final-year Computer Engineering student who loves building software end-to-end and figuring out how things actually work under the hood. Most of my recent engineering focus centers on <span class="bio-highlight">LLMs, autonomous AI agents, Retrieval-Augmented Generation (RAG), and scalable backend architectures</span>.
+          I'm a final-year Computer Engineering student at <strong>Sankalchand Patel University</strong> focused on applied machine learning, LLM agents, and scalable backend engineering.
         </p>
         <p>
-          I am particularly fascinated by what happens <span class="bio-highlight">beyond just calling an LLM API</span> — things like hybrid semantic retrieval, tool calling, multi-agent state machines, validation layers, database schema design, and putting <span class="bio-highlight">deterministic safety rules between AI proposals and real-world execution</span>.
+          I've taken three projects from whiteboard idea to production — including <a href="#project-campuscircle" class="link">CampusCircle</a> (scaled to <strong>200+ real users</strong>) and <a href="#project-agentpay" class="link">AgentPay</a> (implementing a deterministic policy engine for AI-driven commerce at the Razorpay Buildathon). I'm especially interested in what happens <strong>beyond just calling an LLM API</strong>: retrieval-augmented generation, tool calling, stateful agent workflows, schema validation, and enforcing deterministic guardrails between AI decisions and real-world execution.
         </p>
         <p>
-          I have taken multiple projects from whiteboard concept to production: <a href="#project-agentpay" class="inline-link">AgentPay</a> (autonomous buyer-agent commerce infrastructure for Razorpay's Buildathon), <a href="#project-campuscircle" class="inline-link">CampusCircle</a> (a verified student learning platform scaled to <strong>200+ real users</strong>), and <a href="#project-cliniqueai" class="inline-link">CliniqueAI</a> (combining clinical ML classification with RAG). Along the way, I’ve competed in 6 hackathons, placing in the <span class="bio-highlight">Top 20 out of 1,600+</span> and <span class="bio-highlight">Top 18 out of 500+</span> nationwide.
-        </p>
-        <p>
-          I am actively looking for full-time &amp; internship opportunities in <span class="bio-highlight">AI/ML Engineering, GenAI/Agent Systems, Python/Backend, or Software Engineering</span> where I can tackle demanding technical problems and build robust, high-impact systems.
+          Outside of my core projects, I have participated in 6 hackathons, placing in the <strong>Top 20 out of 1,600+</strong> at Unstop's National AI Hackathon and <strong>Top 18 out of 500+</strong> at The Maverick Ect AI Challenge. I'm currently seeking roles in AI/ML, GenAI, and backend software engineering.
         </p>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------------------------
-         Featured Projects Section (#projects)
-         ---------------------------------------------------------------------- -->
+    <!-- Projects -->
     <section id="projects" class="section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="section-number">01.</span> Featured Projects
-        </h2>
-        <span class="text-subtle text-sm">3 Production Products · 1 R&amp;D Lab</span>
+      <div class="section-heading">
+        <h2>Projects</h2>
+        <span class="section-subtext">Production Systems &amp; R&amp;D</span>
       </div>
 
-      <!-- Interactive Category Filter Chips -->
-      <div class="project-filters">
-        <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="agent">AI Agents &amp; LangGraph</button>
-        <button class="filter-btn" data-filter="rag">RAG &amp; Vector Search</button>
-        <button class="filter-btn" data-filter="hackathon">Award Winners</button>
-        <button class="filter-btn" data-filter="backend">Backend &amp; APIs</button>
-      </div>
-
-      <!-- Project 1: AgentPay -->
-      <article id="project-agentpay" class="project-card" data-categories="agent backend hackathon">
-        <div class="project-media">
-          <img src="./assets/projects/agentpay.svg" alt="AgentPay Architecture Banner" loading="lazy">
+      <!-- AgentPay -->
+      <article id="project-agentpay" class="project-entry">
+        <div class="project-header">
+          <h3 class="project-title">
+            <a href="https://buildathon-nu-eight.vercel.app" target="_blank" rel="noopener noreferrer">
+              AgentPay — AI Buyer-Agent Commerce Infrastructure
+            </a>
+          </h3>
+          <span class="badge">Razorpay Buildathon</span>
         </div>
-        <div class="project-content">
-          <div class="project-top">
-            <h3 class="project-title">
-              <a href="https://buildathon-nu-eight.vercel.app" target="_blank" rel="noopener noreferrer">
-                AgentPay — Autonomous Buyer-Agent Commerce Infrastructure
-              </a>
-            </h3>
-            <span class="venue-badge venue-badge-purple">Razorpay Buildathon</span>
-          </div>
+        <p class="project-meta">Python · FastAPI · LangGraph · PostgreSQL · Redis · Next.js · LLaMA 3.3</p>
 
-          <div class="tag-list">
-            <span class="tag tag-agent">AI Agents</span>
-            <span class="tag tag-agent">LangGraph</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag tag-fintech">FinTech Safety</span>
-            <span class="tag">LLaMA 3.3</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Redis</span>
-            <span class="tag">Next.js</span>
-          </div>
+        <div class="tags">
+          <span class="tag">AI Agents</span>
+          <span class="tag">LangGraph</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">FinTech Policy</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Redis</span>
+        </div>
 
-          <ul class="project-bullets">
-            <li>
-              Engineered autonomous buyer-agent infrastructure where the LLM proposes transactions, but an isolated <strong>deterministic policy engine gates every payment action</strong> before invoking Razorpay’s API — the agent is strictly prohibited from executing money movement directly.
-            </li>
-            <li>
-              Enforced an append-only, <strong>database-trigger-backed audit trail</strong> logging every state transition, multi-tenant merchant isolation, and consumer spend limits that the LLM cannot override.
-            </li>
-            <li>
-              Shipped a full sandbox-to-live compliance pipeline featuring webhook-driven external agent integration with <strong>HMAC verification</strong> and automatic retry handling.
-            </li>
-          </ul>
+        <ul class="project-list">
+          <li>Built autonomous buyer-agent infrastructure where the LLM proposes purchases, but an isolated <strong>deterministic policy engine gates every payment action</strong> before Razorpay’s API is called — the agent never directly initiates money movement.</li>
+          <li>Enforced an append-only, <strong>database-trigger-backed audit trail</strong> logging every state transition, tenant merchant isolation, and hard consumer spend-authorization limits.</li>
+          <li>Shipped a full sandbox-to-live compliance pipeline featuring webhook-driven external agent integration with <strong>HMAC verification</strong> and automatic retry handling.</li>
+        </ul>
 
-          <div class="project-actions">
-            <a href="https://buildathon-nu-eight.vercel.app" target="_blank" rel="noopener noreferrer" class="pill-action">
-              <span>Live Demo</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            </a>
-            <a href="https://github.com/prempatel-ai/buildathon" target="_blank" rel="noopener noreferrer" class="pill-action">
-              <span>GitHub</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-            </a>
-          </div>
+        <div class="project-links">
+          <a href="https://buildathon-nu-eight.vercel.app" target="_blank" rel="noopener noreferrer" class="action-link">Live Demo ↗</a>
+          <a href="https://github.com/prempatel-ai/buildathon" target="_blank" rel="noopener noreferrer" class="action-link">GitHub ↗</a>
         </div>
       </article>
 
-      <!-- Project 2: CampusCircle -->
-      <article id="project-campuscircle" class="project-card" data-categories="agent backend hackathon">
-        <div class="project-media">
-          <img src="./assets/projects/campuscircle.svg" alt="CampusCircle Platform Architecture" loading="lazy">
-        </div>
-        <div class="project-content">
-          <div class="project-top">
-            <h3 class="project-title">
-              <a href="https://github.com/prempatel-ai/CampusCircle" target="_blank" rel="noopener noreferrer">
-                CampusCircle — Campus Community &amp; AI Learning Platform
-              </a>
-            </h3>
-            <span class="venue-badge venue-badge-emerald">Top 18 of 500+ · 200+ Active Users</span>
-          </div>
-
-          <div class="tag-list">
-            <span class="tag tag-growth">200+ Users</span>
-            <span class="tag tag-agent">LLaMA 3.3 70B</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">TypeScript</span>
-          </div>
-
-          <ul class="project-bullets">
-            <li>
-              Sole backend &amp; AI engineer for a verified collegiate community and learning hub; built the data models, API layer, and deployment on Vercel, organically scaling to <strong>200+ active campus students</strong>.
-            </li>
-            <li>
-              Integrated 3 high-impact AI capabilities powered by <strong>LLaMA 3.3 70B</strong>: student support agent <em>"Reva"</em>, an adaptive quiz engine dynamically tuning difficulty, and a YouTube-to-structured-study notes generator.
-            </li>
-            <li>
-              Recognized in the <strong>Top 18 of 500+ participants</strong> at The Maverick Ect AI Challenge 2026 (Dewang Mehta Foundation Trust).
-            </li>
-          </ul>
-
-          <div class="project-actions">
-            <a href="https://github.com/prempatel-ai/CampusCircle" target="_blank" rel="noopener noreferrer" class="pill-action">
-              <span>GitHub</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      <!-- CampusCircle -->
+      <article id="project-campuscircle" class="project-entry">
+        <div class="project-header">
+          <h3 class="project-title">
+            <a href="https://github.com/prempatel-ai/CampusCircle" target="_blank" rel="noopener noreferrer">
+              CampusCircle — Campus Community &amp; AI Learning Platform
             </a>
-          </div>
+          </h3>
+          <span class="badge">Top 18 of 500+ · 200+ Active Users</span>
+        </div>
+        <p class="project-meta">Next.js · FastAPI · PostgreSQL · LLaMA 3.3 70B · TypeScript</p>
+
+        <div class="tags">
+          <span class="tag">Community</span>
+          <span class="tag">200+ Users</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">LLaMA 3.3 70B</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+
+        <ul class="project-list">
+          <li>Architected the complete backend and AI layer for a verified campus community platform, solo developer scaling to <strong>200+ active students</strong>.</li>
+          <li>Shipped 3 AI features powered by <strong>LLaMA 3.3 70B</strong>: student support assistant ("Reva"), an adaptive quiz engine adjusting difficulty dynamically, and a YouTube-to-structured-notes generator.</li>
+          <li>Placed in the <strong>Top 18 out of 500+ participants</strong> in The Maverick Ect AI Challenge 2026 (Dewang Mehta Foundation Trust).</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/prempatel-ai/CampusCircle" target="_blank" rel="noopener noreferrer" class="action-link">GitHub ↗</a>
         </div>
       </article>
 
-      <!-- Project 3: CliniqueAI -->
-      <article id="project-cliniqueai" class="project-card" data-categories="rag backend hackathon">
-        <div class="project-media">
-          <img src="./assets/projects/cliniqueai.svg" alt="CliniqueAI Diagnostic System" loading="lazy">
-        </div>
-        <div class="project-content">
-          <div class="project-top">
-            <h3 class="project-title">
-              <a href="https://github.com/prempatel-ai/CliniqueAI" target="_blank" rel="noopener noreferrer">
-                CliniqueAI — AI-Powered Clinical Decision Support
-              </a>
-            </h3>
-            <span class="venue-badge venue-badge-amber">Top 20 of 1,600+ · Unstop Hackathon</span>
-          </div>
-
-          <div class="tag-list">
-            <span class="tag tag-rag">Healthcare RAG</span>
-            <span class="tag">XGBoost</span>
-            <span class="tag">Scikit-learn</span>
-            <span class="tag">Flask</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">LangChain</span>
-            <span class="tag">Pydantic</span>
-          </div>
-
-          <ul class="project-bullets">
-            <li>
-              Trained and benchmarked Logistic Regression, Random Forest, and <strong>XGBoost classifiers</strong> for diabetes risk prediction, selecting optimal thresholds based on medical explainability and false-negative minimization.
-            </li>
-            <li>
-              Implemented a conversational patient copilot grounded via <strong>RAG over localized clinical records</strong>, coupled with a transactional CRUD workflow, Pydantic data schemas, and physician notification alerts.
-            </li>
-            <li>
-              Overcame free-tier cloud cold starts on Render by engineering an automated 10-minute heartbeat with UptimeRobot, sustaining 99.9% availability at $0 cost.
-            </li>
-          </ul>
-
-          <div class="project-actions">
-            <a href="https://github.com/prempatel-ai/CliniqueAI" target="_blank" rel="noopener noreferrer" class="pill-action">
-              <span>GitHub</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      <!-- CliniqueAI -->
+      <article id="project-cliniqueai" class="project-entry">
+        <div class="project-header">
+          <h3 class="project-title">
+            <a href="https://github.com/prempatel-ai/CliniqueAI" target="_blank" rel="noopener noreferrer">
+              CliniqueAI — AI-Powered Clinical Decision Support
             </a>
-          </div>
+          </h3>
+          <span class="badge">Top 20 of 1,600+ · Unstop Hackathon</span>
+        </div>
+        <p class="project-meta">Python · Flask · PostgreSQL · Scikit-learn · XGBoost · LangChain · Pydantic</p>
+
+        <div class="tags">
+          <span class="tag">Healthcare ML</span>
+          <span class="tag">RAG</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Flask</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+
+        <ul class="project-list">
+          <li>Trained and benchmarked Logistic Regression, Random Forest, and <strong>XGBoost classifiers</strong> for diabetes risk prediction, selecting optimal thresholds for clinical explainability.</li>
+          <li>Implemented a <strong>RAG patient assistant</strong> grounded on localized EHR history, complete with transactional CRUD operations, Pydantic validation, and physician notification alerts.</li>
+          <li>Eliminated free-tier cloud cold starts on Render using an automated 10-minute heartbeat via UptimeRobot.</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/prempatel-ai/CliniqueAI" target="_blank" rel="noopener noreferrer" class="action-link">GitHub ↗</a>
         </div>
       </article>
 
-      <!-- Project 4: RAG Architectures Lab -->
-      <article id="project-raglab" class="project-card" data-categories="rag agent">
-        <div class="project-media">
-          <img src="./assets/projects/raglab.svg" alt="RAG Architectures Lab" loading="lazy">
-        </div>
-        <div class="project-content">
-          <div class="project-top">
-            <h3 class="project-title">
-              <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer">
-                RAG Architectures Lab — Comparative Retrieval &amp; Agentic Playground
-              </a>
-            </h3>
-            <span class="venue-badge venue-badge-purple">R&amp;D Benchmark</span>
-          </div>
-
-          <div class="tag-list">
-            <span class="tag tag-rag">Self-RAG</span>
-            <span class="tag tag-rag">Hybrid Search</span>
-            <span class="tag">Qdrant</span>
-            <span class="tag">FAISS</span>
-            <span class="tag">Pinecone</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Streamlit</span>
-          </div>
-
-          <ul class="project-bullets">
-            <li>
-              Benchmarked retrieval accuracy across basic dense semantic search, conversational memory RAG, and self-corrective agentic loops with automated query reformulation.
-            </li>
-            <li>
-              Evaluated vector search latency and precision tradeoffs comparing Qdrant, Pinecone, and in-memory FAISS indexing across multi-thousand chunk document collections.
-            </li>
-          </ul>
-
-          <div class="project-actions">
-            <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="pill-action">
-              <span>GitHub</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      <!-- RAG Architectures Lab -->
+      <article id="project-raglab" class="project-entry">
+        <div class="project-header">
+          <h3 class="project-title">
+            <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer">
+              RAG Architectures Lab — Comparative Retrieval Playground
             </a>
-          </div>
+          </h3>
+          <span class="badge">Comparative Study</span>
+        </div>
+        <p class="project-meta">Python · LangChain · FAISS · Qdrant · Pinecone · FastAPI · Streamlit</p>
+
+        <div class="tags">
+          <span class="tag">Self-RAG</span>
+          <span class="tag">Hybrid Retrieval</span>
+          <span class="tag">Qdrant</span>
+          <span class="tag">Pinecone</span>
+          <span class="tag">FAISS</span>
+        </div>
+
+        <ul class="project-list">
+          <li>Developed a comparative testbed evaluating basic dense retrieval vs conversational memory RAG vs self-corrective agentic loops.</li>
+          <li>Benchmarked hybrid dense/sparse vector search performance across Qdrant, Pinecone, and in-memory FAISS indexing.</li>
+        </ul>
+
+        <div class="project-links">
+          <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="action-link">GitHub ↗</a>
         </div>
       </article>
     </section>
 
-    <!-- ----------------------------------------------------------------------
-         Résumé Timeline Section (#resume) - J Rosser Style
-         ---------------------------------------------------------------------- -->
+    <!-- Résumé & Experience -->
     <section id="resume" class="section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="section-number">02.</span> Résumé &amp; Experience
-        </h2>
-        <button class="pill-action print-cv-btn" title="Download CV as PDF">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>Save PDF</span>
-        </button>
+      <div class="section-heading">
+        <h2>Experience &amp; Education</h2>
+        <span class="section-subtext">Timeline</span>
       </div>
 
       <div class="timeline">
-        <!-- Education Node -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <h3 class="timeline-role">B.Tech in Computer Engineering</h3>
-            <span class="timeline-dates">June 2023 — June 2027 (Final Year)</span>
+        <!-- Education -->
+        <div class="timeline-entry">
+          <div class="timeline-node"></div>
+          <div class="timeline-heading">
+            <span class="timeline-title">B.Tech in Computer Engineering</span>
+            <span class="timeline-date">2023 — 2027</span>
           </div>
-          <div class="timeline-org">Sankalchand Patel University · Visnagar, Gujarat</div>
-          <div class="timeline-desc">
-            <p><strong>Cumulative GPA: 7.80 / 10.0</strong></p>
-            <ul class="timeline-bullets">
-              <li><strong>Relevant Coursework:</strong> Machine Learning, Artificial Intelligence, Deep Learning Applications, Database Management Systems (DBMS), Operating Systems, Data Structures &amp; Algorithms, Software Engineering, NLP &amp; GenAI.</li>
-              <li>Active member and organizer in the college technical club — hosting coding competitions, workshops, and hackathons.</li>
+          <div class="timeline-subtitle">Sankalchand Patel University · Visnagar, Gujarat</div>
+          <div class="timeline-body">
+            <strong>CGPA: 7.80 / 10.0</strong>
+            <ul>
+              <li><strong>Coursework:</strong> Machine Learning, Artificial Intelligence, Deep Learning Applications, Database Management Systems, Operating Systems, Data Structures &amp; Algorithms, Software Engineering, NLP &amp; GenAI.</li>
+              <li>Organizer in the college technical club — managing hackathons and technical workshops.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Hackathon Achievement 1 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <h3 class="timeline-role">Top 20 Finalist (out of 1,600+ Participants)</h3>
-            <span class="timeline-dates">Feb 2026</span>
+        <!-- Hackathon 1 -->
+        <div class="timeline-entry">
+          <div class="timeline-node"></div>
+          <div class="timeline-heading">
+            <span class="timeline-title">Top 20 Finalist (out of 1,600+ Participants)</span>
+            <span class="timeline-date">Feb 2026</span>
           </div>
-          <div class="timeline-org">National AI Hackathon · Unstop</div>
-          <div class="timeline-desc">
-            Earned verified national finalist ranking out of 1,600+ software developers for building <em>CliniqueAI</em>, integrating predictive diabetes risk modeling with a clinical RAG decision copilot.
-          </div>
-        </div>
-
-        <!-- Hackathon Achievement 2 -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <h3 class="timeline-role">Top 18 Finalist (out of 500+ Participants)</h3>
-            <span class="timeline-dates">2026</span>
-          </div>
-          <div class="timeline-org">The Maverick Ect AI Challenge · Dewang Mehta Foundation Trust</div>
-          <div class="timeline-desc">
-            Recognized among top nationwide innovators for <em>CampusCircle</em>, an AI-augmented community platform scaling to 200+ active students powered by LLaMA 3.3.
+          <div class="timeline-subtitle">National AI Hackathon · Unstop</div>
+          <div class="timeline-body">
+            Verified national finalist for developing <em>CliniqueAI</em>, integrating predictive ML diagnostic classification with a RAG patient chatbot.
           </div>
         </div>
 
-        <!-- Competitions / Hackathons Participation -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <h3 class="timeline-role">Competitive Hackathons (6 Total)</h3>
-            <span class="timeline-dates">2023 — Present</span>
+        <!-- Hackathon 2 -->
+        <div class="timeline-entry">
+          <div class="timeline-node"></div>
+          <div class="timeline-heading">
+            <span class="timeline-title">Top 18 Finalist (out of 500+ Participants)</span>
+            <span class="timeline-date">2026</span>
           </div>
-          <div class="timeline-org">Razorpay Buildathon · Unstop · DMF Trust Hackathons</div>
-          <div class="timeline-desc">
-            Consistently built and pitched end-to-end production applications under tight 24-48h deadlines, specializing in agentic workflows, deterministic API integrations, and robust database architectures.
+          <div class="timeline-subtitle">The Maverick Ect AI Challenge · Dewang Mehta Foundation Trust</div>
+          <div class="timeline-body">
+            Recognized for <em>CampusCircle</em>, scaling an AI-augmented community hub to 200+ active students using LLaMA 3.3.
           </div>
         </div>
 
-        <!-- Certifications Node -->
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <h3 class="timeline-role">Professional Certifications &amp; Foundations</h3>
-            <span class="timeline-dates">2025 — 2026</span>
+        <!-- Hackathons Total -->
+        <div class="timeline-entry">
+          <div class="timeline-node"></div>
+          <div class="timeline-heading">
+            <span class="timeline-title">Hackathon Competitor (6 Total)</span>
+            <span class="timeline-date">2023 — Present</span>
           </div>
-          <div class="timeline-org">HackerRank · Edunet Foundation</div>
-          <div class="timeline-desc">
-            <ul class="timeline-bullets">
-              <li><strong>HackerRank Certified Software Engineer:</strong> Verified proficiency in Problem Solving, SQL, and REST API Design (2025).</li>
-              <li><strong>Foundation Course on Green Skills &amp; Artificial Intelligence:</strong> Edunet Foundation (2026).</li>
-              <li><strong>Operating Systems &amp; Python Programming:</strong> Core algorithmic and systems verification.</li>
+          <div class="timeline-subtitle">Razorpay Buildathon, Unstop, DMF Trust Hackathons</div>
+          <div class="timeline-body">
+            Built end-to-end full-stack AI and backend systems under 24–48 hour constraints, focusing on agent workflows, deterministic validation, and transactional data integrity.
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="timeline-entry">
+          <div class="timeline-node"></div>
+          <div class="timeline-heading">
+            <span class="timeline-title">Certifications &amp; Foundations</span>
+            <span class="timeline-date">2025 — 2026</span>
+          </div>
+          <div class="timeline-subtitle">HackerRank · Edunet Foundation</div>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>HackerRank Certified Software Engineer:</strong> Problem Solving, SQL, REST API Design (2025).</li>
+              <li><strong>Foundation Course on Green Skills &amp; AI:</strong> Edunet Foundation (2026).</li>
+              <li><strong>Operating Systems &amp; Python Programming Foundations.</strong></li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------------------------
-         Technical Skills Section (#skills)
-         ---------------------------------------------------------------------- -->
+    <!-- Skills -->
     <section id="skills" class="section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="section-number">03.</span> Technical Arsenal
-        </h2>
-        <span class="text-subtle text-sm">Languages, Frameworks &amp; Tooling</span>
+      <div class="section-heading">
+        <h2>Technical Skills</h2>
+        <span class="section-subtext">Proficiencies</span>
       </div>
 
-      <div class="skills-grid">
-        <!-- Category 1: AI & Agentic Systems -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m10 15 5-3-5-3v6z"></path></svg>
-            LLMs &amp; Agentic AI
-          </h3>
-          <div class="skill-pills">
+      <div class="skills-block">
+        <div class="skill-col">
+          <h3>LLM &amp; Agentic AI</h3>
+          <div class="skill-tags">
             <span class="skill-pill">LangChain</span>
             <span class="skill-pill">LangGraph</span>
-            <span class="skill-pill">Autonomous Agents</span>
-            <span class="skill-pill">Tool Use &amp; Calling</span>
+            <span class="skill-pill">AI Agents</span>
+            <span class="skill-pill">Tool Calling</span>
             <span class="skill-pill">LLaMA 3.3 70B</span>
             <span class="skill-pill">OpenAI API</span>
             <span class="skill-pill">Groq API</span>
-            <span class="skill-pill">Prompt Engineering</span>
-            <span class="skill-pill">Structured LLM Outputs</span>
+            <span class="skill-pill">Structured Outputs</span>
           </div>
         </div>
 
-        <!-- Category 2: RAG & Vector Search -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 21-4.3-4.3"></path><circle cx="11" cy="11" r="8"></circle></svg>
-            RAG &amp; Vector Search
-          </h3>
-          <div class="skill-pills">
+        <div class="skill-col">
+          <h3>Retrieval &amp; Vector Search</h3>
+          <div class="skill-tags">
             <span class="skill-pill">RAG Pipelines</span>
             <span class="skill-pill">Self-RAG</span>
             <span class="skill-pill">FAISS</span>
             <span class="skill-pill">Qdrant</span>
             <span class="skill-pill">Pinecone</span>
             <span class="skill-pill">ChromaDB</span>
-            <span class="skill-pill">Hybrid Dense/Sparse</span>
+            <span class="skill-pill">Hybrid Retrieval</span>
             <span class="skill-pill">LlamaIndex</span>
-            <span class="skill-pill">Query Reformulation</span>
           </div>
         </div>
 
-        <!-- Category 3: Backend & API Engineering -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
-            Backend &amp; Architecture
-          </h3>
-          <div class="skill-pills">
-            <span class="skill-pill">Python (Core)</span>
+        <div class="skill-col">
+          <h3>Backend &amp; Architecture</h3>
+          <div class="skill-tags">
+            <span class="skill-pill">Python</span>
             <span class="skill-pill">FastAPI</span>
             <span class="skill-pill">Flask</span>
-            <span class="skill-pill">RESTful API Design</span>
-            <span class="skill-pill">Pydantic Validation</span>
+            <span class="skill-pill">RESTful APIs</span>
+            <span class="skill-pill">Pydantic</span>
+            <span class="skill-pill">Deterministic Guardrails</span>
             <span class="skill-pill">HMAC &amp; Webhooks</span>
-            <span class="skill-pill">Deterministic Policy Gates</span>
-            <span class="skill-pill">JWT &amp; RBAC</span>
-            <span class="skill-pill">JavaScript / TypeScript</span>
+            <span class="skill-pill">SQLAlchemy</span>
           </div>
         </div>
 
-        <!-- Category 4: Databases & DevOps -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path></svg>
-            Databases &amp; DevOps
-          </h3>
-          <div class="skill-pills">
+        <div class="skill-col">
+          <h3>Databases &amp; Infrastructure</h3>
+          <div class="skill-tags">
             <span class="skill-pill">PostgreSQL</span>
             <span class="skill-pill">Redis</span>
             <span class="skill-pill">SQLite</span>
@@ -591,88 +378,42 @@
             <span class="skill-pill">UptimeRobot</span>
           </div>
         </div>
-
-        <!-- Category 5: Machine Learning Core -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            ML &amp; Deep Learning
-          </h3>
-          <div class="skill-pills">
-            <span class="skill-pill">PyTorch</span>
-            <span class="skill-pill">TensorFlow</span>
-            <span class="skill-pill">Scikit-learn</span>
-            <span class="skill-pill">XGBoost</span>
-            <span class="skill-pill">NumPy</span>
-            <span class="skill-pill">Pandas</span>
-            <span class="skill-pill">CNNs &amp; LSTMs</span>
-          </div>
-        </div>
-
-        <!-- Category 6: Certifications & Competencies -->
-        <div class="skill-category-card">
-          <h3 class="skill-category-title">
-            <svg class="skill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-            Verified Honors
-          </h3>
-          <div class="skill-pills">
-            <span class="skill-pill">HackerRank Software Engineer</span>
-            <span class="skill-pill">Top 20 Unstop AI Hackathon</span>
-            <span class="skill-pill">Top 18 Maverick AI Challenge</span>
-            <span class="skill-pill">Green Skills &amp; AI (Edunet)</span>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------------------------
-         Contact & Connect Section (#contact)
-         ---------------------------------------------------------------------- -->
+    <!-- Contact -->
     <section id="contact" class="section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="section-number">04.</span> Connect &amp; Collaborate
-        </h2>
+      <div class="section-heading">
+        <h2>Contact</h2>
       </div>
 
-      <div class="bio-prose">
+      <div class="bio">
         <p>
-          I am actively exploring new engineering challenges where I can push applied GenAI, autonomous agents, and resilient backend systems to their fullest. If you’re building something interesting or hiring for AI/ML and SWE roles, my inbox is always open.
+          I'm actively looking for opportunities in AI/ML, LLM/agent systems, Python backend, or full-stack software engineering. If you're building something interesting or want to collaborate, feel free to reach out:
         </p>
         <p>
-          Drop me an email at 
-          <a href="mailto:prempatel7740@gmail.com" class="inline-link">prempatel7740@gmail.com</a> 
-          or connect with me on 
-          <a href="https://www.linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer" class="inline-link">LinkedIn</a> 
-          and 
-          <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="inline-link">GitHub</a>.
+          Email: <a href="mailto:prempatel7740@gmail.com" class="link">prempatel7740@gmail.com</a>
+          <br>
+          LinkedIn: <a href="https://www.linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer" class="link">linkedin.com/in/prem-patel-ai</a>
+          <br>
+          GitHub: <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="link">github.com/prempatel-ai</a>
         </p>
       </div>
     </section>
 
   </main>
 
-  <!-- ========================================================================
-       Academic Minimalist Footer (Minimal-Light + J Rosser acknowledgement)
-       ======================================================================== -->
-  <footer class="container site-footer">
-    <div class="footer-credits">
-      Prem Patel &copy; 2026 · Built with clean semantic HTML, CSS &amp; vanilla JS for GitHub Pages.
-      <br>
-      <span class="text-subtle">
-        Inspired by <a href="https://minimal-light-theme.yliu.me/" target="_blank" rel="noopener">Minimal Light</a> &amp; <a href="https://jrosser.co.uk/" target="_blank" rel="noopener">J Rosser</a>.
-      </span>
+  <footer class="container footer">
+    <div>
+      Prem Patel &copy; 2026 · Minimalist portfolio &amp; résumé
     </div>
-
-    <div class="text-subtle text-xs">
-      Shortcuts: <kbd>T</kbd> theme · <kbd>Ctrl+P</kbd> printable CV
+    <div>
+      Inspired by <a href="https://minimal-light-theme.yliu.me/" target="_blank" rel="noopener">Minimal Light</a> &amp; <a href="https://jrosser.co.uk/" target="_blank" rel="noopener">J Rosser</a>
     </div>
   </footer>
 
-  <!-- Toast Notification (Email Copied) -->
   <div id="toast" role="status" aria-live="polite"></div>
 
-  <!-- JavaScript Behavior -->
   <script src="./script.js"></script>
 </body>
 </html>
