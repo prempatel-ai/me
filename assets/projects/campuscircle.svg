@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e1d" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#bgCC)" rx="12"/>
+  <g opacity="0.1" stroke="#ffffff" stroke-width="1">
+    <circle cx="200" cy="120" r="40"/>
+    <circle cx="200" cy="120" r="80"/>
+    <circle cx="200" cy="120" r="120"/>
+  </g>
+  <!-- Central Hub: 200+ Users & LLaMA 3.3 -->
+  <circle cx="200" cy="120" r="45" fill="#042f2e" stroke="#14b8a6" stroke-width="2.5"/>
+  <text x="200" y="115" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#2dd4bf" text-anchor="middle">LLaMA 3.3</text>
+  <text x="200" y="132" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#99f6e4" text-anchor="middle">70B Core</text>
+  <!-- Satellite 1: Reva Support Agent -->
+  <rect x="35" y="55" width="105" height="52" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="87" y="78" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Reva AI</text>
+  <text x="87" y="94" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#a7f3d0" text-anchor="middle">Support Agent</text>
+  <line x1="140" y1="85" x2="165" y2="105" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="3 3"/>
+  <!-- Satellite 2: Adaptive Quiz Engine -->
+  <rect x="260" y="55" width="110" height="52" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="315" y="78" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Quiz Engine</text>
+  <text x="315" y="94" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#a7f3d0" text-anchor="middle">Adaptive Testing</text>
+  <line x1="260" y1="85" x2="235" y2="105" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="3 3"/>
+  <!-- Satellite 3: YouTube Explainer -->
+  <rect x="145" y="175" width="110" height="48" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="200" y="196" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">YT-to-Study</text>
+  <text x="200" y="210" font-family="'JetBrains Mono', monospace" font-size="8" fill="#a7f3d0" text-anchor="middle">Video Summaries</text>
+  <line x1="200" y1="165" x2="200" y2="175" stroke="#2dd4bf" stroke-width="2"/>
+  <!-- Metric Badge -->
+  <rect x="25" y="18" width="165" height="24" rx="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1"/>
+  <text x="107" y="34" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" fill="#5eead4" text-anchor="middle">👥 200+ Active Campus Users</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161e2e" />
+      <stop offset="100%" stop-color="#0a0d14" />
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a3ffc" />
+      <stop offset="50%" stop-color="#5ff26b" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="codeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5ff26b" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer subtle glowing ring -->
+  <circle cx="120" cy="120" r="116" fill="url(#bgGrad)" stroke="url(#ringGrad)" stroke-width="4" />
+  
+  <!-- Stylized Monogram Profile -->
+  <g transform="translate(120, 105)">
+    <!-- Head circle -->
+    <circle cx="0" cy="-20" r="38" fill="#1e293b" stroke="#334155" stroke-width="3" />
+    <!-- Modern tech sunglasses / visor with code reflection -->
+    <rect x="-28" y="-30" width="56" height="18" rx="6" fill="#0f172a" stroke="url(#codeGrad)" stroke-width="2.5" />
+    <path d="M -20 -21 L -8 -21 M 6 -21 L 20 -21" stroke="#5ff26b" stroke-width="2" stroke-linecap="round" />
+    
+    <!-- Torso / Hoodie -->
+    <path d="M -60 55 C -60 12, -35 8, 0 8 C 35 8, 60 12, 60 55 Z" fill="#1e293b" stroke="#334155" stroke-width="3" />
+    <path d="M -15 8 L 0 42 L 15 8" fill="none" stroke="url(#codeGrad)" stroke-width="2.5" />
+  </g>
+  
+  <!-- Terminal code badge overlay -->
+  <g transform="translate(42, 178)">
+    <rect width="156" height="34" rx="8" fill="#090d16" stroke="#334155" stroke-width="1.5" />
+    <circle cx="14" cy="17" r="4" fill="#ef4444" />
+    <circle cx="26" cy="17" r="4" fill="#f59e0b" />
+    <circle cx="38" cy="17" r="4" fill="#10b981" />
+    <text x="52" y="22" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#5ff26b">&gt; prem.build()</text>
+  </g>
+</svg>
