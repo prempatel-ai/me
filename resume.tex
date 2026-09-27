@@ -18,7 +18,7 @@
 \geometry{left=0.50in, top=0.45in, right=0.50in, bottom=0.45in}
 
 \pagestyle{fancy}
-\fancyhf{} % clear all header and footer fields
+\fancyhf{}
 \fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -45,11 +45,11 @@
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-1pt}\item
+  \vspace{3pt}\item
     \begin{tabular*}{0.985\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \small #2 \\
       \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-4pt}
+    \end{tabular*}\vspace{-2pt}
 }
 
 \newcommand{\resumeProjectHeading}[2]{
@@ -62,7 +62,7 @@
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-3pt}}
 \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}, itemsep=2pt]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in, noitemsep, topsep=2pt]}
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-2pt}}
@@ -73,10 +73,10 @@
 % ---------- HEADING ----------
 \begin{center}
     {\Huge \scshape Premkumar M. Patel} \\ \vspace{3pt}
-    \small +91 76229 46712 $|$ 
-    \href{mailto:prempatel7740@gmail.com}{\underline{prempatel7740@gmail.com}} $|$ 
-    \href{https://linkedin.com/in/prem-patel-ai}{\underline{linkedin.com/in/prem-patel-ai}} $|$ 
-    \href{https://github.com/prempatel-ai}{\underline{github.com/prempatel-ai}} $|$ 
+    \small +91 76229 46712 $|$
+    \href{mailto:prempatel7740@gmail.com}{\underline{prempatel7740@gmail.com}} $|$
+    \href{https://linkedin.com/in/prem-patel-ai}{\underline{linkedin.com/in/prem-patel-ai}} $|$
+    \href{https://github.com/prempatel-ai}{\underline{github.com/prempatel-ai}} $|$
     \href{https://medium.com/@prempatel7740}{\underline{medium.com/@prempatel7740}}
 \end{center}
 
@@ -85,9 +85,9 @@
   \resumeSubHeadingListStart
     \resumeSubheading
       {Sankalchand Patel University}{Visnagar, Gujarat, India}
-      {Bachelor of Technology in Computer Engineering (CGPA: 7.80 / 10.0)}{June 2023 -- June 2027}
+      {Bachelor of Technology in Computer Engineering, CGPA: 7.80 / 10.0}{June 2023 -- June 2027}
       \resumeItemListStart
-        \resumeItem{\textbf{Coursework}: Data Structures \& Algorithms, DBMS, Operating Systems, OOP, Computer Networks, Software Engineering, Machine Learning, Deep Learning.}
+        \resumeItem{Coursework: Data Structures and Algorithms, DBMS, Operating Systems, OOP, Computer Networks, Software Engineering, Machine Learning, Deep Learning}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
 
@@ -95,11 +95,11 @@
 \section{Technical Skills}
  \begin{itemize}[leftmargin=0.0in, label={}, noitemsep, topsep=1.5pt]
     \small{\item{
-     \textbf{Languages}{: Python, C++, SQL, JavaScript, TypeScript} \\
-     \textbf{Backend \& APIs}{: FastAPI, Flask, RESTful APIs, Pydantic, Webhooks, HMAC Verification} \\
-     \textbf{AI \& Agent Systems}{: LangGraph, LangChain, Autonomous Agents, Tool Calling, LLaMA 3.3 70B, OpenAI API, Groq} \\
-     \textbf{Databases \& Retrieval}{: PostgreSQL, Redis, SQLite, RAG Pipelines, FAISS, Qdrant, Pinecone} \\
-     \textbf{DevOps \& Tools}{: Docker, Git, GitHub, Linux/Bash, Vercel, Render, Postman, UptimeRobot}
+     \textbf{Languages}: Python, C++, SQL, JavaScript, TypeScript \\
+     \textbf{Backend \& APIs}: FastAPI, Flask, RESTful APIs, Pydantic, Webhooks, HMAC Verification \\
+     \textbf{AI \& Agent Systems}: LangGraph, LangChain, Autonomous Agents, Tool Calling, LLaMA 3.3 70B, OpenAI API, Groq \\
+     \textbf{Databases \& Retrieval}: PostgreSQL, Redis, SQLite, RAG Pipelines, FAISS, Qdrant, Pinecone \\
+     \textbf{DevOps \& Tools}: Docker, Git, GitHub, Linux/Bash, Vercel, Render, Postman, UptimeRobot
     }}
  \end{itemize}
 
@@ -110,41 +110,46 @@
       \resumeProjectHeading
           {\textbf{AgentPay} $|$ \emph{Python, FastAPI, LangGraph, PostgreSQL, Redis, Next.js, Razorpay API}}{Feb 2026}
           \resumeItemListStart
-            \resumeItem{Engineered autonomous buyer-agent infrastructure where the LLM proposes purchases, but an isolated \textbf{deterministic policy engine gates every payment action} before invoking Razorpay's API, eliminating unconstrained agent execution.}
-            \resumeItem{Enforced an append-only, \textbf{database-trigger-backed audit trail} tracking every state transition, tenant merchant isolation, and hard consumer spend-authorization limits.}
-            \resumeItem{Implemented a sandbox-to-production compliance pipeline with webhook-driven agent integration, \textbf{HMAC signature verification}, and automated retry backoff handling.}
+            \resumeItem{Built an autonomous buyer-agent system where the LLM proposes purchases and a separate deterministic policy engine gates every payment before it reaches the Razorpay API}
+            \resumeItem{Logged every state change in an append-only audit trail backed by database triggers, with merchant data isolated per tenant and hard spend limits per consumer}
+            \resumeItem{Set up a sandbox-to-production pipeline with webhook-driven agent integration, HMAC signature verification, and automatic retry with backoff}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{CampusCircle} $|$ \emph{Next.js, FastAPI, PostgreSQL, LLaMA 3.3 70B, TypeScript}}{Nov 2025 -- Jan 2026}
           \resumeItemListStart
-            \resumeItem{Architected and deployed the full backend and AI infrastructure for a verified student platform, scaling solo to \textbf{200+ active campus users} with sub-150ms average API response times.}
-            \resumeItem{Shipped 3 production AI features powered by \textbf{LLaMA 3.3 70B}: an automated support agent (\emph{"Reva"}), an adaptive quiz engine dynamically tuning question difficulty, and a YouTube-to-structured-study notes summarizer.}
-            \resumeItem{Awarded \textbf{Top 18 of 500+ participants} nationwide in The Maverick Ect AI Challenge (Dewang Mehta Foundation Trust).}
+            \resumeItem{Designed and deployed the full backend and AI infrastructure for a verified student platform, scaling it solo to over 200 active campus users with average API response times under 150ms}
+            \resumeItem{Shipped three production AI features on LLaMA 3.3 70B: an automated support agent ("Reva"), an adaptive quiz engine that adjusts question difficulty in real time, and a YouTube-to-study-notes summarizer}
+            \resumeItem{Placed in the top 18 of over 500 participants nationwide in The Maverick Effect AI Challenge, run by the Dewang Mehta Foundation Trust}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{CliniqueAI} $|$ \emph{Python, Flask, PostgreSQL, Scikit-learn, XGBoost, LangChain, Pydantic}}{Jan 2026 -- Feb 2026}
           \resumeItemListStart
-            \resumeItem{Trained and benchmarked Logistic Regression, Random Forest, and \textbf{XGBoost classifiers} for clinical diabetes risk prediction, optimizing the decision boundary for medical explainability and high recall.}
-            \resumeItem{Integrated a \textbf{RAG patient copilot} grounded on localized EHR records, transactional CRUD endpoints, Pydantic data schemas, and physician notification alerts.}
-            \resumeItem{Eliminated cloud cold-start latency on Render free tier by configuring an automated heartbeat via UptimeRobot.}
+            \resumeItem{Trained and benchmarked Logistic Regression, Random Forest, and XGBoost classifiers for clinical diabetes risk prediction, tuning the decision boundary for explainability and high recall}
+            \resumeItem{Built a RAG-based patient copilot grounded on localized EHR records, with transactional CRUD endpoints, Pydantic data schemas, and physician notification alerts}
+            \resumeItem{Removed cold-start latency on Render's free tier by setting up an automated heartbeat with UptimeRobot}
           \resumeItemListEnd
 
     \resumeSubHeadingListEnd
 
-% ---------- HONORS & CERTIFICATIONS ----------
-\section{Honors \& Certifications}
+% ---------- HONORS ----------
+\section{Honors}
  \resumeSubHeadingListStart
     \resumeSubheading
-      {National AI Hackathon (Unstop) --- Top 20 Finalist (out of 1,600+)}{National Level}
-      {Selected among top 20 software teams nationwide for developing CliniqueAI diagnostic copilot}{Feb 2026}
+      {National AI Hackathon (Unstop) --- Top 20 Finalist, out of 1,600+ teams}{National Level}
+      {Selected among the top 20 software teams nationwide for CliniqueAI, a diagnostic copilot}{Feb 2026}
     \resumeSubheading
-      {The Maverick Ect AI Challenge --- Top 18 Finalist (out of 500+)}{National Level}
-      {Recognized by Dewang Mehta Foundation Trust for building CampusCircle AI community platform}{2026}
+      {The Maverick Effect AI Challenge --- Top 18 Finalist, out of 500+ participants}{National Level}
+      {Recognized by the Dewang Mehta Foundation Trust for CampusCircle, an AI community platform}{2026}
+ \resumeSubHeadingListEnd
+
+% ---------- CERTIFICATIONS ----------
+\section{Certifications}
+ \resumeSubHeadingListStart
     \resumeSubheading
-      {HackerRank Certified Software Engineer}{Verified Certificate}
-      {Demonstrated competency in Problem Solving, SQL Database Queries, and RESTful API Architecture}{2025}
+      {HackerRank Software Engineer Certification}{2025}
+      {Problem Solving, SQL, REST APIs}{}
  \resumeSubHeadingListEnd
 
 \end{document}
