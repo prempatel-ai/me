@@ -1,13 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8a3ffc" />
-      <stop offset="50%" stop-color="#5ff26b" />
-      <stop offset="100%" stop-color="#0284c7" />
-    </linearGradient>
+    <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+    <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+    <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
   </defs>
-  <rect width="100" height="100" rx="24" fill="#0f141c" />
-  <rect x="3" y="3" width="94" height="94" rx="21" fill="none" stroke="url(#favGrad)" stroke-width="3" opacity="0.7"/>
-  <text x="50" y="65" font-family="'JetBrains Mono', monospace" font-size="44" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="-1">P</text>
-  <circle cx="76" cy="28" r="7" fill="#5ff26b" />
+  <g shape-rendering="crispEdges">
+    <!-- Top loop in purple (#af67ff) -->
+    <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+    <!-- Spine in green (#5ff26b) -->
+    <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+    <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+    <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+    <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+    <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+    <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+    <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+    <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+  </g>
 </svg>
