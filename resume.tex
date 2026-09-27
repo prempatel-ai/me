@@ -1,0 +1,168 @@
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{charter}
+
+% Geometry setup (0.45in margins for strict 1-page fit)
+\geometry{left=0.48in, top=0.48in, right=0.48in, bottom=0.48in}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.0in}
+\addtolength{\evensidemargin}{-0.0in}
+\addtolength{\textwidth}{0.0in}
+\addtolength{\topmargin}{-0.0in}
+\addtolength{\textheight}{0.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-4pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+% -------------------------
+% Custom commands (Jake's Resume standard)
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-1.5pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1.5pt}\item
+    \begin{tabular*}{0.985\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \small #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{-1.5pt}\item
+    \begin{tabular*}{0.985\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small #2 \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-3pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in, noitemsep, topsep=1.5pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-3pt}}
+
+% ---------------------------------------------------------------------------
+% RESUME STARTS HERE
+% ---------------------------------------------------------------------------
+\begin{document}
+
+% ---------- HEADING ----------
+\begin{center}
+    {\Huge \scshape Premkumar M. Patel} \\ \vspace{2pt}
+    \small +91 76229 46712 $|$ 
+    \href{mailto:prempatel7740@gmail.com}{\underline{prempatel7740@gmail.com}} $|$ 
+    \href{https://linkedin.com/in/prem-patel-ai}{\underline{linkedin.com/in/prem-patel-ai}} $|$ 
+    \href{https://github.com/prempatel-ai}{\underline{github.com/prempatel-ai}} $|$ 
+    \href{https://medium.com/@prempatel7740}{\underline{medium.com/@prempatel7740}}
+\end{center}
+
+% ---------- EDUCATION ----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Sankalchand Patel University}{Visnagar, Gujarat, India}
+      {Bachelor of Technology in Computer Engineering (CGPA: 7.80 / 10.0)}{June 2023 -- June 2027}
+      \resumeItemListStart
+        \resumeItem{\textbf{Relevant Coursework}: Data Structures \& Algorithms, Machine Learning, Deep Learning, DBMS, Operating Systems, Software Engineering, Object-Oriented Programming, Computer Networks.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+% ---------- TECHNICAL SKILLS ----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.0in, label={}, noitemsep, topsep=1pt]
+    \small{\item{
+     \textbf{Languages \& Backend}{: Python (Proficient), C++, SQL, JavaScript, TypeScript, FastAPI, Flask, RESTful APIs, Pydantic} \\
+     \textbf{AI \& Agentic Systems}{: LangGraph, LangChain, Autonomous Agents, Tool Calling, LLaMA 3.3, OpenAI API, Groq, PyTorch} \\
+     \textbf{Retrieval \& Databases}{: RAG Pipelines, Self-RAG, FAISS, Qdrant, Pinecone, PostgreSQL, Redis, SQLite, MongoDB} \\
+     \textbf{Developer Tools \& DevOps}{: Git, GitHub, Docker, Vercel, Render, Postman, UptimeRobot, Linux/Bash}
+    }}
+ \end{itemize}
+
+% ---------- PROJECTS ----------
+\section{Featured Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{AgentPay} $|$ \emph{Python, FastAPI, LangGraph, PostgreSQL, Redis, Next.js, Razorpay API}}{Feb 2026}
+          \resumeItemListStart
+            \resumeItem{Engineered autonomous buyer-agent infrastructure where the LLM proposes purchases, but an isolated \textbf{deterministic policy engine gates every payment action} before invoking Razorpay's API, eliminating unconstrained agent execution.}
+            \resumeItem{Enforced an append-only, \textbf{database-trigger-backed audit trail} tracking every state transition, tenant merchant isolation, and hard consumer spend-authorization limits.}
+            \resumeItem{Implemented a sandbox-to-production compliance pipeline with webhook-driven agent integration, \textbf{HMAC signature verification}, and automated retry backoff handling.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{CampusCircle} $|$ \emph{Next.js, FastAPI, PostgreSQL, LLaMA 3.3 70B, TypeScript}}{Nov 2025 -- Jan 2026}
+          \resumeItemListStart
+            \resumeItem{Architected and deployed the full backend and AI infrastructure for a verified student platform, scaling solo to \textbf{200+ active campus users} with sub-150ms average API response times.}
+            \resumeItem{Shipped 3 production AI features powered by \textbf{LLaMA 3.3 70B}: an automated support agent (\emph{"Reva"}), an adaptive quiz engine dynamically tuning question difficulty, and a YouTube-to-structured-study notes summarizer.}
+            \resumeItem{Awarded \textbf{Top 18 of 500+ participants} nationwide in The Maverick Ect AI Challenge (Dewang Mehta Foundation Trust).}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{CliniqueAI} $|$ \emph{Python, Flask, PostgreSQL, Scikit-learn, XGBoost, LangChain, Pydantic}}{Jan 2026 -- Feb 2026}
+          \resumeItemListStart
+            \resumeItem{Trained and benchmarked Logistic Regression, Random Forest, and \textbf{XGBoost classifiers} for clinical diabetes risk prediction, optimizing the decision boundary for medical explainability and high recall.}
+            \resumeItem{Integrated a \textbf{RAG patient copilot} grounded on localized EHR records, transactional CRUD endpoints, Pydantic data schemas, and physician notification alerts.}
+            \resumeItem{Eliminated cloud cold-start latency on Render free tier by configuring an automated heartbeat via UptimeRobot.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{RAG Architectures Lab} $|$ \emph{Python, LangChain, FAISS, Qdrant, Pinecone, FastAPI, Streamlit}}{2025 -- 2026}
+          \resumeItemListStart
+            \resumeItem{Implemented a comparative playground for RAG paradigms, benchmarking naive dense retrieval vs. conversational memory vs. self-corrective agentic loops with automated query reformulation.}
+            \resumeItem{Evaluated vector search indexing latency and precision tradeoffs across Qdrant, Pinecone, and in-memory FAISS.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+% ---------- HONORS & CERTIFICATIONS ----------
+\section{Honors \& Certifications}
+ \resumeSubHeadingListStart
+    \resumeSubheading
+      {National AI Hackathon (Unstop) --- Top 20 Finalist (out of 1,600+)}{National Level}
+      {Selected among top 20 software teams nationwide for developing CliniqueAI diagnostic copilot}{Feb 2026}
+    \resumeSubheading
+      {The Maverick Ect AI Challenge --- Top 18 Finalist (out of 500+)}{National Level}
+      {Recognized by Dewang Mehta Foundation Trust for building CampusCircle AI community platform}{2026}
+    \resumeSubheading
+      {HackerRank Certified Software Engineer}{Verified Certificate}
+      {Demonstrated competency in Problem Solving, SQL Database Queries, and RESTful API Architecture}{2025}
+ \resumeSubHeadingListEnd
+
+% ---------------------------------------------------------------------------
+\end{document}
