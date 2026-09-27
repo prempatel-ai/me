@@ -189,7 +189,7 @@
   });
 
   // -------------------------------------------------------------------------
-  // 5. Keyboard Shortcuts ('T' to toggle theme, 'L' to pop party)
+  // 5. Keyboard Shortcuts ('T' to toggle theme)
   // -------------------------------------------------------------------------
   window.addEventListener('keydown', (e) => {
     if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
@@ -198,5 +198,32 @@
       applyTheme(current === 'dark' ? 'light' : 'dark');
     }
   });
+
+  // -------------------------------------------------------------------------
+  // 6. Typewriter Animation for "Hi I'm Prem!" on Page Load
+  // -------------------------------------------------------------------------
+  const typewriterText = document.getElementById('typewriter-text');
+  if (typewriterText) {
+    const textToType = "Hi I'm Prem!";
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      typewriterText.textContent = '';
+      let i = 0;
+      const startDelay = 300;
+      const typingSpeed = 75;
+
+      setTimeout(() => {
+        const timer = setInterval(() => {
+          if (i < textToType.length) {
+            typewriterText.textContent += textToType.charAt(i);
+            i++;
+          } else {
+            clearInterval(timer);
+          }
+        }, typingSpeed);
+      }, startDelay);
+    }
+  }
 
 })();

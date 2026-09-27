@@ -358,6 +358,35 @@ a:hover {
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
   color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3rem;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.15em;
+  background-color: var(--link-color);
+  margin-left: 4px;
+  border-radius: 1px;
+  animation: cursor-blink 0.85s infinite;
+  vertical-align: middle;
+}
+
+@keyframes cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-cursor {
+    animation: none;
+  }
 }
 
 /* Image 1 Icon Bar with Text Labels */
