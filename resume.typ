@@ -1,73 +1,78 @@
 #set page(
   paper: "us-letter",
-  margin: (x: 0.45in, top: 0.42in, bottom: 0.42in),
+  margin: (x: 0.50in, top: 0.45in, bottom: 0.45in),
 )
 
 #set text(
   font: ("Palatino Linotype", "Georgia", "Times New Roman"),
-  size: 9.4pt,
+  size: 9.5pt,
   fill: rgb("#111827"),
-  spacing: 105%,
+  spacing: 104%,
+  hyphenate: false,
   lang: "en",
 )
 
 #set par(
   justify: true,
-  leading: 0.44em,
+  leading: 0.48em,
 )
 
-// Section header styling (matching Jake's Resume titlerule)
+// Section header styling (Jake's Resume standard titlerule)
 #let section(title) = {
-  v(8.5pt)
-  text(size: 11pt, weight: "bold", tracking: 0.03em)[#smallcaps(title)]
-  v(-2.5pt)
-  line(length: 100%, stroke: 0.55pt + rgb("#111827"))
-  v(4pt)
+  v(9pt)
+  text(size: 11pt, weight: "bold", tracking: 0.04em)[#smallcaps(title)]
+  v(-3.5pt)
+  line(length: 100%, stroke: 0.6pt + rgb("#1f2937"))
+  v(4.5pt)
 }
 
-// Subheading helper
+// Subheading helper (Education & Honors)
 #let entry(title, date, subtitle, location) = {
-  block(width: 100%, below: 5.5pt)[
+  block(width: 100%, below: 6pt)[
     #grid(
       columns: (1fr, auto),
-      row-gutter: 3.5pt,
-      [*#title*], [#text(size: 8.8pt)[#date]],
-      [#text(size: 9.1pt)[#emph(subtitle)]], [#text(size: 8.8pt)[#emph(location)]],
+      [*#title*], [#text(size: 9pt)[#date]],
+    )
+    #v(2.5pt)
+    #grid(
+      columns: (1fr, auto),
+      [#emph(subtitle)], [#text(size: 9pt)[#emph(location)]],
     )
   ]
 }
 
 // Project heading helper
 #let project(title, stack, date) = {
-  block(width: 100%, above: 6.5pt, below: 3.5pt)[
+  block(width: 100%, above: 7pt, below: 3pt)[
     #grid(
       columns: (1fr, auto),
-      [*#title* $|$ #text(size: 9.1pt)[#emph(stack)]], [#text(size: 8.8pt)[#date]],
+      [*#title* $|$ #text(size: 9pt)[#emph(stack)]], [#text(size: 9pt)[#date]],
     )
   ]
 }
 
 // Bullet list helper
 #let bullets(..items) = {
-  v(0.5pt)
+  v(1pt)
   list(
     marker: [•],
-    spacing: 0.42em,
+    spacing: 0.48em,
     ..items
   )
+  v(1.5pt)
 }
 
 // -------------------------------------------------------------------------
 // HEADER
 // -------------------------------------------------------------------------
 #align(center)[
-  #text(size: 19.5pt, weight: "bold")[Premkumar M. Patel] \
-  #v(2.5pt)
-  #text(size: 8.8pt)[
-    +91 76229 46712 $|$
-    #link("mailto:prempatel7740@gmail.com")[prempatel7740\@gmail.com] $|$
-    #link("https://linkedin.com/in/prem-patel-ai")[linkedin.com/in/prem-patel-ai] $|$
-    #link("https://github.com/prempatel-ai")[github.com/prempatel-ai] $|$
+  #text(size: 20pt, weight: "bold")[Premkumar M. Patel] \
+  #v(3.5pt)
+  #text(size: 8.5pt)[
+    +91 76229 46712 #h(4pt) $|$ #h(4pt)
+    #link("mailto:prempatel7740@gmail.com")[prempatel7740\@gmail.com] #h(4pt) $|$ #h(4pt)
+    #link("https://linkedin.com/in/prem-patel-ai")[linkedin.com/in/prem-patel-ai] #h(4pt) $|$ #h(4pt)
+    #link("https://github.com/prempatel-ai")[github.com/prempatel-ai] #h(4pt) $|$ #h(4pt)
     #link("https://medium.com/@prempatel7740")[medium.com/\@prempatel7740]
   ]
 ]
@@ -85,7 +90,7 @@
   "Visnagar, Gujarat, India"
 )
 #bullets(
-  [*Relevant Coursework:* Data Structures & Algorithms, Machine Learning, Deep Learning, Database Management Systems (DBMS), Operating Systems, Software Engineering, Object-Oriented Programming, Computer Networks.],
+  [*Coursework:* Data Structures & Algorithms, DBMS, Operating Systems, OOP, Computer Networks, Software Engineering, Machine Learning, Deep Learning.],
 )
 
 // -------------------------------------------------------------------------
@@ -94,13 +99,13 @@
 #section("Technical Skills")
 #v(1pt)
 #grid(
-  columns: (auto, 1fr),
-  column-gutter: 10pt,
-  row-gutter: 3.5pt,
-  [*Languages & Backend:*], [Python (Core), C++, SQL, JavaScript, TypeScript, FastAPI, Flask, RESTful APIs, Pydantic],
-  [*AI & Agent Systems:*], [LangGraph, LangChain, Autonomous Agents, Tool Calling, LLaMA 3.3 70B, OpenAI API, Groq, PyTorch],
-  [*Retrieval & Databases:*], [RAG Pipelines, Self-RAG, FAISS, Qdrant, Pinecone, PostgreSQL, Redis, SQLite, MongoDB],
-  [*Developer Tools & DevOps:*], [Docker, Git, GitHub, Vercel, Render, Postman, UptimeRobot, Linux/Bash],
+  columns: (1.52in, 1fr),
+  row-gutter: 4pt,
+  [*Languages:*], [Python, C++, SQL, JavaScript, TypeScript],
+  [*Backend & APIs:*], [FastAPI, Flask, RESTful APIs, Pydantic, Webhooks, HMAC Verification],
+  [*AI & Agent Systems:*], [LangGraph, LangChain, Autonomous Agents, Tool Calling, LLaMA 3.3 70B, OpenAI API, Groq],
+  [*Databases & Retrieval:*], [PostgreSQL, Redis, SQLite, RAG Pipelines, FAISS, Qdrant, Pinecone],
+  [*DevOps & Tools:*], [Docker, Git, GitHub, Linux/Bash, Vercel, Render, Postman, UptimeRobot],
 )
 
 // -------------------------------------------------------------------------
@@ -127,12 +132,6 @@
   [Trained and benchmarked Logistic Regression, Random Forest, and *XGBoost classifiers* for clinical diabetes risk prediction, optimizing the decision boundary for medical explainability and high recall.],
   [Integrated a *RAG patient copilot* grounded on localized EHR records, transactional CRUD endpoints, Pydantic data schemas, and physician notification alerts.],
   [Eliminated cloud cold-start latency on Render free tier by configuring an automated heartbeat via UptimeRobot.],
-)
-
-#project("RAG Architectures Lab", "Python, LangChain, FAISS, Qdrant, Pinecone, FastAPI, Streamlit", "2025 – 2026")
-#bullets(
-  [Implemented a comparative playground for RAG paradigms, benchmarking naive dense retrieval vs. conversational memory vs. self-corrective agentic loops with automated query reformulation.],
-  [Evaluated vector search indexing latency and precision tradeoffs across Qdrant, Pinecone, and in-memory FAISS.],
 )
 
 // -------------------------------------------------------------------------
