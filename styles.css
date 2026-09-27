@@ -247,8 +247,10 @@ a:hover {
 .sidebar {
   width: 230px;
   flex-shrink: 0;
+  position: -webkit-sticky;
   position: sticky;
   top: 5.5rem;
+  align-self: flex-start;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -828,10 +830,9 @@ a:hover {
    Responsive Layout (Mobile, Tablet, Desktop)
    -------------------------------------------------------------------------- */
 
-/* Prevent horizontal overflow on any device */
+/* Prevent horizontal overflow on any device without breaking position: sticky */
 html, body {
-  overflow-x: hidden;
-  max-width: 100vw;
+  overflow-x: clip;
 }
 
 /* Tablets Landscape & Small Laptops (1024px and down) */

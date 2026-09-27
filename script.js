@@ -200,17 +200,19 @@
   });
 
   // -------------------------------------------------------------------------
-  // 6. Typewriter Animation for "Hi I'm Prem!" on Page Load
+  // 6. Typewriter Effect for "Hi I'm Prem!" on Page Load
   // -------------------------------------------------------------------------
   const typewriterText = document.getElementById('typewriter-text');
   if (typewriterText) {
     const textToType = "Hi I'm Prem!";
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion) {
+    if (prefersReducedMotion) {
+      typewriterText.textContent = textToType;
+    } else {
       typewriterText.textContent = '';
       let i = 0;
-      const startDelay = 300;
+      const startDelay = 250;
       const typingSpeed = 75;
 
       setTimeout(() => {
