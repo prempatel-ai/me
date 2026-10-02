@@ -11,8 +11,13 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
 
+  <!-- JetBrains Mono Font (Same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../blog.css?v=20261002e">
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
 
   <!-- Immediate Theme Initializer -->
   <script>
@@ -30,20 +35,22 @@
 </head>
 <body class="surya-body">
 
-  <!-- Minimalist Header (Surya Style) -->
-  <header class="surya-header">
-    <div class="surya-header-inner">
-      <div class="surya-brand">
-        <!-- 3D Voxel Pixel Logo Button (Easter Egg) -->
-        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party! 🎉" aria-label="Tap Logo" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;">
-          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:28px;">
+  <!-- Top Sticky Header (Exact Match to index.html & media_1790962808380.png) -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo (Click for Confetti Explosion 🎉) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party! 🎉" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
               <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
               <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
             </defs>
             <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
               <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
               <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
               <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
               <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
@@ -55,29 +62,25 @@
             </g>
           </svg>
         </button>
-        <a href="../index.html" class="surya-brand-logo">Prem Patel</a>
+        <a href="../index.html" class="header-title">Prem Patel</a>
       </div>
 
-      <nav class="surya-nav">
-        <a href="../index.html">Home</a>
-        <a href="../index.html#projects">Work</a>
-        <a href="./index.html" class="active">Blog</a>
+      <!-- Navigation with Purple Pipe Separators (Image 2) -->
+      <nav class="header-nav">
         <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
       </nav>
 
-      <div class="surya-header-actions">
-        <!-- Twitter / X -->
-        <a href="https://x.com/kickingkeys" target="_blank" rel="noopener noreferrer" class="surya-social-icon" title="Twitter / X">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer" class="surya-social-icon" title="LinkedIn">
-          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-        </a>
-
-        <!-- Theme Switcher -->
-        <button id="theme-toggle" class="surya-theme-btn" aria-label="Toggle theme">
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
           <span id="theme-icon"></span>
         </button>
       </div>
@@ -156,38 +159,7 @@
     <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
-  <!-- Theme Toggle & Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-  <script>
-    (function() {
-      var themeToggleBtn = document.getElementById('theme-toggle');
-      var themeIcon = document.getElementById('theme-icon');
-      function updateIcon(theme) {
-        if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-      }
-      var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      updateIcon(currentTheme);
-
-      if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', function() {
-          var now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', now);
-          localStorage.setItem('theme', now);
-          updateIcon(now);
-        });
-      }
-
-      var voxelBtn = document.getElementById('voxel-logo-btn');
-      if (voxelBtn && typeof confetti === 'function') {
-        voxelBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var rect = voxelBtn.getBoundingClientRect();
-          var x = (rect.left + rect.width / 2) / window.innerWidth;
-          var y = (rect.top + rect.height / 2) / window.innerHeight;
-          confetti({ particleCount: 40, spread: 60, origin: { x: x, y: y }, colors: ['#af67ff', '#5ff26b', '#c084fc', '#98ff9c', '#7c3aed'] });
-        });
-      }
-    })();
-  </script>
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
 </body>
 </html>
