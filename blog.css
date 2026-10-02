@@ -1,118 +1,142 @@
 /* ==========================================================================
-   Anthropic Official Design System
-   Exact match to: anthropic.com/policy-on-the-ai-exponential
-   Embedded Fonts: anthropicSans + anthropicSerif
-   Tokens: Ivory Light (#FAF9F5) / Slate Dark (#141413)
+   Surya.website Blog Design System
+   Exact match to: blog/Learning_to_Draw_Again_With_AI.html
+   Official Fonts: PP Editorial New + PP Neue Montreal + Fragment Mono + Caveat
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Official Embedded Anthropic Fonts
+   1. Official Embedded Fonts
    -------------------------------------------------------------------------- */
 @font-face {
-  font-family: 'anthropicSans';
-  src: url('./assets/fonts/anthropicSans_normal.woff2') format('woff2');
-  font-weight: 400 800;
+  font-family: 'PP Editorial New';
+  src: url('./assets/fonts/PP_Editorial_New_Regular_400_normal.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'anthropicSans';
-  src: url('./assets/fonts/anthropicSans_italic.woff2') format('woff2');
-  font-weight: 400 800;
+  font-family: 'PP Editorial New';
+  src: url('./assets/fonts/PP_Editorial_New_Ultralight_Italic_200_italic.woff2') format('woff2');
+  font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'anthropicSerif';
-  src: url('./assets/fonts/anthropicSerif_normal.woff2') format('woff2');
-  font-weight: 400 700;
+  font-family: 'PP Editorial New';
+  src: url('./assets/fonts/PP_Editorial_New_Ultrabold_800_normal.woff2') format('woff2');
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'anthropicSerif';
-  src: url('./assets/fonts/anthropicSerif_italic.woff2') format('woff2');
-  font-weight: 400 700;
+  font-family: 'PP Neue Montreal';
+  src: url('./assets/fonts/PP_Neue_Montreal_Book_400_normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('./assets/fonts/PP_Neue_Montreal_Medium_500_normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('./assets/fonts/PP_Neue_Montreal_Bold_700_normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('./assets/fonts/PP_Neue_Montreal_SemiBold_italic_600_italic.woff2') format('woff2');
+  font-weight: 600;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal Mono';
+  src: url('./assets/fonts/PP_Neue_Montreal_Mono_Book_normal_normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fragment Mono';
+  src: url('./assets/fonts/Fragment_Mono_400_normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Caveat';
+  src: url('./assets/fonts/Caveat_400_normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 
 /* --------------------------------------------------------------------------
-   2. Exact Anthropic CSS Custom Properties
+   2. Design Tokens
    -------------------------------------------------------------------------- */
 :root {
-  --anthropic-sans: 'anthropicSans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --anthropic-serif: 'anthropicSerif', "Georgia", "Charter", serif;
-  --anthropic-mono: 'JetBrains Mono', monospace;
+  --surya-bg: #FFFFFF;
+  --surya-bg-subtle: #F8F8F8;
+  --surya-title: #434343;
+  --surya-heading: #333333;
+  --surya-body: #4F4F4D;
+  --surya-muted: #999999;
+  --surya-border: #E8E8E8;
+  --surya-link: #434343;
+  --surya-nav-link: #555555;
+  --surya-nav-link-hover: #111111;
 
-  /* Colors (Light Ivory Theme) */
-  --color-ivory-light: #FAF9F5;
-  --color-ivory-medium: #F0EEE6;
-  --color-slate-900: #1A1918;
-  --color-slate-800: #262624;
-  --color-slate-600: #5E5D59;
-  --color-slate-dark: #141413;
-  --color-dark: #0F0F0E;
+  --font-serif: 'PP Editorial New', Georgia, serif;
+  --font-sans: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Fragment Mono', 'PP Neue Montreal Mono', monospace;
+  --font-script: 'Caveat', cursive;
 
-  --border-subtle: #D1CFC5;
-  --border-strong: #141413;
-  --border-hairline: rgba(20, 20, 19, 0.08);
-
-  /* Spacing */
-  --section-spacer-lg: 96px;
-  --section-spacer-sm: 48px;
-  --gap-lg: 48px;
-  --gap-sm: 24px;
-  --sp-24: 24px;
-  --sp-16: 16px;
-  --sp-12: 12px;
-  --sp-8: 8px;
-  --sp-4: 4px;
-
-  /* Dimensions */
-  --headline-1: 54px;
-  --media-max-width: 880px;
-  --text-column-max-width: 640px;
-  --media-col-max: 1072px;
-  --site-header-height: 68px;
+  --measure-width: 600px;
+  --header-height: 64px;
 }
 
 [data-theme="dark"] {
-  --color-ivory-light: #141413;
-  --color-ivory-medium: #1C1C1A;
-  --color-slate-900: #EDECE8;
-  --color-slate-800: #EDECE8;
-  --color-slate-600: #9E9D97;
-  --color-slate-dark: #EDECE8;
-  --color-dark: #EDECE8;
-
-  --border-subtle: #2D2C28;
-  --border-strong: #EDECE8;
-  --border-hairline: rgba(255, 255, 255, 0.08);
+  --surya-bg: #111111;
+  --surya-bg-subtle: #191919;
+  --surya-title: #ECECEC;
+  --surya-heading: #E0E0E0;
+  --surya-body: #B5B5B3;
+  --surya-muted: #777777;
+  --surya-border: #262626;
+  --surya-link: #ECECEC;
+  --surya-nav-link: #AAAAAA;
+  --surya-nav-link-hover: #FFFFFF;
 }
 
 /* --------------------------------------------------------------------------
-   3. Body & Page Reset
+   3. Page & Body Reset
    -------------------------------------------------------------------------- */
-html, body {
-  background-color: var(--color-ivory-light);
-  color: var(--color-slate-900);
-  font-family: var(--anthropic-serif);
+body.surya-body {
+  background-color: var(--surya-bg) !important;
+  color: var(--surya-body) !important;
+  font-family: var(--font-sans);
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
   transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-body.anthropic-theme {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  background-color: var(--color-ivory-light) !important;
-  color: var(--color-slate-900) !important;
 }
 
 *, *::before, *::after {
@@ -120,475 +144,425 @@ body.anthropic-theme {
 }
 
 /* --------------------------------------------------------------------------
-   4. Anthropic Official Header Layout
+   4. Minimalist Header
    -------------------------------------------------------------------------- */
-.anthropic-site-header {
+.surya-header {
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--site-header-height);
-  background-color: var(--color-ivory-light);
-  z-index: 9999;
+  height: var(--header-height);
+  background-color: var(--surya-bg);
+  z-index: 1000;
   display: flex;
   align-items: center;
   transition: background-color 0.2s ease;
 }
 
-.anthropic-header-inner {
+.surya-header-inner {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.anthropic-logo-brand {
-  font-family: var(--anthropic-sans);
-  font-weight: 800;
-  font-size: 1.25rem;
-  letter-spacing: -0.02em;
-  color: var(--color-dark);
+.surya-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   text-decoration: none;
+  color: var(--surya-title);
+}
+
+.surya-brand-logo {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--surya-title);
+  text-decoration: none;
+}
+
+.surya-nav {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 1.75rem;
 }
 
-.anthropic-logo-brand .slash {
-  font-weight: 300;
-  color: var(--color-slate-600);
-}
-
-.anthropic-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.anthropic-nav-links a {
-  font-family: var(--anthropic-sans);
+.surya-nav a {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--color-slate-dark);
+  font-weight: 400;
+  color: var(--surya-nav-link);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
-.anthropic-nav-links a:hover {
-  color: var(--color-slate-600);
+.surya-nav a:hover {
+  color: var(--surya-nav-link-hover);
 }
 
-.anthropic-nav-links a.active {
-  font-weight: 700;
+.surya-nav a.active {
+  font-weight: 600;
+  color: var(--surya-title);
 }
 
-.anthropic-header-actions {
+.surya-header-actions {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.btn-try-claude {
-  font-family: var(--anthropic-sans);
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.45rem 1.15rem;
-  border-radius: 9999px;
-  background-color: var(--color-slate-dark);
-  color: var(--color-ivory-light);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: opacity 0.15s ease;
-}
-
-.btn-try-claude:hover {
-  opacity: 0.85;
-}
-
-.btn-theme-round {
-  background: none;
-  border: 1px solid var(--border-subtle);
-  border-radius: 9999px;
-  width: 32px;
-  height: 32px;
+.surya-social-icon {
+  color: var(--surya-nav-link);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-slate-dark);
+  width: 20px;
+  height: 20px;
+  transition: color 0.15s ease;
+}
+
+.surya-social-icon:hover {
+  color: var(--surya-nav-link-hover);
+}
+
+.surya-social-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.surya-theme-btn {
+  background: none;
+  border: 1px solid var(--surya-border);
+  border-radius: 9999px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--surya-nav-link);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.btn-theme-round:hover {
-  border-color: var(--border-strong);
+.surya-theme-btn:hover {
+  border-color: var(--surya-title);
+  color: var(--surya-title);
 }
 
 /* --------------------------------------------------------------------------
-   5. Hero Spot Illustration (Exact Match to Images 1 & 2)
+   5. Starting Hero Thing (Exact match to blog/Learning_to_Draw_Again_With_AI.html)
    -------------------------------------------------------------------------- */
-.landing-page-hero-section {
-  padding-top: var(--section-spacer-lg);
-  padding-bottom: var(--section-spacer-sm);
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero-spot-wrapper {
-  max-width: var(--media-col-max);
-  width: 100%;
+.surya-container {
+  max-width: var(--measure-width);
   margin: 0 auto;
+  padding: 3.5rem 1.25rem 6rem 1.25rem;
+}
+
+.hero-stuff {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--gap-lg);
+  gap: 20px;
+  margin-bottom: 28px;
 }
 
-.hero-header-wrapper {
+.hero-title-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--gap-sm);
-  text-align: center;
+  gap: 6px;
 }
 
-.headline-1 {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: clamp(34px, 5.2vw, var(--headline-1));
-  font-weight: 700;
-  line-height: 105%;
-  letter-spacing: -0.035em;
-  color: var(--color-slate-dark);
-  text-align: center;
-  text-wrap: balance;
-  max-width: var(--media-max-width);
-  margin: 0;
-}
-
-.body-large-2 {
-  font-family: var(--anthropic-serif), serif;
-  font-size: clamp(20px, 2.3vw, 23px);
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 5.2vw, 36px);
   font-weight: 400;
-  line-height: 145%;
-  letter-spacing: 0;
-  max-width: var(--text-column-max-width);
-  text-align: center;
-  text-wrap: balance;
-  color: var(--color-slate-900);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--surya-title);
   margin: 0;
+  text-align: left;
 }
 
-.body-3 {
-  font-family: var(--anthropic-serif), serif;
+.hero-date {
+  font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 400;
-  line-height: 155%;
-  max-width: var(--text-column-max-width);
-  text-align: center;
-  text-wrap: balance;
-  color: var(--color-slate-600);
+  color: var(--surya-muted);
   margin: 0;
+  text-align: left;
 }
 
-/* Numbered Chapters Navigation (01 / 02) */
-.hero-chapters {
-  display: flex;
-  gap: var(--sp-24);
-  justify-content: center;
+/* Hero Banner Image */
+.hero-banner {
   width: 100%;
-  max-width: var(--text-column-max-width);
-  margin-top: 1rem;
-}
-
-.hero-chapter {
-  flex: 1 1 0;
-  max-width: 280px;
-  border-top: 1px solid var(--border-subtle);
-  color: var(--color-dark);
-  padding-bottom: var(--sp-16);
-  padding-top: var(--sp-12);
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-  transition: border-color 0.15s ease;
-}
-
-.hero-chapter:hover {
-  color: var(--color-slate-dark);
-}
-
-.hero-chapter-selected {
-  border-top-color: var(--border-strong);
-}
-
-.hero-chapter-number {
-  font-family: var(--anthropic-serif), serif;
-  font-size: 15px;
-  color: var(--color-slate-600);
-  line-height: 1;
-}
-
-.hero-chapter-title {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-slate-dark);
-  line-height: 1.25;
-}
-
-/* --------------------------------------------------------------------------
-   6. Hero Spot Media Column
-   -------------------------------------------------------------------------- */
-.hero-media-wrapper {
-  width: 100%;
-  max-width: var(--media-col-max);
-  margin: 0 auto;
-  padding: 0 1.5rem 5rem 1.5rem;
-}
-
-.hero-figure {
-  margin: 0;
-  width: 100%;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  background-color: var(--color-ivory-medium);
+  background-color: var(--surya-bg-subtle);
+  margin: 4px 0 8px 0;
 }
 
-.hero-figure img {
+.hero-banner img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* --------------------------------------------------------------------------
-   7. Reading Column (Article Body)
-   -------------------------------------------------------------------------- */
-.reading-column {
-  max-width: var(--text-column-max-width);
-  margin: 0 auto 6rem auto;
-  padding: 0 1.5rem;
+/* Hero Subtext & Author Block */
+.hero-subtext-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.post-heading {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: clamp(26px, 3.4vw, 32px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  color: var(--color-slate-dark);
-  margin: 0 0 1.5rem 0;
-}
-
-.post-subheading {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--color-slate-dark);
-  margin: 3.5rem 0 1.25rem 0;
-}
-
-.post-text {
-  font-family: var(--anthropic-serif), serif;
-  font-size: 18px;
-  line-height: 1.62;
-  color: var(--color-slate-900);
-  margin-bottom: 1.5rem;
-}
-
-.post-text strong {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-weight: 700;
-  color: var(--color-slate-dark);
-}
-
-.post-cta-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: var(--anthropic-sans), sans-serif;
+.hero-subtext {
+  font-family: var(--font-sans);
   font-size: 16px;
-  font-weight: 600;
-  color: var(--color-slate-dark);
+  line-height: 1.55;
+  color: var(--surya-body);
+  margin: 0;
+}
+
+.hero-subtext .byline a {
+  color: var(--surya-title);
   text-decoration: underline;
   text-underline-offset: 3px;
-  margin-bottom: 2rem;
-  transition: color 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
-.post-cta-link:hover {
-  color: var(--color-slate-600);
+.hero-subtext .byline a:hover {
+  opacity: 0.7;
 }
 
-.post-cta-link .arrow {
-  display: inline-block;
-  transition: transform 0.15s ease;
-  text-decoration: none;
-}
-
-.post-cta-link:hover .arrow {
-  transform: translateX(4px);
-}
-
-/* Points Group */
-.points-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.point-entry {
-  font-family: var(--anthropic-serif), serif;
-  font-size: 18px;
-  line-height: 1.62;
-  color: var(--color-slate-900);
+.hero-action-links {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--surya-body);
   margin: 0;
 }
 
-.point-entry strong {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-weight: 700;
-  color: var(--color-slate-dark);
+.hero-action-links a {
+  color: var(--surya-title);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.hero-action-links a:hover {
+  opacity: 0.7;
+}
+
+.hero-action-links .sep {
+  color: var(--surya-muted);
+  margin: 0 8px;
+}
+
+/* Post Switcher / Tabs */
+.post-switcher {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--surya-border);
+}
+
+.switcher-tab {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background-color: var(--surya-bg-subtle);
+  border: 1px solid var(--surya-border);
+  color: var(--surya-body);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.switcher-tab:hover {
+  color: var(--surya-title);
+  border-color: var(--surya-title);
+}
+
+.switcher-tab.active {
+  background-color: var(--surya-title);
+  color: var(--surya-bg);
+  border-color: var(--surya-title);
 }
 
 /* --------------------------------------------------------------------------
-   8. Blog Directory / Engineering Section
+   6. Article Prose Styling
    -------------------------------------------------------------------------- */
-.blog-directory {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 5rem;
-  margin-top: 5rem;
+.article-prose {
+  margin-top: 2rem;
 }
 
-.blog-directory-title {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: clamp(24px, 3.2vw, 32px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--color-slate-dark);
-  margin: 0 0 0.5rem 0;
-  text-align: center;
+.article-prose h2 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--surya-heading);
+  margin: 48px 0 16px 0;
 }
 
-.blog-directory-sub {
-  font-family: var(--anthropic-serif), serif;
+.article-prose p {
+  font-family: var(--font-sans);
   font-size: 16px;
-  color: var(--color-slate-600);
-  text-align: center;
-  margin-bottom: 3.5rem;
+  line-height: 1.65;
+  color: var(--surya-body);
+  margin: 0 0 20px 0;
 }
 
-.blog-list {
+.article-prose a {
+  color: var(--surya-title);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-prose a:hover {
+  opacity: 0.75;
+}
+
+.article-figure {
+  width: 100%;
+  margin: 36px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--surya-bg-subtle);
+}
+
+.article-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.article-caption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--surya-muted);
+  padding: 8px 4px 0 4px;
+  text-align: left;
+}
+
+/* Callout quote */
+.article-quote {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--surya-title);
+  margin: 36px 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--surya-title);
+}
+
+/* Hand-written script annotation */
+.hand-annotation {
+  font-family: var(--font-script);
+  font-size: 24px;
+  color: var(--surya-title);
+  margin: 20px 0;
+  display: block;
+}
+
+/* Code block */
+.article-code {
+  background-color: var(--surya-bg-subtle);
+  border: 1px solid var(--surya-border);
+  border-radius: 6px;
+  padding: 16px;
+  margin: 24px 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--surya-title);
+}
+
+/* --------------------------------------------------------------------------
+   7. Other Essays Directory / Footer
+   -------------------------------------------------------------------------- */
+.essays-directory {
+  border-top: 1px solid var(--surya-border);
+  margin-top: 60px;
+  padding-top: 40px;
+}
+
+.essays-directory-heading {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--surya-title);
+  margin: 0 0 24px 0;
+}
+
+.essay-item {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  max-width: var(--text-column-max-width);
-  margin: 0 auto;
-}
-
-.blog-item {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 1.25rem;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--surya-border);
   text-decoration: none;
   color: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  transition: border-color 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
-.blog-item:hover {
-  border-top-color: var(--border-strong);
+.essay-item:hover {
+  opacity: 0.7;
 }
 
-.blog-item-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--anthropic-serif), serif;
-  font-size: 14px;
-  color: var(--color-slate-600);
+.essay-item-title {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--surya-title);
 }
 
-.blog-item-num {
-  font-style: italic;
+.essay-item-date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--surya-muted);
 }
 
-.blog-item-title {
-  font-family: var(--anthropic-sans), sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--color-slate-dark);
-  margin: 0;
-  transition: color 0.15s ease;
-}
-
-.blog-item:hover .blog-item-title {
-  color: var(--color-slate-600);
-}
-
-.blog-item-summary {
-  font-family: var(--anthropic-serif), serif;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--color-slate-600);
-  margin: 0;
-}
-
-/* --------------------------------------------------------------------------
-   9. Minimal Footer
-   -------------------------------------------------------------------------- */
-.anthropic-footer {
-  border-top: 1px solid var(--border-hairline);
-  padding: 4rem 2rem;
+/* Footer */
+.surya-footer {
+  border-top: 1px solid var(--surya-border);
+  padding: 3rem 1.5rem;
   text-align: center;
-  font-family: var(--anthropic-sans), sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
-  color: var(--color-slate-600);
+  color: var(--surya-muted);
 }
 
-.anthropic-footer a {
-  color: var(--color-slate-dark);
+.surya-footer a {
+  color: var(--surya-title);
   text-decoration: none;
-  margin: 0 0.5rem;
+  margin: 0 6px;
 }
 
-.anthropic-footer a:hover {
+.surya-footer a:hover {
   text-decoration: underline;
 }
 
-/* --------------------------------------------------------------------------
-   10. Mobile Responsiveness
-   -------------------------------------------------------------------------- */
+/* Responsive */
 @media (max-width: 640px) {
-  .anthropic-header-inner {
-    padding: 0 1rem;
+  .surya-container {
+    padding: 2.5rem 1rem 4rem 1rem;
   }
 
-  .anthropic-nav-links {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .surya-nav {
     display: none;
-  }
-
-  .landing-page-hero-section {
-    padding-top: 3.5rem;
-  }
-
-  .hero-chapters {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .reading-column {
-    padding: 0 1.25rem;
   }
 }
