@@ -1,0 +1,597 @@
+/* ==========================================================================
+   Anthropic-Inspired Editorial Blog & Engineering Logs
+   Inspired by: anthropic.com/policy-on-the-ai-exponential
+   Typography: High-contrast Display Sans + Elegant Literary Serif + JetBrains Mono
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Blog Theming & Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Anthropic Warm Paper Light Palette */
+  --blog-bg: #FAF9F5;
+  --blog-bg-subtle: #F3F1EB;
+  --blog-bg-surface: #FFFFFF;
+  --blog-card-bg: #FFFFFF;
+  --blog-text: #191919;
+  --blog-text-muted: #565551;
+  --blog-text-subtle: #828079;
+  --blog-border: rgba(25, 25, 25, 0.12);
+  --blog-border-subtle: rgba(25, 25, 25, 0.06);
+  --blog-accent: #CC5500;
+  --blog-accent-hover: #b04600;
+  --blog-callout-bg: #F4F1EA;
+  --blog-code-bg: #21201D;
+  --blog-code-text: #F3F1EB;
+
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Newsreader', 'Charter', 'Georgia', 'Tiempos Text', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  --container-max-width: 1120px;
+  --reading-max-width: 720px;
+}
+
+[data-theme="dark"] {
+  /* Anthropic Charcoal Dark Palette */
+  --blog-bg: #141413;
+  --blog-bg-subtle: #1C1C1A;
+  --blog-bg-surface: #1E1E1C;
+  --blog-card-bg: #1E1E1C;
+  --blog-text: #EDECE8;
+  --blog-text-muted: #A3A29D;
+  --blog-text-subtle: #73726D;
+  --blog-border: rgba(255, 255, 255, 0.12);
+  --blog-border-subtle: rgba(255, 255, 255, 0.06);
+  --blog-accent: #E28743;
+  --blog-accent-hover: #f09552;
+  --blog-callout-bg: #1F1E1B;
+  --blog-code-bg: #0D0D0C;
+  --blog-code-text: #E5E3DC;
+}
+
+/* --------------------------------------------------------------------------
+   Base Styles for Blog Page
+   -------------------------------------------------------------------------- */
+body.blog-page {
+  background-color: var(--blog-bg);
+  color: var(--blog-text);
+  font-family: var(--font-serif);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.blog-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Header Active Link Highlight */
+.header-nav a.active {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Blog Container & Page Wrappers
+   -------------------------------------------------------------------------- */
+.blog-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem 1.5rem;
+}
+
+.reading-column {
+  max-width: var(--reading-max-width);
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Anthropic-Style Hero Section (Matching Image & Clone)
+   -------------------------------------------------------------------------- */
+.hero-spot-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 3rem auto;
+}
+
+.hero-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blog-accent);
+  margin-bottom: 1.5rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--blog-bg-subtle);
+  border: 1px solid var(--blog-border);
+}
+
+.headline-1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.2vw, 3.85rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--blog-text);
+  margin-bottom: 1.5rem;
+}
+
+.hero-subhead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--blog-text);
+  max-width: 740px;
+  margin-bottom: 1.5rem;
+}
+
+.hero-summary {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.68;
+  color: var(--blog-text-muted);
+  max-width: 680px;
+  margin-bottom: 2.75rem;
+  text-align: justify;
+  text-align-last: center;
+}
+
+/* --------------------------------------------------------------------------
+   Anthropic Numbered Chapters Navigation (Image 1 Bottom Row)
+   -------------------------------------------------------------------------- */
+.hero-chapters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.hero-chapter-item {
+  border-top: 1px solid var(--blog-border);
+  padding-top: 0.85rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-chapter-item:hover {
+  border-top-color: var(--blog-accent);
+  transform: translateY(-2px);
+}
+
+.chapter-number {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--blog-text-subtle);
+  font-style: italic;
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--blog-text);
+  transition: color 0.15s ease;
+}
+
+.hero-chapter-item:hover .chapter-title {
+  color: var(--blog-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Spot Illustration Media Column
+   -------------------------------------------------------------------------- */
+.hero-media-wrapper {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto 4rem auto;
+}
+
+.hero-media-figure {
+  margin: 0;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--blog-bg-subtle);
+  border: 1px solid var(--blog-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.hero-media-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.hero-media-caption {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--blog-text-subtle);
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--blog-border-subtle);
+  background-color: var(--blog-bg-surface);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Reading Column & Article Prose
+   -------------------------------------------------------------------------- */
+.article-body {
+  margin-bottom: 5rem;
+}
+
+.post-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--blog-text);
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-subheading {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--blog-text);
+  margin-top: 2.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.post-text {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: var(--blog-text);
+  margin-bottom: 1.5rem;
+}
+
+.post-text strong {
+  font-weight: 600;
+  color: var(--blog-text);
+}
+
+/* Distinctive Anthropic CTA Box */
+.anthropic-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.15rem 1.4rem;
+  background-color: var(--blog-bg-subtle);
+  border: 1px solid var(--blog-border);
+  border-radius: 6px;
+  margin: 2.25rem 0 2.5rem 0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.anthropic-cta-card:hover {
+  background-color: var(--blog-callout-bg);
+  border-color: var(--blog-accent);
+  transform: translateX(4px);
+}
+
+.anthropic-cta-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blog-text);
+}
+
+.anthropic-cta-arrow {
+  font-size: 1.25rem;
+  color: var(--blog-accent);
+  transition: transform 0.2s ease;
+}
+
+.anthropic-cta-card:hover .anthropic-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Structured Key Recommendations List */
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.75rem 0 2.5rem 0;
+}
+
+.recommendation-item {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--blog-border);
+  transition: border-color 0.2s ease;
+}
+
+.recommendation-item:hover {
+  border-left-color: var(--blog-accent);
+}
+
+.recommendation-lead {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--blog-text);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.recommendation-desc {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--blog-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Code Block (AgentPay Deterministic Policy Engine Example)
+   -------------------------------------------------------------------------- */
+.code-block-wrapper {
+  background-color: var(--blog-code-bg);
+  border: 1px solid var(--blog-border);
+  border-radius: 8px;
+  margin: 2rem 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #9E9D97;
+}
+
+.code-lang-tag {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.copy-code-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #c5c3be;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.copy-code-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.code-block-wrapper pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--blog-code-text);
+}
+
+.code-block-wrapper code {
+  font-family: inherit;
+}
+
+/* Syntax Highlighting Colors */
+.token-keyword { color: #f472b6; }
+.token-def { color: #60a5fa; font-weight: 600; }
+.token-string { color: #a3e635; }
+.token-comment { color: #71717a; font-style: italic; }
+.token-decorator { color: #fbbf24; }
+.token-builtin { color: #38bdf8; }
+
+/* --------------------------------------------------------------------------
+   Callout / Pullquote
+   -------------------------------------------------------------------------- */
+.editorial-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.55;
+  color: var(--blog-text);
+  border-left: 3px solid var(--blog-accent);
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  margin: 2.5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Writings & Technical Logs Directory Section
+   -------------------------------------------------------------------------- */
+.blog-directory-section {
+  border-top: 1px solid var(--blog-border);
+  padding-top: 4.5rem;
+  margin-top: 4.5rem;
+}
+
+.directory-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.directory-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--blog-text);
+  margin-bottom: 0.5rem;
+}
+
+.directory-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--blog-text-muted);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  border-radius: 8px;
+  background-color: var(--blog-card-bg);
+  border: 1px solid var(--blog-border);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.blog-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--blog-accent);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+}
+
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--blog-text-subtle);
+}
+
+.blog-card-number {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--blog-accent);
+}
+
+.blog-card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--blog-text);
+  margin-bottom: 0.75rem;
+}
+
+.blog-card:hover .blog-card-title {
+  color: var(--blog-accent);
+}
+
+.blog-card-excerpt {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--blog-text-muted);
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.blog-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.blog-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background-color: var(--blog-bg-subtle);
+  border: 1px solid var(--blog-border-subtle);
+  border-radius: 4px;
+  color: var(--blog-text-muted);
+}
+
+.blog-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blog-accent);
+  margin-top: auto;
+}
+
+.blog-card-footer svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform 0.15s ease;
+}
+
+.blog-card:hover .blog-card-footer svg {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout for Blog
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero-chapters {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-container {
+    padding: 1.5rem 1rem 3.5rem 1rem;
+  }
+
+  .headline-1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-subhead {
+    font-size: 1.15rem;
+  }
+
+  .hero-summary {
+    font-size: 0.98rem;
+    text-align: left;
+  }
+
+  .post-heading {
+    font-size: 1.6rem;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}

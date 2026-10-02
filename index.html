@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./styles.css?v=20260927">
+  <link rel="stylesheet" href="./styles.css?v=20261002">
 
   <script>
     (function() {
@@ -74,6 +74,8 @@
         <a href="#resume">Résumé</a>
         <span class="nav-pipe">|</span>
         <a href="#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./blog.html">Blog</a>
       </nav>
 
       <div class="header-controls">
@@ -446,6 +448,62 @@
         </div>
       </section>
 
+      <!-- Writing / Blog Section (Anthropic Style Numbered Log) -->
+      <section id="blog" class="section">
+        <div class="section-heading">
+          <h2>Writing &amp; Logs</h2>
+        </div>
+
+        <p class="section-intro-text">
+          Technical deep dives, architectural breakdowns, and reflections on frontier AI policy.
+        </p>
+
+        <!-- Anthropic Exponential Chapter Style Grid -->
+        <div class="blog-preview-grid">
+          <a href="./blog.html" class="blog-preview-item">
+            <div class="blog-preview-meta">
+              <span class="blog-preview-num">01</span>
+              <span class="blog-preview-tag">Featured &middot; Anthropic AI Policy</span>
+            </div>
+            <h3 class="blog-preview-title">Policy on the AI Exponential</h3>
+            <p class="blog-preview-desc">
+              An editorial analysis of Anthropic's Advanced AI Framework and Economic Policy: governing exponential capability curves, frontier developer mandates, and deterministic agent gating.
+            </p>
+            <span class="blog-preview-link">Read full essay &rarr;</span>
+          </a>
+
+          <a href="./blog.html#advanced-framework" class="blog-preview-item">
+            <div class="blog-preview-meta">
+              <span class="blog-preview-num">02</span>
+              <span class="blog-preview-tag">Architecture &middot; AgentPay</span>
+            </div>
+            <h3 class="blog-preview-title">Deterministic Policy Engines for Autonomous AI Agents</h3>
+            <p class="blog-preview-desc">
+              Why autonomous agents must never directly invoke payment gateways. Separating probabilistic LLM reasoning from hard deterministic verification gates.
+            </p>
+            <span class="blog-preview-link">Read case study &rarr;</span>
+          </a>
+
+          <a href="./blog.html#economic-framework" class="blog-preview-item">
+            <div class="blog-preview-meta">
+              <span class="blog-preview-num">03</span>
+              <span class="blog-preview-tag">Scalability &middot; CampusCircle</span>
+            </div>
+            <h3 class="blog-preview-title">Scaling FastAPI &amp; PostgreSQL to 200+ Active Users</h3>
+            <p class="blog-preview-desc">
+              High-concurrency async patterns, Redis caching, and connection pool management built solo for a production student platform.
+            </p>
+            <span class="blog-preview-link">Explore logs &rarr;</span>
+          </a>
+        </div>
+
+        <div class="blog-section-cta">
+          <a href="./blog.html" class="btn-all-posts">
+            View All Essays &amp; Logs (Anthropic Style) &rarr;
+          </a>
+        </div>
+      </section>
+
       <!-- Contact Section -->
       <section id="contact" class="section">
         <div class="section-heading">
@@ -480,6 +538,6 @@
 
   <div id="toast" role="status" aria-live="polite"></div>
 
-  <script src="./script.js?v=20260927"></script>
+  <script src="./script.js?v=20261002"></script>
 </body>
 </html>
