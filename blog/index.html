@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Learning to Draw Again With AI — Prem Patel &middot; Blog</title>
-  <meta name="description" content="An essay on divergence, taste, and visual exploration in AI-native design workflows.">
+  <title>Blog — Prem Patel &middot; Thoughts &amp; Essays</title>
+  <meta name="description" content="Essays and notes on AI architectures, backend systems, visual divergence, and creative engineering.">
   <meta name="author" content="Prem Patel">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../blog.css?v=20261002d">
+  <link rel="stylesheet" href="../blog.css?v=20261002e">
 
   <!-- Immediate Theme Initializer -->
   <script>
@@ -30,9 +30,7 @@
 </head>
 <body class="surya-body">
 
-  <!-- ========================================================================
-       Minimalist Header (Surya Style)
-       ======================================================================== -->
+  <!-- Minimalist Header (Surya Style) -->
   <header class="surya-header">
     <div class="surya-header-inner">
       <div class="surya-brand">
@@ -48,7 +46,7 @@
               <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
               <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
               <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
-              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
               <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
               <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
               <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
@@ -87,263 +85,245 @@
   </header>
 
   <!-- ========================================================================
-       Main Content Area (600px Measure)
+       Blog Menu Main (Exact Match to blog/blog menu.html)
        ======================================================================== -->
-  <main class="surya-container">
+  <main class="blog-menu-container">
 
-    <!-- Post Selector Tabs -->
-    <div class="post-switcher">
-      <button class="switcher-tab active" onclick="switchPost('draw')">Learning to Draw Again</button>
-      <button class="switcher-tab" onclick="switchPost('ny')">Two years in New York</button>
-      <button class="switcher-tab" onclick="switchPost('agentpay')">Deterministic Policy Engines</button>
-      <button class="switcher-tab" onclick="switchPost('campus')">Scaling FastAPI</button>
+    <!-- Section 1: Featured Big Post (Blog big) -->
+    <div class="blog-featured">
+      <div class="blog-featured-banner">
+        <a href="./eternal-sunshine-of-a-slopless-mind.html">
+          <img src="../assets/slopless_featured_banner.webp" alt="Eternal Sunshine of a Slopless Mind" loading="eager">
+        </a>
+      </div>
+
+      <div class="blog-featured-header">
+        <h1 class="blog-featured-title">
+          <a href="./eternal-sunshine-of-a-slopless-mind.html">Eternal Sunshine of a Slopless Mind</a>
+        </h1>
+        <p class="blog-featured-date">Mar 9, 2026</p>
+      </div>
+
+      <p class="blog-featured-excerpt">
+        I, along with many others have started to build software with AI this year. You've probably seen the demos. They all blur together after a while. Someone is talking to an agent. Things appear on screen. Forty minutes later, there's a "working" app. It's hard to tell.
+      </p>
+
+      <div class="blog-continue-container">
+        <a href="./eternal-sunshine-of-a-slopless-mind.html" class="blog-continue-btn">
+          <span>Continue reading</span>
+          <svg viewBox="0 0 256 256" focusable="false" aria-hidden="true">
+            <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+          </svg>
+        </a>
+      </div>
     </div>
 
-    <!-- POST 1: Learning to Draw Again With AI -->
-    <article id="post-draw" class="blog-article-content">
-      <!-- Starting Hero Thing -->
-      <div class="hero-stuff">
-        <div class="hero-title-group">
-          <h1 class="hero-title">Learning to Draw Again With AI</h1>
-          <p class="hero-date">Feb 8, 2026</p>
-        </div>
+    <!-- Section 2: All Blogs List -->
+    <section class="blog-all-section">
+      <h2 class="blog-all-heading">All Blogs</h2>
 
-        <!-- Banner Image -->
-        <div class="hero-banner">
-          <img src="../assets/surya_banner.avif" alt="Learning to Draw Again With AI Banner" loading="eager">
-        </div>
+      <div class="blog-menu-list">
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Two years in New York</h3>
+          <time class="blog-menu-item-date" datetime="2026-08-19">Aug 19, 2026</time>
+        </a>
 
-        <!-- Subtext & Author Block -->
-        <div class="hero-subtext-group">
-          <p class="hero-subtext">
-            An essay on divergence, taste, and visual exploration in AI-native design workflows
-            <span class="byline">by <a href="https://x.com/kickingkeys" target="_blank" rel="noopener">Surya</a>, <a href="https://x.com/nikokozak" target="_blank" rel="noopener">Nikolai</a> and <a href="https://x.com/sairamved" target="_blank" rel="noopener">Sai</a>.</span>
-          </p>
+        <a class="blog-menu-item" href="./eternal-sunshine-of-a-slopless-mind.html">
+          <h3 class="blog-menu-item-title">The Narrative is the Business</h3>
+          <time class="blog-menu-item-date" datetime="2026-03-31">Mar 31, 2026</time>
+        </a>
 
-          <p class="hero-action-links">
-            <a href="https://surya.website/beyond-text" target="_blank" rel="noopener">Watch the video introduction here</a>
-            <span class="sep">|</span>
-            <a href="https://github.com/Thoughts-and-Experiments/design-evolve" target="_blank" rel="noopener">Try the experimental skill here</a>
-          </p>
-        </div>
+        <a class="blog-menu-item" href="./eternal-sunshine-of-a-slopless-mind.html">
+          <h3 class="blog-menu-item-title">Eternal Sunshine of a Slopless Mind</h3>
+          <time class="blog-menu-item-date" datetime="2026-03-09">Mar 9, 2026</time>
+        </a>
+
+        <a class="blog-menu-item" href="./deterministic-policy-engines.html">
+          <h3 class="blog-menu-item-title">Deterministic Policy Engines for Autonomous AI Agents</h3>
+          <time class="blog-menu-item-date" datetime="2026-02-15">Feb 15, 2026</time>
+        </a>
+
+        <a class="blog-menu-item" href="./learning-to-draw-again-with-ai.html">
+          <h3 class="blog-menu-item-title">Learning to Draw Again With AI</h3>
+          <time class="blog-menu-item-date" datetime="2026-02-08">Feb 8, 2026</time>
+        </a>
+
+        <a class="blog-menu-item" href="./learning-to-draw-again-with-ai.html">
+          <h3 class="blog-menu-item-title">Narrative Version Control</h3>
+          <time class="blog-menu-item-date" datetime="2026-01-26">Jan 26, 2026</time>
+        </a>
+
+        <a class="blog-menu-item" href="./scaling-fastapi.html">
+          <h3 class="blog-menu-item-title">Scaling FastAPI &amp; PostgreSQL for 10k+ Concurrent Users</h3>
+          <time class="blog-menu-item-date" datetime="2026-01-20">Jan 20, 2026</time>
+        </a>
+
+        <a class="blog-menu-item" href="./learning-to-draw-again-with-ai.html">
+          <h3 class="blog-menu-item-title">The Syntax Layer</h3>
+          <time class="blog-menu-item-date" datetime="2025-11-29">Nov 29, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./learning-to-draw-again-with-ai.html">
+          <h3 class="blog-menu-item-title">Tools That Teach Us Their Language</h3>
+          <time class="blog-menu-item-date" datetime="2025-09-15">Sep 15, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Energy: Caustics</h3>
+          <time class="blog-menu-item-date" datetime="2025-03-25">Mar 25, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Selling You</h3>
+          <time class="blog-menu-item-date" datetime="2025-03-19">Mar 19, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Seeing Machines : Conway's Game of Life</h3>
+          <time class="blog-menu-item-date" datetime="2025-02-08">Feb 8, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Energy: Questions</h3>
+          <time class="blog-menu-item-date" datetime="2025-01-30">Jan 30, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Handheld : CSS Slider Toy</h3>
+          <time class="blog-menu-item-date" datetime="2025-01-30">Jan 30, 2025</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Blockchain Chicken Cutlet</h3>
+          <time class="blog-menu-item-date" datetime="2024-12-05">Dec 5, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Collective Composite</h3>
+          <time class="blog-menu-item-date" datetime="2024-12-01">Dec 1, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">The Sound of Squirrels // ICM W10</h3>
+          <time class="blog-menu-item-date" datetime="2024-11-17">Nov 17, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Bodies as Instruments // ICM W9</h3>
+          <time class="blog-menu-item-date" datetime="2024-11-09">Nov 9, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Thershold Based Segmenting // ICM W8</h3>
+          <time class="blog-menu-item-date" datetime="2024-11-04">Nov 4, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Creative Control: An Experiment in AI-Led Creative Coding</h3>
+          <time class="blog-menu-item-date" datetime="2024-10-29">Oct 29, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Simulating Cells // ICM W7</h3>
+          <time class="blog-menu-item-date" datetime="2024-10-21">Oct 21, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Using Brainwaves for creative output // PCOMP Midterm</h3>
+          <time class="blog-menu-item-date" datetime="2024-10-20">Oct 20, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Time: Calenders // ICM W5</h3>
+          <time class="blog-menu-item-date" datetime="2024-10-06">Oct 6, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Rethinking the Food System: Flavor, Nutrition, and Cravings</h3>
+          <time class="blog-menu-item-date" datetime="2024-10-06">Oct 6, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Nostalgia to Code: Cozy Rain // ICM W4</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-30">Sep 30, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">An interactive quiz that determins your moral philosophy profile</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-23">Sep 23, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Musical Instruments // PCOMP W3</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-22">Sep 22, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">I fixed my Nano Controller (Sort of) // PCOMP W2</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-16">Sep 16, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Progress and Regress // ICM W2</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-16">Sep 16, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Something is food only with respect to some other thing</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-11">Sep 11, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">I broke my Nano Controller // PCOMP W1</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-08">Sep 8, 2024</time>
+        </a>
+
+        <a class="blog-menu-item" href="./two-years-in-new-york.html">
+          <h3 class="blog-menu-item-title">Self-Portrait with P5.js // ICM W1</h3>
+          <time class="blog-menu-item-date" datetime="2024-09-08">Sep 8, 2024</time>
+        </a>
       </div>
-
-      <!-- Essay Body -->
-      <div class="article-prose">
-        <h2>The Funnel</h2>
-        <p>
-          CLI-based AI tooling serves as an idea funnel. Little does it matter how broad your research is or how many creative kernels you approach a project with. The second you reduce a vision down to a text prompt, you are forced to make premature choices.
-        </p>
-        <p>
-          Text prompts act as narrow bottlenecks through which wide design ideas must pass. You cannot easily sketch a spatial feeling, a rhythmic pacing, or an ambiguous mood through words alone without collapsing the very ambiguity that makes early exploration fruitful.
-        </p>
-
-        <h2>The Image that Understood Itself</h2>
-        <p>
-          Images don't just depict ideas; they understand themselves. When an AI model processes visual representations, it sees structural relationships, composition, tension, and whitespace in ways that language tokens struggle to encode.
-        </p>
-        <p>
-          A shift towards images is a shift closer to the source material. By working visually with model feedback loops, designers and engineers can preserve divergence rather than immediately snapping to the nearest convergent template.
-        </p>
-
-        <h2>Paper, Layers, Canvas</h2>
-        <p>
-          Software design originated with physical surfaces: paper, pencils, layout sheets, and drafting tables. Digital canvases gave us layers, infinite boards, and precision vectors. But the latest wave of text-first generation tools momentarily pulled us backwards into linear command prompts.
-        </p>
-        <p>
-          By restoring visual canvases to AI interfaces, we reclaim the intuitive workspace where ideas collide, mutate, and evolve before code is ever minted.
-        </p>
-
-        <h2>Taste is Selection</h2>
-        <p>
-          When generation costs approach zero, the scarce commodity is no longer output volume; it is taste. Taste is knowing which variation carries weight, which subtlety should be amplified, and which 99 options must be discarded.
-        </p>
-
-        <h2>Learning to Draw Again</h2>
-        <p>
-          AI has drawn us back into the terminal, into the heart of the computer. Text is king. But by sticking to this paradigm we risk overlooking other abilities that have recently ballooned in capability, namely images.
-        </p>
-        <p>
-          And ultimately, this is a shift back to the origins of design in software — by betting on images we are once again picking up the pencil, and setting a sheet of paper in front of us. We just need to learn to draw.
-        </p>
-      </div>
-    </article>
-
-    <!-- POST 2: Two years in New York -->
-    <article id="post-ny" class="blog-article-content" style="display:none;">
-      <div class="hero-stuff">
-        <div class="hero-title-group">
-          <h1 class="hero-title">Two years in New York</h1>
-          <p class="hero-date">Aug 19, 2026</p>
-        </div>
-
-        <div class="hero-banner">
-          <img src="../assets/new_york_banner_0.avif" alt="Two years in New York Banner" loading="lazy">
-        </div>
-
-        <div class="hero-subtext-group">
-          <p class="hero-subtext">
-            Reflections on moving to Brooklyn, uncertainty, building software, and learning to find a creative home in New York City.
-          </p>
-        </div>
-      </div>
-
-      <div class="article-prose">
-        <p>
-          Two years ago I came to New York to attend grad school. I arrived with a lot of uncertainty. I didn't know anyone here. The closest family member was thousands of miles away. I had one semester of tuition saved up. No loan and no safety net.
-        </p>
-        <p>
-          I'd spent years watching people do incredible things from afar, and despite my circumstances I wanted to be a part of the conversation. Moving here forced me to strip away hesitation and build with urgency.
-        </p>
-        <p>
-          New York has a strange way of holding up a mirror to whatever obsession you bring into it. If you want to build systems, you'll find the engineers building foundations. If you want to design, you'll find people arguing over letterforms at 2 AM. It taught me that conviction isn't something you wait for; it's something you practice every single day.
-        </p>
-      </div>
-    </article>
-
-    <!-- POST 3: Deterministic Policy Engines -->
-    <article id="post-agentpay" class="blog-article-content" style="display:none;">
-      <div class="hero-stuff">
-        <div class="hero-title-group">
-          <h1 class="hero-title">Deterministic Policy Engines for Autonomous AI Agents</h1>
-          <p class="hero-date">Feb 15, 2026</p>
-        </div>
-
-        <div class="hero-banner">
-          <img src="../assets/anthropic_exponential_hero.webp" alt="AgentPay Policy Architecture" loading="lazy">
-        </div>
-
-        <div class="hero-subtext-group">
-          <p class="hero-subtext">
-            Why probabilistic LLMs must never directly invoke payment gateways. A breakdown of the isolated deterministic gate architecture built for AgentPay at the Razorpay Buildathon
-            <span class="byline">by <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">Prem Patel</a>.</span>
-          </p>
-          <p class="hero-action-links">
-            <a href="https://github.com/prempatel-ai/agentpay" target="_blank" rel="noopener">GitHub Repository</a>
-            <span class="sep">|</span>
-            <a href="../index.html#project-agentpay">View Project Details</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="article-prose">
-        <h2>The Probabilistic Risk</h2>
-        <p>
-          LLMs are fundamentally stochastic token generators. When building autonomous buyer-agent commerce systems, giving an LLM direct API credentials to execute financial transactions invites catastrophic failure: hallucinated amounts, prompt injection exploits, and runaway tool calling loops.
-        </p>
-
-        <h2>Separating Intent from Execution</h2>
-        <p>
-          In AgentPay, the agent only outputs a structured <code>TransactionIntent</code>. A separate deterministic Python policy engine checks spend limits, velocity caps, merchant whitelists, and cryptographic HMAC signatures before any payload touches the Razorpay API.
-        </p>
-        <p>
-          If any condition fails, the transaction is hard-blocked or routed to human authorization. The agent can never bypass the boundary because it does not possess the keys to live financial rails.
-        </p>
-      </div>
-    </article>
-
-    <!-- POST 4: Scaling FastAPI -->
-    <article id="post-campus" class="blog-article-content" style="display:none;">
-      <div class="hero-stuff">
-        <div class="hero-title-group">
-          <h1 class="hero-title">Scaling FastAPI, PostgreSQL &amp; Redis to 200+ Active Users</h1>
-          <p class="hero-date">Nov 20, 2025</p>
-        </div>
-
-        <div class="hero-banner">
-          <img src="../assets/surya_banner.avif" alt="CampusCircle Architecture" loading="lazy">
-        </div>
-
-        <div class="hero-subtext-group">
-          <p class="hero-subtext">
-            Handling high-concurrency requests, connection pooling, token-bucket rate limiting, and defensive database schema designs for a student platform built solo
-            <span class="byline">by <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">Prem Patel</a>.</span>
-          </p>
-          <p class="hero-action-links">
-            <a href="https://campuscircle-pdqa.vercel.app/" target="_blank" rel="noopener">Live Platform Demo</a>
-            <span class="sep">|</span>
-            <a href="../index.html#project-campuscircle">View System Breakdown</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="article-prose">
-        <h2>Building from Whiteboard to Production</h2>
-        <p>
-          CampusCircle was built to solve fragmented student communication and academic collaboration. Operating on FastAPI, PostgreSQL, and Redis, the platform needed to handle concurrent resource uploads, real-time message boards, and strict authentication without incurring high infrastructure costs.
-        </p>
-        <h2>Async Pooling &amp; Redis Caching</h2>
-        <p>
-          By utilizing SQLAlchemy async engine pooling and Redis-backed session token storage, API response latencies stayed below 45ms even during peak exam-week traffic spikes.
-        </p>
-      </div>
-    </article>
-
-    <!-- Other Writings Directory -->
-    <section class="essays-directory">
-      <h3 class="essays-directory-heading">Other Writings</h3>
-
-      <a href="javascript:void(0)" onclick="switchPost('draw')" class="essay-item">
-        <span class="essay-item-title">Learning to Draw Again With AI</span>
-        <span class="essay-item-date">Feb 8, 2026</span>
-      </a>
-
-      <a href="javascript:void(0)" onclick="switchPost('ny')" class="essay-item">
-        <span class="essay-item-title">Two years in New York</span>
-        <span class="essay-item-date">Aug 19, 2026</span>
-      </a>
-
-      <a href="javascript:void(0)" onclick="switchPost('agentpay')" class="essay-item">
-        <span class="essay-item-title">Deterministic Policy Engines for Autonomous AI Agents</span>
-        <span class="essay-item-date">Feb 15, 2026</span>
-      </a>
-
-      <a href="javascript:void(0)" onclick="switchPost('campus')" class="essay-item">
-        <span class="essay-item-title">Scaling FastAPI, PostgreSQL &amp; Redis to 200+ Active Users</span>
-        <span class="essay-item-date">Nov 20, 2025</span>
-      </a>
-
-      <a href="https://medium.com/@prempatel7740" target="_blank" rel="noopener noreferrer" class="essay-item">
-        <span class="essay-item-title">Engineering Notes on Medium</span>
-        <span class="essay-item-date">Continuous &rarr;</span>
-      </a>
     </section>
 
   </main>
 
-  <!-- Minimalist Footer -->
+  <!-- Footer -->
   <footer class="surya-footer">
-    <div>
-      Prem Patel &copy; 2026 &middot;
-      <a href="../index.html">Home</a> &middot;
-      <a href="../index.html#projects">Work</a> &middot;
-      <a href="./index.html">Blog</a> &middot;
-      <a href="https://x.com/kickingkeys" target="_blank" rel="noopener">Twitter</a> &middot;
-      <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a> &middot;
-      <a href="https://linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
-  <div id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Interactive Post Switcher Logic -->
+  <!-- Theme Toggle & Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <script>
-    function switchPost(id) {
-      var articles = document.querySelectorAll('.blog-article-content');
-      articles.forEach(function(a) { a.style.display = 'none'; });
+    (function() {
+      var themeToggleBtn = document.getElementById('theme-toggle');
+      var themeIcon = document.getElementById('theme-icon');
+      function updateIcon(theme) {
+        if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      }
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      updateIcon(currentTheme);
 
-      var tabs = document.querySelectorAll('.switcher-tab');
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-
-      var target = document.getElementById('post-' + id);
-      if (target) {
-        target.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+          var now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', now);
+          localStorage.setItem('theme', now);
+          updateIcon(now);
+        });
       }
 
-      event.target.classList.add('active');
-    }
+      var voxelBtn = document.getElementById('voxel-logo-btn');
+      if (voxelBtn && typeof confetti === 'function') {
+        voxelBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var rect = voxelBtn.getBoundingClientRect();
+          var x = (rect.left + rect.width / 2) / window.innerWidth;
+          var y = (rect.top + rect.height / 2) / window.innerHeight;
+          confetti({ particleCount: 40, spread: 60, origin: { x: x, y: y }, colors: ['#af67ff', '#5ff26b', '#c084fc', '#98ff9c', '#7c3aed'] });
+        });
+      }
+    })();
   </script>
-  <script src="../script.js?v=20261002d"></script>
 </body>
 </html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Learning to Draw Again With AI — Prem Patel &middot; Blog</title>
+  <meta name="description" content="An essay on divergence, taste, and visual exploration in AI-native design workflows.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002e">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Minimalist Header (Surya Style) -->
+  <header class="surya-header">
+    <div class="surya-header-inner">
+      <div class="surya-brand">
+        <!-- 3D Voxel Pixel Logo Button (Easter Egg) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party! 🎉" aria-label="Tap Logo" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:28px;">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="surya-brand-logo">Prem Patel</a>
+      </div>
+
+      <nav class="surya-nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#projects">Work</a>
+        <a href="./index.html" class="active">Blog</a>
+        <a href="../index.html#about">About</a>
+      </nav>
+
+      <div class="surya-header-actions">
+        <!-- Twitter / X -->
+        <a href="https://x.com/kickingkeys" target="_blank" rel="noopener noreferrer" class="surya-social-icon" title="Twitter / X">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/prem-patel-ai" target="_blank" rel="noopener noreferrer" class="surya-social-icon" title="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+
+        <!-- Theme Switcher -->
+        <button id="theme-toggle" class="surya-theme-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Thing -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Learning to Draw Again With AI</h1>
+        <p class="hero-date">Feb 8, 2026</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/surya_banner.avif" alt="Learning to Draw Again With AI Banner" loading="eager">
+      </div>
+
+      <!-- Subtext & Author Block -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          An essay on divergence, taste, and visual exploration in AI-native design workflows
+          <span class="byline">by <a href="https://x.com/kickingkeys" target="_blank" rel="noopener">Surya</a>, <a href="https://x.com/nikokozak" target="_blank" rel="noopener">Nikolai</a> and <a href="https://x.com/sairamved" target="_blank" rel="noopener">Sai</a>.</span>
+        </p>
+
+        <p class="hero-action-links">
+          <a href="https://surya.website/beyond-text" target="_blank" rel="noopener">Watch the video introduction here</a>
+          <span class="sep">|</span>
+          <a href="https://github.com/Thoughts-and-Experiments/design-evolve" target="_blank" rel="noopener">Try the experimental skill here</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <h2>The Funnel</h2>
+      <p>
+        CLI-based AI tooling serves as an idea funnel. Little does it matter how broad your research is or how many creative kernels you approach a project with. The second you reduce a vision down to a text prompt, you are forced to make premature choices.
+      </p>
+      <p>
+        Text prompts act as narrow bottlenecks through which wide design ideas must pass. You cannot easily sketch a spatial feeling, a rhythmic pacing, or an ambiguous mood through words alone without collapsing the very ambiguity that makes early exploration fruitful.
+      </p>
+
+      <h2>The Image that Understood Itself</h2>
+      <p>
+        Images don't just depict ideas; they understand themselves. When an AI model processes visual representations, it sees structural relationships, composition, tension, and whitespace in ways that language tokens struggle to encode.
+      </p>
+      <p>
+        A shift towards images is a shift closer to the source material. By working visually with model feedback loops, designers and engineers can preserve divergence rather than immediately snapping to the nearest convergent template.
+      </p>
+
+      <h2>Paper, Layers, Canvas</h2>
+      <p>
+        Software design originated with physical surfaces: paper, pencils, layout sheets, and drafting tables. Digital canvases gave us layers, infinite boards, and precision vectors. But the latest wave of text-first generation tools momentarily pulled us backwards into linear command prompts.
+      </p>
+      <p>
+        By restoring visual canvases to AI interfaces, we reclaim the intuitive workspace where ideas collide, mutate, and evolve before code is ever minted.
+      </p>
+
+      <h2>Taste is Selection</h2>
+      <p>
+        When generation costs approach zero, the scarce commodity is no longer output volume; it is taste. Taste is knowing which variation carries weight, which subtlety should be amplified, and which 99 options must be discarded.
+      </p>
+
+      <h2>Learning to Draw Again</h2>
+      <p>
+        AI has drawn us back into the terminal, into the heart of the computer. Text is king. But by sticking to this paradigm we risk overlooking other abilities that have recently ballooned in capability, namely images.
+      </p>
+      <p>
+        And ultimately, this is a shift back to the origins of design in software — by betting on images we are once again picking up the pencil, and setting a sheet of paper in front of us. We just need to learn to draw.
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: space-between; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+      <a href="./two-years-in-new-york.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        Next essay: Two years in New York &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Theme Toggle & Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script>
+    (function() {
+      var themeToggleBtn = document.getElementById('theme-toggle');
+      var themeIcon = document.getElementById('theme-icon');
+      function updateIcon(theme) {
+        if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      }
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      updateIcon(currentTheme);
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+          var now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', now);
+          localStorage.setItem('theme', now);
+          updateIcon(now);
+        });
+      }
+
+      var voxelBtn = document.getElementById('voxel-logo-btn');
+      if (voxelBtn && typeof confetti === 'function') {
+        voxelBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var rect = voxelBtn.getBoundingClientRect();
+          var x = (rect.left + rect.width / 2) / window.innerWidth;
+          var y = (rect.top + rect.height / 2) / window.innerHeight;
+          confetti({ particleCount: 40, spread: 60, origin: { x: x, y: y }, colors: ['#af67ff', '#5ff26b', '#c084fc', '#98ff9c', '#7c3aed'] });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
