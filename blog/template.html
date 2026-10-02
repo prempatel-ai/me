@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Scaling FastAPI &amp; PostgreSQL for 10k+ Concurrent Users — Prem Patel &middot; Blog</title>
-  <meta name="description" content="Connection pooling, async batching, Redis read-through caching, and DB indexing lessons learned building CampusCircle.">
+  <!-- Post Title & Description -->
+  <title>{{POST_TITLE}} — Prem Patel &middot; Blog</title>
+  <meta name="description" content="{{POST_DESCRIPTION}}">
   <meta name="author" content="Prem Patel">
 
   <!-- Favicon -->
@@ -35,7 +36,7 @@
 </head>
 <body class="surya-body">
 
-  <!-- Top Sticky Header (Exact Match to index.html & media_1790962808380.png) -->
+  <!-- Top Sticky Header -->
   <header id="header">
     <div class="header-container">
       <div class="header-brand-group">
@@ -65,7 +66,7 @@
         <a href="../index.html" class="header-title">Prem Patel</a>
       </div>
 
-      <!-- Navigation with Purple Pipe Separators (Image 2) -->
+      <!-- Navigation with Purple Pipe Separators -->
       <nav class="header-nav">
         <a href="../index.html#about">About</a>
         <span class="nav-pipe">|</span>
@@ -96,59 +97,46 @@
       Back to all blogs
     </a>
 
-    <!-- Starting Hero Thing -->
+    <!-- Starting Hero Section -->
     <div class="hero-stuff">
       <div class="hero-title-group">
-        <h1 class="hero-title">Scaling FastAPI &amp; PostgreSQL for 10k+ Concurrent Users</h1>
-        <p class="hero-date">Jan 20, 2026</p>
+        <h1 class="hero-title">{{POST_TITLE}}</h1>
+        <p class="hero-date">{{POST_DATE}}</p>
       </div>
 
-      <!-- Banner Image -->
+      <!-- Optional Hero Banner Image -->
+      <!--
       <div class="hero-banner">
-        <img src="../assets/projects/campuscircle.svg" alt="FastAPI Scaling Architecture" loading="eager" style="background:#0a0a0a;padding:20px;object-fit:contain;">
+        <img src="../assets/your-banner.webp" alt="{{POST_TITLE}}" loading="eager">
       </div>
+      -->
 
-      <!-- Subtext -->
+      <!-- Lead Subtext / Summary -->
       <div class="hero-subtext-group">
         <p class="hero-subtext">
-          Connection pooling, async batching, Redis read-through caching, and DB indexing lessons learned building CampusCircle
-          <span class="byline">by <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">Prem Patel</a>.</span>
-        </p>
-
-        <p class="hero-action-links">
-          <a href="https://campuscircle-pdqa.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
-          <span class="sep">|</span>
-          <a href="../index.html#projects">View Project in Portfolio</a>
+          {{POST_EXCERPT}}
         </p>
       </div>
     </div>
 
-    <!-- Essay Body -->
+    <!-- Essay Content -->
     <div class="article-prose">
-      <h2>The Concurrency Wall</h2>
+      <h2>Section Heading</h2>
       <p>
-        Building CampusCircle for real-time university community engagement meant preparing for sudden bursty traffic during campus elections and event announcements. Under load tests, naive synchronous database queries collapsed response latency past 1800ms.
+        Your essay content goes here...
       </p>
 
-      <h2>Async Engine &amp; PgBouncer Pooling</h2>
+      <h2>Next Heading</h2>
       <p>
-        Switching SQLAlchemy to <code>asyncpg</code> and configuring PgBouncer connection multiplexing eliminated the per-connection memory overhead in PostgreSQL, reducing p99 latency down to 42ms under 8,000 requests/sec.
-      </p>
-
-      <h2>Two-Tier Cache Invalidation</h2>
-      <p>
-        Feed timelines and popular group listings are cached in Redis with probabilistic early expiration (XFetch) to prevent cache stampedes when hot keys expire. Write paths invalidate localized cache tags asynchronously via Redis Pub/Sub workers.
+        Additional thoughts and insights...
       </p>
     </div>
 
     <!-- Bottom navigation -->
-    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: space-between; align-items: center;">
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
       <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
         <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
         Back to all blogs
-      </a>
-      <a href="./deterministic-policy-engines.html" class="blog-breadcrumb" style="margin-bottom: 0;">
-        Next essay: Deterministic Policy Engines &rarr;
       </a>
     </div>
 
