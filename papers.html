@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Papers I Read | Prem Patel</title>
+  <meta name="description" content="Tracking my AI research reading journey across foundational and modern papers.">
+  <meta name="author" content="Premkumar M. Patel">
+
+  <!-- Favicon with 3D Voxel Logo -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles.css?v=20261012">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo (Click for Confetti Explosion) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party! 🎉" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="./index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="./index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html#resume">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./blog.html">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="./papers.html" class="active">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="./resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Two-Column Minimal-Light Layout -->
+  <div class="site-wrapper">
+
+    <!-- Static Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-avatar">
+        <img src="./assets/avatar.png?v=2" alt="Prem Patel">
+      </div>
+      <h1 class="sidebar-name">Prem Patel</h1>
+      <p class="sidebar-position">Backend &amp; Applied AI Engineer</p>
+      <p class="sidebar-affiliation">Computer Engineering '27 · Ahmedabad</p>
+
+      <div class="sidebar-email">
+        <button id="copy-email-btn" title="Click to copy email address">prempatel7740@gmail.com</button>
+      </div>
+
+      <!-- Social Icons Row -->
+      <div class="sidebar-social">
+        <a href="./resume.pdf" target="_blank" rel="noopener noreferrer" class="sidebar-icon-link" title="Download Résumé (PDF)">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 9h-2v2h2v-2zm-3 0H8v4h2v-1H9v-2h1v-1zm7 4h-1.5l-1-2.5-1 2.5H12l1.7-4h1.6l1.7 4zM13 9V3.5L18.5 9H13z"/></svg>
+        </a>
+        <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer" class="sidebar-icon-link" title="GitHub Profile">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/prempatel-ai" target="_blank" rel="noopener noreferrer" class="sidebar-icon-link" title="LinkedIn Profile">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+        <a href="https://medium.com/@prempatel7740" target="_blank" rel="noopener noreferrer" class="sidebar-icon-link" title="Medium Articles">
+          <svg viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+        </a>
+        <a href="https://x.com/kickingkeys" target="_blank" rel="noopener noreferrer" class="sidebar-icon-link" title="Twitter / X Profile">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="mailto:prempatel7740@gmail.com" class="sidebar-icon-link" title="Send Email">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Right Main Content Column -->
+    <main class="main-content">
+
+      <!-- Section: Papers I Read -->
+      <section id="papers" class="section">
+        <div class="section-heading">
+          <h2>Papers I Read</h2>
+          <span class="section-subtext">AI Research Timeline</span>
+        </div>
+
+        <div class="papers-hero">
+          <div class="bio-prose">
+            <p>
+              Tracking my personal journey through foundational machine learning literature, modern transformer breakthroughs, and frontier LLM architectures.
+            </p>
+          </div>
+        </div>
+
+        <!-- Progress Tracker Card -->
+        <div class="papers-progress-card">
+          <div class="papers-progress-header">
+            <span id="progress-title" class="papers-progress-title">0 of 42 papers read</span>
+            <span id="progress-stats" class="papers-progress-stats">0 read | 0 reading | 42 planned (0%)</span>
+          </div>
+          <div class="papers-progress-bar-bg">
+            <div id="progress-bar-fill"
+                 class="papers-progress-bar-fill"
+                 role="progressbar"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="0"
+                 aria-label="Papers read progress"></div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="papers-controls">
+          <input type="search"
+                 id="papers-search"
+                 class="papers-search-input"
+                 placeholder="Search by title, author, year, tag, or keyword..."
+                 aria-label="Search papers">
+
+          <div class="papers-filters-row">
+            <select id="stage-filter" class="papers-select" aria-label="Filter by stage">
+              <option value="all">All Stages</option>
+              <option value="Origins">Origins (1950 - 2001)</option>
+              <option value="Deep Learning Takes Off">Deep Learning Takes Off (2006 - 2015)</option>
+              <option value="RL and Game AI">RL and Game AI (2013 - 2017)</option>
+              <option value="Transformer Era">Transformer Era (2017 - 2021)</option>
+              <option value="Modern LLMs">Modern LLMs (2020 - 2025)</option>
+            </select>
+
+            <select id="status-filter" class="papers-select" aria-label="Filter by status">
+              <option value="all">All Statuses</option>
+              <option value="read">Read</option>
+              <option value="reading">Reading</option>
+              <option value="planned">Planned</option>
+            </select>
+
+            <select id="tag-filter" class="papers-select" aria-label="Filter by tag">
+              <option value="all">All Tags</option>
+            </select>
+
+            <button id="reset-filters" class="papers-reset-btn" type="button">Reset</button>
+
+            <span id="papers-count-indicator" class="papers-count-indicator">Showing 42 of 42 papers</span>
+          </div>
+        </div>
+
+        <!-- Grouped Timeline Container -->
+        <div id="papers-timeline-container" aria-live="polite">
+          <!-- Dynamically populated by papers.js -->
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div>
+      Prem Patel &copy; 2026
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Global scripts (Theme toggle, confetti, email copy) -->
+  <script src="./script.js?v=20261012"></script>
+  <!-- Papers logic script -->
+  <script src="./papers.js?v=20261012"></script>
+</body>
+</html>
