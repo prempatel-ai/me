@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>What a Researcher Does? - Prem Patel &middot; Blog</title>
+  <meta name="description" content="A researcher picks a question nobody has answered and keeps at it. Reflections on curiosity, honesty, and finding the heater.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font (Same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo (Click for Confetti Explosion) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">What a Researcher Does?</h1>
+        <p class="hero-date">Oct 14, 2026 &middot; 2 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/researcher_plant_window.webp" alt="The plant by the window that kept dying" loading="eager">
+      </div>
+
+      <!-- Subtext -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          The plant by the window that kept dying. I am a student, so I haven't earned the word yet. I know what I want from it, though. A researcher picks a question nobody has answered and keeps at it. Most of the time it stays unanswered. They keep at it anyway.
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <p>
+        My room has two windows. A plant on the left one is fine. The same plant on the right one keeps dying. I could have bought another plant. I wanted to know why instead.
+      </p>
+
+      <p>
+        I wrote my first guess on a sticky note and stuck it on the glass. It said "sun." I swapped the pots, and the left plant was still fine, so I crossed the note out. The second note said "water." I measured it, and the amount was the same. Crossed out. I crossed them out with more pleasure than I'd admit. The glass looked emptier each time, and the answer looked closer.
+      </p>
+
+      <p>
+        Then I pushed my hand into the soil by the right window. It was warm. A heater sits right under that window, and the pot was drying from the bottom. Nobody asked me to find that. I couldn't leave it.
+      </p>
+
+      <p>
+        That's what I loved. Two weeks of not knowing, then my hand in warm soil, and I knew. Nobody handed it to me, and I could show anyone how I got there.
+      </p>
+
+      <h2>What Makes a Great Researcher?</h2>
+
+      <p>
+        So what makes a great researcher? Someone who knows everything? I don't think so. Nobody does, and the person who believes they do has stopped asking. Knowing where to look is better, because it saves time. I never knew about the heater. I only knew to check the room.
+      </p>
+
+      <p>
+        Not quitting is better again. The answer usually sits behind boring days when nothing happens, and that's where most people walk away. But I'd trust the honest one most. If you bend a result to match what you hoped for, you haven't found anything. The researcher I want to be can write down the answer they didn't want and keep looking at it.
+      </p>
+
+      <p>
+        That means staying in "I don't know" for a long time without lying to yourself. I think that's the real work. Everything else helps you survive it.
+      </p>
+
+      <h2>Beyond One Field</h2>
+
+      <p>
+        I don't want to be a researcher of one field. I knew nothing about soil or heat when I started, and I learned what I needed to find the heater. I want to do that with every question I meet. Whatever domain it lives in, I'll go in deep and learn it.
+      </p>
+
+      <p>
+        Right now my question is in AI. How can I make a machine smarter? I don't have an answer yet. I have the question.
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
+        "From today I want to be that."
+      </blockquote>
+
+      <p>
+        This morning I moved the pot an inch to the left and stuck a new note on the glass. It says "day one."
+      </p>
+
+      <p style="margin-top: 2.5rem; font-size: 14px; color: var(--surya-muted);">
+        Originally published on <a href="https://medium.com/@prempatel7740/what-a-researcher-does-0e6a07c52d53" target="_blank" rel="noopener noreferrer">Medium</a>.
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
+</body>
+</html>
