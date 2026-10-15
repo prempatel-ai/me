@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Can Machines Think? - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Reading Alan Turing's 1950 paper Computing Machinery and Intelligence: the imitation game, objections, teaching machines like children, and asking what evidence would convince us.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font (Same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo (Click for Confetti Explosion) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Can Machines Think?</h1>
+        <p class="hero-date">Oct 15, 2026 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/can_machines_think_banner.webp" alt="Can Machines Think illustration with screen and imitation game" loading="eager">
+      </div>
+
+      <!-- Subtext -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          I started reading Alan Turing's 1950 paper because I wanted to understand where the question of machine intelligence began. I had been looking at AGI tests and asking how we would know if a machine had become intelligent. Turing was asking almost the same question seventy-six years ago.
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <p>
+        His paper is called <em><a href="../papers.html">Computing Machinery and Intelligence</a></em>. I expected him to explain whether machines could think. Instead, he started by questioning the question itself.
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
+        &ldquo;Can machines think?&rdquo;
+      </blockquote>
+
+      <p>
+        It sounds simple. But what does thinking actually mean? If I ask ten people, I might get ten different answers. Some will talk about consciousness, some about solving problems, and some about understanding the world. We could spend years arguing over the meaning of the word and never get anywhere.
+      </p>
+
+      <p>
+        Turing saw this problem. So he changed the question.
+      </p>
+
+      <p>
+        What if we stopped trying to define thinking and instead tested what a machine could do?
+      </p>
+
+      <h2>The game</h2>
+
+      <p>
+        Turing proposed a game. An interrogator communicates with two people without seeing them and tries to identify who is who. One tries to confuse the interrogator, while the other helps them make the correct identification.
+      </p>
+
+      <p>
+        Then Turing replaces one of the people with a machine.
+      </p>
+
+      <p>
+        Can the interrogator tell which one is the machine?
+      </p>
+
+      <p>
+        That's the idea behind the imitation game, which later became known as the Turing test.
+      </p>
+
+      <p>
+        What I find interesting is that Turing didn't ask the interrogator to look inside the machine. He asked them to judge its answers. The machine could be questioned about mathematics, poetry, chess, or almost anything else.
+      </p>
+
+      <p>
+        I kept thinking about this. We can't look inside another person's mind either. We judge people by what they say, how they explain things, and how they respond when challenged. We do this every day without thinking much about it.
+      </p>
+
+      <p>
+        But there is a problem. A machine might give convincing answers without actually experiencing anything. It might write a poem about sadness without feeling sad.
+      </p>
+
+      <p>
+        Turing knew this objection. He didn't claim that his test would solve the mystery of consciousness. He argued that we could investigate machine intelligence without first solving every mystery about the mind.
+      </p>
+
+      <p>
+        I think that's a reasonable place to start, even if it doesn't answer every question.
+      </p>
+
+      <h2>Why do we think machines cannot think?</h2>
+
+      <p>
+        Most of the paper is Turing considering arguments against thinking machines.
+      </p>
+
+      <p>
+        Some people argued that machines could never think because they had no soul. Others believed that humans were special and that machines could never match them. Some argued that machines could only follow instructions, never create anything new, or never learn as humans do.
+      </p>
+
+      <p>
+        Turing didn't accept these claims just because they sounded convincing. He asked whether they actually proved what people thought they proved.
+      </p>
+
+      <p>
+        For example, a machine has limitations. But does that mean humans have no limitations? If one machine cannot solve a problem, does that mean every possible machine will fail at it?
+      </p>
+
+      <p>
+        We often make the same mistake in other areas. We see what something can do today and assume that is all it will ever do.
+      </p>
+
+      <p>
+        Turing also challenged the idea that a machine cannot surprise us. Something can follow rules and still produce a result we didn't expect. We might simply be unable to calculate all the consequences beforehand.
+      </p>
+
+      <p>
+        That made me think about how often we confuse <em>not understanding something</em> with <em>there being nothing more to understand</em>.
+      </p>
+
+      <h2>Maybe we should teach machines like children</h2>
+
+      <p>
+        This was my favourite part of the paper.
+      </p>
+
+      <p>
+        Lady Lovelace had argued that a machine could only do what humans instructed it to do. Turing took this objection seriously and explored another possibility.
+      </p>
+
+      <p>
+        Instead of trying to program an entire adult mind from the beginning, why not build something like a child's mind and teach it?
+      </p>
+
+      <p>
+        A child isn't born knowing mathematics, language, or how the world works. They learn through education and experience. They make mistakes, receive feedback, and gradually improve.
+      </p>
+
+      <p>
+        Turing wondered whether a machine could develop in a similar way.
+      </p>
+
+      <p>
+        He imagined a learning machine that could receive rewards and punishments, learn from experience, and improve its behaviour. He also understood that rewards alone wouldn't be enough. A machine would need information and other ways to communicate with its teacher.
+      </p>
+
+      <p>
+        What I liked most was the change in approach. Instead of trying to write every intelligent behaviour ourselves, we could try to build something that learns to develop those behaviours.
+      </p>
+
+      <p>
+        The teacher might not even fully understand everything happening inside the machine.
+      </p>
+
+      <p>
+        That possibility interested me because I don't think building intelligence is only about writing better instructions. It might also be about designing systems that can learn things we never explicitly taught them.
+      </p>
+
+      <h2>What I took from it</h2>
+
+      <p>
+        Turing didn't prove that machines are conscious. He didn't settle whether a machine can experience feelings, and he didn't claim to have solved the human mind.
+      </p>
+
+      <p>
+        He gave us a way to approach the question and challenged us to stop dismissing the possibility before properly investigating it.
+      </p>
+
+      <p>
+        I went into this paper wanting to know whether machines could think. I came out with a different question: what evidence would actually convince me?
+      </p>
+
+      <p>
+        A machine passing a test would be evidence of something. But what exactly? Intelligence? The ability to imitate human behaviour? Understanding? Consciousness? These aren't automatically the same thing.
+      </p>
+
+      <p>
+        I don't have clear answers yet, and I don't want to pretend that I do.
+      </p>
+
+      <p>
+        In my previous post, <a href="./is-agi-possible.html">Is AGI Possible?</a>, I wrote down ten tests I would like to see an AI pass before I felt comfortable calling it AGI. Reading Turing made me realise that before building a list of tests, I need to understand what each test can actually tell me.
+      </p>
+
+      <p>
+        That's the next part of this journey. Not just collecting results, but learning what they mean and what they don't.
+      </p>
+
+      <p>
+        Turing started asking this question in 1950. I'm asking it now, with a laptop and a lot less knowledge than I'd like.
+      </p>
+
+      <p>
+        I think that's a good place to begin.
+      </p>
+
+      <p style="font-weight: 500;">
+        Prem signing off.
+      </p>
+
+      <p style="margin-top: 2.5rem; font-size: 14px; color: var(--surya-muted);">
+        Originally published on <a href="https://medium.com/@prempatel7740/can-machines-think-68ef58c60345" target="_blank" rel="noopener noreferrer">Medium</a>.
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
+</body>
+</html>
