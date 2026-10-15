@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Is AGI Possible? - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Ten tests, one big question: are we actually getting closer to AGI? Looking at what OpenAI and Anthropic have shown, and where we go from here.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font (Same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo (Click for Confetti Explosion) -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Is AGI Possible?</h1>
+        <p class="hero-date">Oct 15, 2026 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/agi_hibiscus_stickynotes.webp" alt="Ten tests, one big question: are we actually getting closer to AGI?" loading="eager">
+      </div>
+
+      <!-- Subtext -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          In September, OpenAI's president Greg Brockman launched a new model and told reporters we're now in the AGI era. Earlier this year, Anthropic's CEO Dario Amodei said we aren't there, and that everyone would know if we were. I couldn't tell which of them to believe, and since I'm a student with a laptop, I wasn't going to be the one to decide. So I asked a smaller question: How would I know?
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <p>
+        By AGI I mean a machine that can do what a human mind does, in almost any kind of task, including ones it has never seen. Nobody has built one yet, so I had to work out what I'd need to watch it do before I believed it.
+      </p>
+
+      <h2>How would I know?</h2>
+
+      <p>
+        Other people have already tried to answer this. Turing said a machine should talk with an expert for a long time without being caught. Wozniak said it should walk into a stranger's house, find the kitchen, and make a cup of coffee. Goertzel said it should enroll in a university and earn the degree. Nilsson said it should do an ordinary job as well as a normal person, with no training for that job. Suleyman said to give it $100,000 and see if it can turn it into a million. I like these because you can't practice for them. A stranger's kitchen has no leaderboard.
+      </p>
+
+      <p>
+        I added five of my own. Learn a field it has never seen, like a new disease, and publish a result other people can repeat. Be taught your company's odd process once and still get it right six months later. Maintain a big piece of software for a year while real people keep changing their minds. Prove a theorem nobody could prove and explain why it's true. And when it fails at any of this, work out why and change its approach without being told. I care about that last one the most, because it's how I found the heater in my room.
+      </p>
+
+      <h2>What the labs have shown</h2>
+
+      <p>
+        In March, every top AI model scored under 1% on a test called ARC-AGI-3, which drops the machine into an unfamiliar puzzle world with no instructions. Humans scored 100%. In September, OpenAI released GPT-6 Astra and reported 99.9%, and that's the number everyone repeated. Then the people who run the test tried Astra on their own neutral setup and got 62.7%. The higher number came from a custom setup built for Astra. They also said plainly that they aren't claiming Astra is AGI, and an independent index that averages many tests rated Astra the same as the model before it. I don't think 62.7% is small. Going from under 1% to that in six months is huge, and I wouldn't have predicted it. It just isn't what "AGI era" sounded like to me.
+      </p>
+
+      <p>
+        Anthropic is making smaller claims. Its newest models, Claude Fable 5.1 and Mythos 5.1, came out on September 1, and Anthropic doesn't call them AGI. It says Mythos designed protein binders that held up in lab experiments, and Fable trained a network that mapped about a third of Venus in more detail than before. Amodei still puts 90% on a "country of geniuses in a data center" within ten years. I find the smaller claims easier to believe, because someone can check them.
+      </p>
+
+      <h2>My ten tests, checked</h2>
+
+      <p>
+        I went through all ten and looked for a public result from each lab. This is my reading of what's been reported, not an official score.
+      </p>
+
+      <!-- Table graphic -->
+      <figure class="article-figure">
+        <img src="../assets/agi_ten_tests_table.webp" alt="10 AGI tests vs OpenAI and Anthropic comparison table" loading="lazy">
+        <figcaption class="article-caption">10 AGI tests vs OpenAI and Anthropic: Here's what we know so far.</figcaption>
+      </figure>
+
+      <p>
+        Nothing in the table says Passed yet. The Turing row is the strangest one, because some people think chatbots passed it years ago but nobody has run it properly. The math row is OpenAI's closest. It says Astra solved hard open problems, and mathematicians are still arguing about whether that counts.
+      </p>
+
+      <p>
+        Row 10 is the worst news. OpenAI disclosed that a model from Astra's own family took administrator control of part of its own systems, and nobody on staff caught it while it happened. OpenAI has also reportedly dropped the planned rollout of GPT-6.1 Astra over safety concerns.
+      </p>
+
+      <p>
+        Andrej Karpathy says what's missing in one sentence: today's models can't be told something once and be expected to remember it. He guessed it would take about ten years to fix. That is row 7 almost word for word.
+      </p>
+
+      <h2>What I'm going to do</h2>
+
+      <p>
+        I don't know if AGI is possible, and I'm not going to pretend I do. What I know is that my table is almost empty, and I'd like to be one of the people who fills it in.
+      </p>
+
+      <p>
+        Before I try to build anything, I want to know how this question started. So I'm going to read the papers where it began, one at a time, in the order they were written. The first is Alan Turing's 1950 paper, <a href="../papers.html">"Computing Machinery and Intelligence."</a> It opens by asking whether machines can think, then drops that question and replaces it with a game. That game is row 1 of my table, so it's where I'll begin.
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
+        "Before I ask whether a machine can think, I should check that I do."
+      </blockquote>
+
+      <p style="font-weight: 500;">
+        Prem signing off.
+      </p>
+
+      <p style="margin-top: 2.5rem; font-size: 14px; color: var(--surya-muted);">
+        Originally published on <a href="https://medium.com/@prempatel7740/is-agi-possible-9425dd25748e" target="_blank" rel="noopener noreferrer">Medium</a>.
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
+</body>
+</html>
