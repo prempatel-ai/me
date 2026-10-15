@@ -1614,6 +1614,19 @@ html, body {
   margin: 0;
 }
 
+.paper-card-top-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.paper-quick-link {
+  font-size: 0.72rem;
+  padding: 0.12rem 0.5rem;
+  line-height: 1.4;
+}
+
 .paper-status-badge {
   font-size: 0.7rem;
   font-weight: 600;

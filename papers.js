@@ -240,23 +240,45 @@
       detailsContentHtml += '</div>';
     }
 
+    // Add informative status for paper currently being read if detailed notes are not yet written
+    if (!hasSummary && !hasKeyIdea && paper.status === 'reading') {
+      detailsContentHtml = `
+        <div class="paper-field">
+          <span class="paper-field-label">Status</span>
+          <p>Currently reading. Detailed analysis and takeaways will be published here upon completion.</p>
+        </div>
+      ` + detailsContentHtml;
+    }
+
     // If completely empty (e.g. planned paper without notes yet)
     if (!detailsContentHtml) {
       detailsContentHtml = '<p class="paper-empty-planned-note">Reading notes will appear here once reviewed.</p>';
     }
 
+    const isExpanded = paper.status === 'reading';
+    const expandedClass = isExpanded ? ' is-expanded' : '';
+    const ariaExpanded = isExpanded ? 'true' : 'false';
+    const expandLabel = isExpanded ? 'Click to collapse' : 'Click to expand';
+
     return `
       <div class="timeline-entry paper-timeline-entry">
         <div class="timeline-node"></div>
-        <article class="paper-card ${statusClass}"
+        <article class="paper-card ${statusClass}${expandedClass}"
                  data-id="${escapeHtml(paper.id)}"
                  tabindex="0"
                  role="button"
-                 aria-expanded="false"
+                 aria-expanded="${ariaExpanded}"
                  aria-label="${escapeHtml(paper.title)}, ${paper.year}">
           <div class="paper-card-top">
             <h4 class="paper-card-title">${escapeHtml(paper.title)}</h4>
-            <span class="paper-status-badge ${escapeHtml(paper.status || 'planned')}">${statusLabel}</span>
+            <div class="paper-card-top-actions">
+              ${hasPaperUrl ? `
+                <a href="${escapeHtml(paper.paperUrl)}" target="_blank" rel="noopener noreferrer" class="action-link paper-quick-link" onclick="event.stopPropagation()" title="Read original paper">
+                  Read Paper &nearr;
+                </a>
+              ` : ''}
+              <span class="paper-status-badge ${escapeHtml(paper.status || 'planned')}">${statusLabel}</span>
+            </div>
           </div>
 
           <div class="paper-card-meta">
@@ -269,7 +291,7 @@
           ${tagsHtml}
 
           <div class="paper-expand-hint">
-            <span class="paper-expand-label">Click to expand</span>
+            <span class="paper-expand-label">${expandLabel}</span>
             <span class="paper-chevron" aria-hidden="true">&#9660;</span>
           </div>
 
