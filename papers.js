@@ -151,6 +151,7 @@
     const hasLimitations = Boolean(paper.limitations && paper.limitations.trim());
     const hasTakeaway = Boolean(paper.myTakeaway && paper.myTakeaway.trim());
     const hasPaperUrl = Boolean(paper.paperUrl && paper.paperUrl.trim());
+    const hasBlogUrl = Boolean(paper.blogUrl && paper.blogUrl.trim());
     const hasCodeUrl = Boolean(paper.codeUrl && paper.codeUrl.trim());
     const hasDateRead = Boolean(paper.dateRead && paper.dateRead.trim());
 
@@ -213,12 +214,19 @@
     }
 
     // Links row
-    if (hasPaperUrl || hasCodeUrl) {
+    if (hasPaperUrl || hasBlogUrl || hasCodeUrl) {
       detailsContentHtml += '<div class="paper-links">';
+      if (hasBlogUrl) {
+        detailsContentHtml += `
+          <a href="${escapeHtml(paper.blogUrl)}" class="action-link" onclick="event.stopPropagation()">
+            Read My Essay &nearr;
+          </a>
+        `;
+      }
       if (hasPaperUrl) {
         detailsContentHtml += `
           <a href="${escapeHtml(paper.paperUrl)}" target="_blank" rel="noopener noreferrer" class="action-link" onclick="event.stopPropagation()">
-            Read Paper &nearr;
+            Read Original Paper &nearr;
           </a>
         `;
       }
