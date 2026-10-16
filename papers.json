@@ -14,6 +14,38 @@
     "whatItChanged": "Founded artificial intelligence as an empirical discipline and framed the foundational debates on machine cognition.",
     "limitations": "Tests behavioral imitation rather than genuine understanding or subjective consciousness.",
     "myTakeaway": "Before building a list of tests for AGI, we have to understand what each test actually proves and what it leaves unanswered.",
+    "keyTerms": [
+      {
+        "term": "Imitation Game (Turing Test)",
+        "definition": "An operational benchmark replacing subjective debates on 'thinking' with conversational indistinguishability from a human."
+      },
+      {
+        "term": "Discrete State Machine",
+        "definition": "A computational system that moves in discontinuous jumps between distinct, well-defined states. The foundational abstraction for all modern digital computers."
+      },
+      {
+        "term": "Universality of Digital Computers",
+        "definition": "The mathematical property that a single general-purpose digital computer can mimic any other discrete state machine given sufficient storage and execution time."
+      },
+      {
+        "term": "Lady Lovelace's Objection",
+        "definition": "The claim that machines can only execute explicit human instructions and never generate novel knowledge. Turing refuted this by proving deterministic systems produce emergent, unpredicted results."
+      },
+      {
+        "term": "Child-Machine Learning",
+        "definition": "The proposal that instead of hard-coding an adult mind, researchers should construct a simpler learner (a child's mind) and educate it with experience and feedback."
+      },
+      {
+        "term": "Argument from Informality of Behavior",
+        "definition": "The philosophical claim that human conduct is guided by countless unwritten rules that cannot be programmed. Turing answered that learning machines induce rules from observation without explicit hand-crafted rules."
+      }
+    ],
+    "takeaways": [
+      "Operational over Semantic: When defining 'thinking' directly leads to endless circular arguments, testing observable problem-solving behavior in standardized conditions is the only empirical path forward.",
+      "The Learning Machine is the Only Scalable Architecture: Hand-crafting human intelligence through rigid symbolic rules is intractable. Building general learners that update parameters via feedback is the foundation of all modern AI.",
+      "Deterministic Systems Produce Emergent Surprise: A programmer can understand every line of deterministic code in a system and still be astonished by its outputs. Complexity emerges from simple underlying rules.",
+      "Behavior vs. Subjective Experience: A model can generate moving reflections on grief or creativity through pattern recognition without possessing internal consciousness. Measuring benchmark capability is not the same as measuring sentience."
+    ],
     "codeUrl": "",
     "tags": ["Philosophy", "Turing Test", "Foundations"]
   },
@@ -26,11 +58,47 @@
     "status": "reading",
     "dateRead": "",
     "paperUrl": "https://homepages.math.uic.edu/~lreyzin/papers/rosenblatt58.pdf",
-    "summary": "",
-    "keyIdea": "",
-    "whatItChanged": "",
-    "limitations": "",
-    "myTakeaway": "",
+    "summary": "Proposed the first mathematically formalized, learning artificial neural network to explain how physical nervous systems store information and classify patterns.",
+    "keyIdea": "Information is stored as distributed statistical connection weights across sensory, association, and response units, updated dynamically through reinforcement and error correction.",
+    "whatItChanged": "Shifted AI from pure symbolic logic to connectionism and statistical learning, directly giving birth to the modern artificial neural network.",
+    "limitations": "Single-layer perceptrons can only classify linearly separable patterns, making them unable to compute simple non-linear functions like XOR without hidden layers.",
+    "myTakeaway": "Memories and intelligence do not live in discrete memory cells or localized files; they are distributed weight configurations across an entire connected network.",
+    "keyTerms": [
+      {
+        "term": "Perceptron",
+        "definition": "The earliest computational model of an artificial neural network, composed of sensory, association, and response units that learn through error correction."
+      },
+      {
+        "term": "S-Points (Sensory Units)",
+        "definition": "The input receptors (analogous to retinal cells) that receive external environmental stimuli and convert them into electrical signals."
+      },
+      {
+        "term": "A-Units (Association Units)",
+        "definition": "Intermediate threshold elements that receive inputs from sensory units and fire when incoming signals exceed a threshold (the earliest precursor to hidden layer representations)."
+      },
+      {
+        "term": "R-Units (Response Units)",
+        "definition": "The output classification units that integrate weighted signals from association units to produce the final decision or classification."
+      },
+      {
+        "term": "Synaptic Plasticity & Connection Weights",
+        "definition": "Variable coupling strengths between connected units that adjust over time based on feedback, operationalizing Hebbian learning in a physical circuit."
+      },
+      {
+        "term": "Threshold Activation Function",
+        "definition": "A mathematical step function where a neuron remains inactive until the weighted sum of its inputs exceeds a predefined barrier threshold value."
+      },
+      {
+        "term": "Linear Separability",
+        "definition": "The mathematical requirement that two target classes can be completely divided by a single flat hyperplane in feature space."
+      }
+    ],
+    "takeaways": [
+      "Distributed vs. Localized Representation: Knowledge does not reside in single registers or localized files; it exists in the statistical strength of connections across the whole network.",
+      "Hardware-Realized Learning: Rosenblatt proved connectionist learning was physically feasible by constructing the Mark I Perceptron in custom hardware with motorized potentiometers.",
+      "The Precursor to Deep Representations: By combining fixed projections (Sensory to Association) with learned linear weights (Association to Response), the perceptron anticipated modern feature embeddings.",
+      "Understanding Structural Boundaries: Identifying the mathematical boundaries of single-layer architectures was the necessary catalyst that eventually drove AI to multi-layer deep networks."
+    ],
     "codeUrl": "",
     "tags": ["Neural Networks", "Perceptron", "Foundations"]
   },

@@ -127,9 +127,19 @@
         const tagsMatch = Array.isArray(paper.tags) && paper.tags.some(t => t.toLowerCase().includes(q));
         const summaryMatch = (paper.summary || '').toLowerCase().includes(q);
         const keyIdeaMatch = (paper.keyIdea || '').toLowerCase().includes(q);
+        const whatItChangedMatch = (paper.whatItChanged || '').toLowerCase().includes(q);
+        const limitationsMatch = (paper.limitations || '').toLowerCase().includes(q);
         const takeawayMatch = (paper.myTakeaway || '').toLowerCase().includes(q);
+        const termsMatch = Array.isArray(paper.keyTerms) && paper.keyTerms.some(kt =>
+          (kt.term || '').toLowerCase().includes(q) || (kt.def || kt.definition || '').toLowerCase().includes(q)
+        );
+        const takeawaysListMatch = Array.isArray(paper.takeaways) && paper.takeaways.some(t =>
+          t.toLowerCase().includes(q)
+        );
 
-        if (!titleMatch && !authorsMatch && !yearMatch && !stageMatch && !tagsMatch && !summaryMatch && !keyIdeaMatch && !takeawayMatch) {
+        if (!titleMatch && !authorsMatch && !yearMatch && !stageMatch && !tagsMatch &&
+            !summaryMatch && !keyIdeaMatch && !whatItChangedMatch && !limitationsMatch &&
+            !takeawayMatch && !termsMatch && !takeawaysListMatch) {
           return false;
         }
       }
@@ -150,6 +160,8 @@
     const hasWhatItChanged = Boolean(paper.whatItChanged && paper.whatItChanged.trim());
     const hasLimitations = Boolean(paper.limitations && paper.limitations.trim());
     const hasTakeaway = Boolean(paper.myTakeaway && paper.myTakeaway.trim());
+    const hasKeyTerms = Array.isArray(paper.keyTerms) && paper.keyTerms.length > 0;
+    const hasTakeawaysList = Array.isArray(paper.takeaways) && paper.takeaways.length > 0;
     const hasPaperUrl = Boolean(paper.paperUrl && paper.paperUrl.trim());
     const hasBlogUrl = Boolean(paper.blogUrl && paper.blogUrl.trim());
     const hasCodeUrl = Boolean(paper.codeUrl && paper.codeUrl.trim());
@@ -165,52 +177,163 @@
       `;
     }
 
-    // Build details body (never display placeholder or empty fields)
+    // Check if paper has rich multi-section content for tabs
+    const hasTabs = (hasSummary || hasKeyIdea) && (hasKeyTerms || hasTakeawaysList);
+
     let detailsContentHtml = '';
 
-    if (hasSummary) {
+    // Reading status banner (compact)
+    if (paper.status === 'reading') {
       detailsContentHtml += `
-        <div class="paper-field">
-          <span class="paper-field-label">Problem Solved</span>
-          <p>${escapeHtml(paper.summary)}</p>
+        <div class="paper-reading-banner">
+          <span class="paper-reading-dot"></span>
+          <span><strong>Reading in progress:</strong> Logging foundational terms, architecture notes, and takeaways.</span>
         </div>
       `;
     }
 
-    if (hasKeyIdea) {
-      detailsContentHtml += `
-        <div class="paper-field">
-          <span class="paper-field-label">Key Idea</span>
-          <p>${escapeHtml(paper.keyIdea)}</p>
-        </div>
-      `;
-    }
+    if (hasTabs) {
+      const termsCount = hasKeyTerms ? paper.keyTerms.length : 0;
+      const takeawaysCount = (hasTakeawaysList ? paper.takeaways.length : 0) + (hasTakeaway ? 1 : 0);
 
-    if (hasWhatItChanged) {
-      detailsContentHtml += `
-        <div class="paper-field">
-          <span class="paper-field-label">What It Changed</span>
-          <p>${escapeHtml(paper.whatItChanged)}</p>
+      const navTabsHtml = `
+        <div class="paper-nav-tabs" role="tablist">
+          <button type="button" class="paper-tab-btn active" data-tab="overview">
+            Overview
+          </button>
+          ${hasKeyTerms ? `
+            <button type="button" class="paper-tab-btn" data-tab="terms">
+              Key Terms <span class="tab-count">${termsCount}</span>
+            </button>
+          ` : ''}
+          ${(hasTakeawaysList || hasTakeaway) ? `
+            <button type="button" class="paper-tab-btn" data-tab="takeaways">
+              Takeaways <span class="tab-count">${takeawaysCount}</span>
+            </button>
+          ` : ''}
+          <button type="button" class="paper-tab-btn" data-tab="all">
+            All
+          </button>
         </div>
       `;
-    }
 
-    if (hasLimitations) {
-      detailsContentHtml += `
-        <div class="paper-field">
-          <span class="paper-field-label">Limitations</span>
-          <p>${escapeHtml(paper.limitations)}</p>
+      // Panel 1: Overview in a responsive 2-column grid
+      const overviewPanelHtml = `
+        <div class="paper-tab-panel" data-panel="overview" style="display: block;">
+          <div class="paper-overview-grid">
+            <div class="paper-overview-col">
+              ${hasSummary ? `
+                <div class="paper-field">
+                  <span class="paper-field-label">Problem Solved</span>
+                  <p>${escapeHtml(paper.summary)}</p>
+                </div>
+              ` : ''}
+              ${hasWhatItChanged ? `
+                <div class="paper-field">
+                  <span class="paper-field-label">What It Changed</span>
+                  <p>${escapeHtml(paper.whatItChanged)}</p>
+                </div>
+              ` : ''}
+            </div>
+            <div class="paper-overview-col">
+              ${hasKeyIdea ? `
+                <div class="paper-field">
+                  <span class="paper-field-label">Key Idea</span>
+                  <p>${escapeHtml(paper.keyIdea)}</p>
+                </div>
+              ` : ''}
+              ${hasLimitations ? `
+                <div class="paper-field">
+                  <span class="paper-field-label">Limitations</span>
+                  <p>${escapeHtml(paper.limitations)}</p>
+                </div>
+              ` : ''}
+            </div>
+          </div>
         </div>
       `;
-    }
 
-    if (hasTakeaway) {
-      detailsContentHtml += `
-        <div class="paper-field">
-          <span class="paper-field-label">My Takeaway</span>
-          <p>${escapeHtml(paper.myTakeaway)}</p>
-        </div>
-      `;
+      // Panel 2: Key Terms in a responsive 2-column grid
+      let termsPanelHtml = '';
+      if (hasKeyTerms) {
+        termsPanelHtml = `
+          <div class="paper-tab-panel" data-panel="terms" style="display: none;">
+            <div class="paper-terms-grid">
+              ${paper.keyTerms.map(t => `
+                <div class="paper-term-card">
+                  <div class="paper-term-title">${escapeHtml(t.term)}</div>
+                  <div class="paper-term-def">${escapeHtml(t.def || t.definition || '')}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Panel 3: Key Takeaways as styled cards
+      let takeawaysPanelHtml = '';
+      if (hasTakeawaysList || hasTakeaway) {
+        takeawaysPanelHtml = `
+          <div class="paper-tab-panel" data-panel="takeaways" style="display: none;">
+            ${hasTakeaway ? `
+              <div class="paper-field" style="margin-bottom: 0.75rem;">
+                <span class="paper-field-label">My Takeaway</span>
+                <p>${escapeHtml(paper.myTakeaway)}</p>
+              </div>
+            ` : ''}
+            ${hasTakeawaysList ? `
+              <div class="paper-takeaways-cards">
+                ${paper.takeaways.map(t => `
+                  <div class="paper-takeaway-item">${escapeHtml(t)}</div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      detailsContentHtml += navTabsHtml + overviewPanelHtml + termsPanelHtml + takeawaysPanelHtml;
+    } else {
+      if (hasSummary) {
+        detailsContentHtml += `
+          <div class="paper-field">
+            <span class="paper-field-label">Problem Solved</span>
+            <p>${escapeHtml(paper.summary)}</p>
+          </div>
+        `;
+      }
+      if (hasKeyIdea) {
+        detailsContentHtml += `
+          <div class="paper-field">
+            <span class="paper-field-label">Key Idea</span>
+            <p>${escapeHtml(paper.keyIdea)}</p>
+          </div>
+        `;
+      }
+      if (hasWhatItChanged) {
+        detailsContentHtml += `
+          <div class="paper-field">
+            <span class="paper-field-label">What It Changed</span>
+            <p>${escapeHtml(paper.whatItChanged)}</p>
+          </div>
+        `;
+      }
+      if (hasLimitations) {
+        detailsContentHtml += `
+          <div class="paper-field">
+            <span class="paper-field-label">Limitations</span>
+            <p>${escapeHtml(paper.limitations)}</p>
+          </div>
+        `;
+      }
+      if (hasTakeaway) {
+        detailsContentHtml += `
+          <div class="paper-field">
+            <span class="paper-field-label">My Takeaway</span>
+            <p>${escapeHtml(paper.myTakeaway)}</p>
+          </div>
+        `;
+      }
     }
 
     // Links row
@@ -238,16 +361,6 @@
         `;
       }
       detailsContentHtml += '</div>';
-    }
-
-    // Add informative status for paper currently being read if detailed notes are not yet written
-    if (!hasSummary && !hasKeyIdea && paper.status === 'reading') {
-      detailsContentHtml = `
-        <div class="paper-field">
-          <span class="paper-field-label">Status</span>
-          <p>Currently reading. Detailed analysis and takeaways will be published here upon completion.</p>
-        </div>
-      ` + detailsContentHtml;
     }
 
     // If completely empty (e.g. planned paper without notes yet)
@@ -370,8 +483,27 @@
 
     timelineContainerEl.innerHTML = html;
 
-    // Attach card expansion listeners
+    // Attach card expansion listeners and tab switchers
     attachCardListeners();
+    attachTabListeners();
+
+    // Check for deep links or URL parameters (e.g. ?paper=turing-1950 or ?tab=terms)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const expandId = urlParams.get('paper');
+      if (expandId) {
+        const card = timelineContainerEl.querySelector(`.paper-card[data-id="${expandId}"]`);
+        if (card && !card.classList.contains('is-expanded')) {
+          toggleCard(card);
+        }
+      }
+      const activeTab = urlParams.get('tab');
+      if (activeTab) {
+        timelineContainerEl.querySelectorAll(`.paper-tab-btn[data-tab="${activeTab}"]`).forEach(btn => {
+          btn.click();
+        });
+      }
+    } catch (_) {}
   }
 
   function toggleCard(card) {
@@ -384,19 +516,42 @@
     }
   }
 
+  function attachTabListeners() {
+    const tabBtns = timelineContainerEl.querySelectorAll('.paper-tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetTab = btn.getAttribute('data-tab');
+        const detailsEl = btn.closest('.paper-details');
+        if (!detailsEl) return;
+
+        detailsEl.querySelectorAll('.paper-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        detailsEl.querySelectorAll('.paper-tab-panel').forEach(panel => {
+          if (targetTab === 'all' || panel.getAttribute('data-panel') === targetTab) {
+            panel.style.display = 'block';
+          } else {
+            panel.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
   function attachCardListeners() {
     const cards = timelineContainerEl.querySelectorAll('.paper-card');
     cards.forEach(card => {
       // Click toggle
       card.addEventListener('click', (e) => {
-        // Prevent toggle if clicking on an interactive link
-        if (e.target.closest('a')) return;
+        // Prevent toggle if clicking on an interactive link, button, or tab
+        if (e.target.closest('a') || e.target.closest('button')) return;
         toggleCard(card);
       });
 
       // Keyboard accessibility (Enter or Space)
       card.addEventListener('keydown', (e) => {
-        if (e.target.closest('a')) return;
+        if (e.target.closest('a') || e.target.closest('button')) return;
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           toggleCard(card);
