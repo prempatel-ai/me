@@ -336,32 +336,35 @@
       }
     }
 
-    // Links row
-    if (hasPaperUrl || hasBlogUrl || hasCodeUrl) {
-      detailsContentHtml += '<div class="paper-links">';
-      if (hasBlogUrl) {
-        detailsContentHtml += `
-          <a href="${escapeHtml(paper.blogUrl)}" class="action-link" onclick="event.stopPropagation()">
-            Read My Essay &nearr;
-          </a>
-        `;
-      }
-      if (hasPaperUrl) {
-        detailsContentHtml += `
-          <a href="${escapeHtml(paper.paperUrl)}" target="_blank" rel="noopener noreferrer" class="action-link" onclick="event.stopPropagation()">
-            Read Original Paper &nearr;
-          </a>
-        `;
-      }
-      if (hasCodeUrl) {
-        detailsContentHtml += `
-          <a href="${escapeHtml(paper.codeUrl)}" target="_blank" rel="noopener noreferrer" class="action-link" onclick="event.stopPropagation()">
-            My Code Implementation &nearr;
-          </a>
-        `;
-      }
-      detailsContentHtml += '</div>';
+    // Links row & collapse button
+    detailsContentHtml += '<div class="paper-links">';
+    if (hasBlogUrl) {
+      detailsContentHtml += `
+        <a href="${escapeHtml(paper.blogUrl)}" class="action-link" onclick="event.stopPropagation()">
+          Read My Essay &nearr;
+        </a>
+      `;
     }
+    if (hasPaperUrl) {
+      detailsContentHtml += `
+        <a href="${escapeHtml(paper.paperUrl)}" target="_blank" rel="noopener noreferrer" class="action-link" onclick="event.stopPropagation()">
+          Read Original Paper &nearr;
+        </a>
+      `;
+    }
+    if (hasCodeUrl) {
+      detailsContentHtml += `
+        <a href="${escapeHtml(paper.codeUrl)}" target="_blank" rel="noopener noreferrer" class="action-link" onclick="event.stopPropagation()">
+          My Code Implementation &nearr;
+        </a>
+      `;
+    }
+    detailsContentHtml += `
+      <button type="button" class="paper-collapse-btn" title="Collapse paper details">
+        Collapse &uarr;
+      </button>
+    `;
+    detailsContentHtml += '</div>';
 
     // If completely empty (e.g. planned paper without notes yet)
     if (!detailsContentHtml) {
@@ -544,14 +547,31 @@
     cards.forEach(card => {
       // Click toggle
       card.addEventListener('click', (e) => {
-        // Prevent toggle if clicking on an interactive link, button, or tab
-        if (e.target.closest('a') || e.target.closest('button')) return;
+        // If clicking on an explicit collapse button, collapse the card
+        if (e.target.closest('.paper-collapse-btn')) {
+          e.stopPropagation();
+          toggleCard(card);
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          return;
+        }
+
+        // Prevent toggle if clicking on an interactive link, button, or input
+        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
+
+        // If card is already expanded and user taps or clicks inside .paper-details (terms, definitions, takeaways, selecting text), DO NOT collapse
+        if (card.classList.contains('is-expanded') && e.target.closest('.paper-details')) {
+          return;
+        }
+
         toggleCard(card);
       });
 
       // Keyboard accessibility (Enter or Space)
       card.addEventListener('keydown', (e) => {
-        if (e.target.closest('a') || e.target.closest('button')) return;
+        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
+        if (card.classList.contains('is-expanded') && e.target.closest('.paper-details')) {
+          return;
+        }
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           toggleCard(card);
