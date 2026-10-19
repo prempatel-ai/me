@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Has AI Passed the Turing Test? Sort of. - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Most frontier models can pass a ten-minute chat test, but what does that prove? Looking at the catch, where today's systems still fall short, and whether talking like a human is intelligence.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Has AI Passed the Turing Test? Sort of.</h1>
+        <p class="hero-date">Oct 19, 2026 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/has_ai_passed_turing_test_banner.png" alt="Watercolor illustration of two hibiscus flowers side by side: a pressed specimen and a living potted plant on a windowsill" loading="eager">
+        <p class="hero-caption" style="text-align: center; font-size: 0.8rem; color: var(--surya-muted); margin-top: 0.65rem; font-style: italic;">Same flower. One of them is still growing.</p>
+      </div>
+
+      <!-- Subtext -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          In my last post I said I'd go back to the ten tests and work out what they measure. Turing's comes first, because I think the models we have now have already passed it. Mostly.
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <p>
+        That &ldquo;mostly&rdquo; is the whole post.
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
+        Why I think they pass
+      </blockquote>
+
+      <p>
+        From what I've seen, a normal person chatting with one of these models for ten minutes wouldn't reliably tell it from a human. A few years ago that wasn't true.
+      </p>
+
+      <p>
+        Early GPT models were good at predicting the next word. They could write a poem or finish a paragraph, and for the time that was impressive. But they were trained on far less data, and you could feel it. The answers fell apart quickly.
+      </p>
+
+      <p>
+        Now they've been trained on a huge part of the internet: books, blogs, videos, forums. Many of them can also search the web, so they aren't stuck with whatever they learned in training. They can look something up and bring it back into the conversation. That's a real step toward dealing with the world, even if the world is still a search box.
+      </p>
+
+      <p>
+        They also know more than any single person. Ask a human volunteer about a niche topic and you might get &ldquo;not sure.&rdquo; Ask a model and you get a full answer. For a judge trying to find the machine, that makes the job harder.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The catch</h3>
+
+      <p>
+        I haven't been able to test this properly.
+      </p>
+
+      <p>
+        The models I tried are locked down tightly because of misuse. I get why, but it means I'm testing a restricted version, so any result I got would come with an asterisk.
+      </p>
+
+      <p>
+        What I actually want to run is Turing's original setup. A human judge writes the questions. I send the same questions to one human volunteer and one AI model. The judge reads both sets of answers without knowing which is which and decides who the human is. I'd want several judges and several volunteers, because one result from one judge doesn't prove much. I haven't managed it yet.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">Where they still fall short</h3>
+
+      <p>
+        I wrote down the limits I knew about, then went and read about the rest. There are more than I thought, and some are bigger than what I started with.
+      </p>
+
+      <p>
+        <strong>Hallucination</strong> is the one everyone knows. The model says something false in the same confident tone it uses for true things. A person who doesn't know usually says so, or at least sounds unsure. A model often can't tell the difference between what it knows and what it's guessing.
+      </p>
+
+      <p>
+        <strong>Agreeing with the user</strong> is a close second. Push back on a correct answer and many models fold and say you're right. A person with an actual opinion would hold their ground or argue.
+      </p>
+
+      <p>
+        Then there's <strong>memory</strong>. The context window is limited, so in a long conversation the model can lose track of the start. But the deeper issue is that it doesn't learn from you. When the chat ends, whatever happened in it is gone unless someone builds memory on top. Humans learn all the time. A model is mostly frozen after training, and I think that's a bigger gap than the context window.
+      </p>
+
+      <p>
+        Another one is <strong>how much they need to learn</strong>. A child sees a few examples of a dog and gets it. These models need an enormous amount of data to reach a similar level in many areas. They're good because they've read so much, and I'm not sure that's the same thing as learning efficiently.
+      </p>
+
+      <p>
+        <strong>Reasoning is uneven</strong> too. A model can solve a hard maths problem and then fail on something a child would find obvious. Long multi-step planning is shakier. Over a long task, small mistakes pile up and the whole thing drifts off course. People call this jagged intelligence, which sounds about right.
+      </p>
+
+      <p>
+        And they're <strong>weaker when a situation is truly new</strong>. A model can do well on a test and break when the inputs change a bit. If the test was similar to its training data, a good score might mean memory more than understanding. I can't always tell which one I'm looking at, and I think that's a real problem for anyone trying to measure these systems.
+      </p>
+
+      <p>
+        There's also the <strong>physical world</strong>. These models learn from text, images and video. They haven't touched anything or dropped anything or spent years figuring out how objects behave. Some of what humans call common sense comes from that, and I don't know how much of it you can get from text alone.
+      </p>
+
+      <p>
+        Last, <strong>opacity</strong>: I can't see why a model gave a particular answer. We can look at the output but not the reasoning behind it. For something I'd trust with important decisions, that bothers me.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">What I believe</h3>
+
+      <p>
+        I think a lot of this will get better. Context windows keep growing, hallucination gets worked on by a lot of people, and the agreeing habit is a known problem labs are trying to train out.
+      </p>
+
+      <p>
+        But I don't think every item on that list is the same kind of problem. Longer context is an engineering problem. Learning continuously, or learning from a few examples the way a child does, might need new ideas and not just bigger models. I don't know which ones scaling will fix. Nobody does yet, as far as I can tell.
+      </p>
+
+      <p>
+        That takes me back to what I wrote last time. If a model can pass the Turing test and still hallucinate, forget you, cave when you push back, and break on anything unfamiliar, what did the test tell us? Maybe just that it can talk like a human. That's a real result. I'm not sure it's the same as intelligence.
+      </p>
+
+      <p>
+        I'll keep working through the other nine tests with that question in mind.
+      </p>
+
+      <p style="font-weight: 500;">
+        Prem signing off. ✍️
+      </p>
+
+      <p style="margin-top: 2.5rem; font-size: 14px; color: var(--surya-muted);">
+        Originally published on <a href="https://medium.com/@prempatel7740/has-ai-passed-the-turing-test-sort-of-570d3b7b0425" target="_blank" rel="noopener noreferrer">Medium</a>.
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
+</body>
+</html>
