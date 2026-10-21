@@ -114,105 +114,77 @@
       <!-- Subtext -->
       <div class="hero-subtext-group">
         <p class="hero-subtext">
-          In my last post I said I'd go back to the ten tests and work out what they measure. Turing's comes first, because I think the models we have now have already passed it. Mostly.
+          In my last post I said I'd go through the ten tests one by one. Turing's test is first, and I think the models we have today have already passed it. Mostly. That &ldquo;mostly&rdquo; is what this post is about.
         </p>
       </div>
     </div>
 
     <!-- Essay Body -->
     <div class="article-prose">
-      <p>
-        That &ldquo;mostly&rdquo; is the whole post.
-      </p>
-
       <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
         Why I think they pass
       </blockquote>
 
       <p>
-        From what I've seen, a normal person chatting with one of these models for ten minutes wouldn't reliably tell it from a human. A few years ago that wasn't true.
+        Talk to one of these models for ten minutes and ask yourself if you could really tell it's not a person. I don't think I could, not always. A few years back it was easy. You'd say two sentences and it would fall apart.
       </p>
 
       <p>
-        Early GPT models were good at predicting the next word. They could write a poem or finish a paragraph, and for the time that was impressive. But they were trained on far less data, and you could feel it. The answers fell apart quickly.
+        The early GPT models were just guessing the next word. They could write a poem and that felt like magic at the time, but they hadn't seen much, and you could feel it. Now they've read books, blogs, videos, forums, basically a big part of the internet. A lot of them can even search the web, so they're not stuck with what they learned in training. They can go and check something. It's still just a search box, but it's a window to the real world.
       </p>
 
       <p>
-        Now they've been trained on a huge part of the internet: books, blogs, videos, forums. Many of them can also search the web, so they aren't stuck with whatever they learned in training. They can look something up and bring it back into the conversation. That's a real step toward dealing with the world, even if the world is still a search box.
-      </p>
-
-      <p>
-        They also know more than any single person. Ask a human volunteer about a niche topic and you might get &ldquo;not sure.&rdquo; Ask a model and you get a full answer. For a judge trying to find the machine, that makes the job harder.
+        And they know more than any person. If you ask a human volunteer something random, they might say &ldquo;I don't know.&rdquo; The model never says that. It just answers. So the judge loses one of the easiest clues for catching the machine.
       </p>
 
       <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The catch</h3>
 
       <p>
-        I haven't been able to test this properly.
+        I couldn't test this properly. The models I tried are locked down because people misuse them, and I get that, but it means I was testing a limited version. Any result I got would be a bit fake.
       </p>
 
       <p>
-        The models I tried are locked down tightly because of misuse. I get why, but it means I'm testing a restricted version, so any result I got would come with an asterisk.
-      </p>
-
-      <p>
-        What I actually want to run is Turing's original setup. A human judge writes the questions. I send the same questions to one human volunteer and one AI model. The judge reads both sets of answers without knowing which is which and decides who the human is. I'd want several judges and several volunteers, because one result from one judge doesn't prove much. I haven't managed it yet.
+        What I really want to do is run Turing's setup. A judge writes questions. I give the same questions to one human volunteer and one AI model. The judge reads both answers without knowing who wrote what, and has to say which one is the human. I'd need a few judges and a few volunteers too, because one judge on one day doesn't mean much. I haven't done it yet.
       </p>
 
       <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">Where they still fall short</h3>
 
       <p>
-        I wrote down the limits I knew about, then went and read about the rest. There are more than I thought, and some are bigger than what I started with.
+        When I started, I only knew a few problems. Then I read more and found a lot of them, and some are bigger than the ones I knew.
       </p>
 
       <p>
-        <strong>Hallucination</strong> is the one everyone knows. The model says something false in the same confident tone it uses for true things. A person who doesn't know usually says so, or at least sounds unsure. A model often can't tell the difference between what it knows and what it's guessing.
+        The famous one is <strong>hallucination</strong>. The model says something wrong in the same confident voice it uses for the right things. A person who doesn't know something usually sounds unsure. A model often can't tell what it knows from what it's making up. Then there's the agreeing. Tell it it's wrong when it's actually right, and a lot of them just say &ldquo;you're right, sorry.&rdquo; Someone who really believes something wouldn't fold that fast.
       </p>
 
       <p>
-        <strong>Agreeing with the user</strong> is a close second. Push back on a correct answer and many models fold and say you're right. A person with an actual opinion would hold their ground or argue.
+        <strong>Memory</strong> is the one that bothers me most. Yes, the context window is limited, so a long chat loses its beginning. But the bigger thing is that nothing stays. The chat ends and it's gone, unless someone built a memory system around it. We keep learning every day without even trying. A model basically stops learning when training ends. And it needs so much data too. A kid sees a few dogs and knows what a dog is. A model needs a mountain of examples. Maybe it's good just because it read everything, and I'm not sure that's the same as learning well.
       </p>
 
       <p>
-        Then there's <strong>memory</strong>. The context window is limited, so in a long conversation the model can lose track of the start. But the deeper issue is that it doesn't learn from you. When the chat ends, whatever happened in it is gone unless someone builds memory on top. Humans learn all the time. A model is mostly frozen after training, and I think that's a bigger gap than the context window.
+        <strong>Reasoning</strong> is strange too. A model can solve a really hard maths problem and then fail at something a child finds obvious. On long tasks the small mistakes add up until it's gone somewhere completely different. People call it jagged intelligence, and I think that's a good name. It also struggles with truly new situations. A model can do great on a test and then break when the question changes a little. If the test looked like its training data, maybe the score just shows memory and not understanding. I can't always tell which one I'm seeing, and that makes me wonder how we measure any of this.
       </p>
 
       <p>
-        Another one is <strong>how much they need to learn</strong>. A child sees a few examples of a dog and gets it. These models need an enormous amount of data to reach a similar level in many areas. They're good because they've read so much, and I'm not sure that's the same thing as learning efficiently.
-      </p>
-
-      <p>
-        <strong>Reasoning is uneven</strong> too. A model can solve a hard maths problem and then fail on something a child would find obvious. Long multi-step planning is shakier. Over a long task, small mistakes pile up and the whole thing drifts off course. People call this jagged intelligence, which sounds about right.
-      </p>
-
-      <p>
-        And they're <strong>weaker when a situation is truly new</strong>. A model can do well on a test and break when the inputs change a bit. If the test was similar to its training data, a good score might mean memory more than understanding. I can't always tell which one I'm looking at, and I think that's a real problem for anyone trying to measure these systems.
-      </p>
-
-      <p>
-        There's also the <strong>physical world</strong>. These models learn from text, images and video. They haven't touched anything or dropped anything or spent years figuring out how objects behave. Some of what humans call common sense comes from that, and I don't know how much of it you can get from text alone.
-      </p>
-
-      <p>
-        Last, <strong>opacity</strong>: I can't see why a model gave a particular answer. We can look at the output but not the reasoning behind it. For something I'd trust with important decisions, that bothers me.
+        There are two more things. These models learn from text, images and video, but they've never touched anything or dropped anything or spent years figuring out how the world pushes back. Maybe some of what we call common sense comes from that, and I don't know how much of it you can get from words alone. And the last one is that I can't see why a model gave a certain answer. I see the output but not the thinking behind it. If it's helping with something important, that scares me a little.
       </p>
 
       <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">What I believe</h3>
 
       <p>
-        I think a lot of this will get better. Context windows keep growing, hallucination gets worked on by a lot of people, and the agreeing habit is a known problem labs are trying to train out.
+        I think a lot of this will get fixed. Context windows keep getting bigger, many people are working on hallucination, and the agreeing problem is known, so labs are trying to train it out.
       </p>
 
       <p>
-        But I don't think every item on that list is the same kind of problem. Longer context is an engineering problem. Learning continuously, or learning from a few examples the way a child does, might need new ideas and not just bigger models. I don't know which ones scaling will fix. Nobody does yet, as far as I can tell.
+        But I don't think they're all the same kind of problem. A bigger context window is just engineering. Learning continuously, or learning from a few examples like a child does, might need completely new ideas, not just bigger models. I don't know which ones scaling will fix. As far as I can tell, nobody does yet.
       </p>
 
       <p>
-        That takes me back to what I wrote last time. If a model can pass the Turing test and still hallucinate, forget you, cave when you push back, and break on anything unfamiliar, what did the test tell us? Maybe just that it can talk like a human. That's a real result. I'm not sure it's the same as intelligence.
+        So I keep coming back to my last post. A model can pass the Turing test and still hallucinate, forget you, give up when you push back, and break on anything it hasn't seen. What did the test really show then? Maybe just that it can talk like a human. That's a real thing. I just don't think it's the same as being intelligent.
       </p>
 
       <p>
-        I'll keep working through the other nine tests with that question in mind.
+        I'll take that question with me into the other nine tests.
       </p>
 
       <p style="font-weight: 500;">
