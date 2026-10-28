@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>A Small Task Queue That Survives Crashes - Prem Patel &middot; Blog</title>
-  <meta name="description" content="Notes on building a fault-tolerant task queue with SQLite, leases, heartbeats, and idempotency so that every job ends cleanly even if workers or the coordinator crash.">
+  <meta name="description" content="A system where you submit jobs, workers run them, and every job always ends as completed or failed, even if a worker or the coordinator crashes.">
   <meta name="author" content="Prem Patel">
 
   <!-- Favicon -->
@@ -102,19 +102,19 @@
     <div class="hero-stuff">
       <div class="hero-title-group">
         <h1 class="hero-title">A Small Task Queue That Survives Crashes</h1>
-        <p class="hero-date">Oct 24, 2025 &middot; 4 min read</p>
+        <p class="hero-date">Oct 2025 &middot; 3 min read</p>
       </div>
 
       <!-- Banner Image -->
       <div class="hero-banner">
         <img src="../assets/task_queue_banner.jpg" alt="Minimal watercolor illustration of mechanical conveyor gears moving sturdy task cubes safely through a storm" loading="eager">
-        <p class="hero-caption" style="text-align: center; font-size: 0.8rem; color: var(--surya-muted); margin-top: 0.65rem; font-style: italic;">A system that keeps working even when things break.</p>
+        <p class="hero-caption" style="text-align: center; font-size: 0.8rem; color: var(--surya-muted); margin-top: 0.65rem; font-style: italic;">A system where crashes do not corrupt the outcome.</p>
       </div>
 
       <!-- Subtext -->
       <div class="hero-subtext-group">
         <p class="hero-subtext">
-          Most queue tutorials show you how to push a message into memory and pop it in a worker thread. But what happens when the power gets cut midway? Notes on building a small, resilient job queue with SQLite, leases, and idempotency.
+          A system where you submit jobs, workers run them, and every job always ends as &ldquo;completed&rdquo; or &ldquo;failed&rdquo;, even if a worker or the coordinator crashes. If a job runs twice, you still get one correct result.
         </p>
       </div>
     </div>
@@ -122,144 +122,91 @@
     <!-- Essay Body -->
     <div class="article-prose">
       <p>
-        Most tutorials on queues make everything look easy. You set up a broker, push a message in, pop it out in a worker, and print &ldquo;job done.&rdquo;
+        I wanted to build a small task queue with one clear promise: no matter what crashes, every job finishes in a known state, and running a job twice never gives you two results.
       </p>
 
       <p>
-        In practice, that only works when nothing goes wrong. In the real world, servers restart unexpectedly, memory runs out, network calls hang, and worker processes get killed right in the middle of writing a file.
+        Not a giant distributed framework. Just a small, dependable system where crashes are expected and handled cleanly.
       </p>
-
-      <p>
-        When that happens, what happens to the job? Does it vanish into thin air? Does a worker wake up, see the job half-finished, and run it again? If that job was charging someone's credit card or writing a transaction to a ledger, running it twice is a serious problem.
-      </p>
-
-      <p>
-        I wanted to see what it actually takes to build a queue that survives crashes without needing a giant distributed setup. Just a simple system where every submitted job always reaches a definitive end: either &ldquo;completed&rdquo; or &ldquo;failed&rdquo;, no matter who crashes along the way. And if a job runs twice, you still get one clean, correct result.
-      </p>
-
-      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
-        &ldquo;A reliable system is not one where nothing crashes. It is one where crashes do not corrupt the outcome.&rdquo;
-      </blockquote>
 
       <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The job</h3>
 
       <p>
-        To test this without getting bogged down in application details, I picked a simple deterministic job:
+        For testing, the job is simple:
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: var(--surya-title);">
+        &ldquo;Count the words in a text file and save the count.&rdquo;
+      </blockquote>
+
+      <p>
+        It is deterministic, so running it twice gives the exact same answer. If a retry happens, the result remains correct.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">Parts</h3>
+
+      <p>
+        The system is split into four parts:
       </p>
 
       <p>
-        <strong>&ldquo;Count the words in a text file and save the count.&rdquo;</strong>
+        &bull; <strong>API:</strong> Accepts a job and returns a job ID.<br>
+        &bull; <strong>Coordinator:</strong> Keeps every job's status in a database (SQLite) on disk.<br>
+        &bull; <strong>Workers:</strong> Ask for a job, run it, save the result, then tell the coordinator.<br>
+        &bull; <strong>Result store:</strong> A table (or folder) where each result is saved under its job ID.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">Rules</h3>
+
+      <p>
+        These rules make the system resilient:
       </p>
 
       <p>
-        Deterministic means if you run it ten times on the same input file, you get the exact same word count all ten times. That predictability makes it easy to verify whether a retry gave you the right answer or corrupted something along the way.
-      </p>
-
-      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The four pieces</h3>
-
-      <p>
-        I kept the architecture down to four straightforward components:
+        <strong>No double jobs.</strong> Each submit carries a unique key. If the same key arrives again, the API returns the old job ID instead of making a new job.
       </p>
 
       <p>
-        <strong>1. API:</strong> The front desk. It accepts a job request, assigns a job ID, and returns it to the client immediately.
+        <strong>Time limit (lease).</strong> When a worker takes a job, it gets a time limit. A worker that is still working sends a &ldquo;still alive&rdquo; signal (heartbeat) to extend it. Only the coordinator's clock decides when time is up.
       </p>
 
       <p>
-        <strong>2. Coordinator:</strong> The central brain. It keeps track of every job's status in a SQLite database persisted on disk. Not in temporary memory where a restart wipes everything out.
+        <strong>Retries.</strong> If time runs out, the job goes back to the queue after a wait that grows each time. Count a try when the job is picked up, not when it fails. After the max tries (3), mark it &ldquo;failed&rdquo;.
       </p>
 
       <p>
-        <strong>3. Workers:</strong> The hands. They ask the coordinator for an available job, process it, write the result, and report back that they are done.
+        <strong>No duplicate results.</strong> The result is saved under the job ID. Marking &ldquo;completed&rdquo; works only if the job isn't already completed. The first result wins and later ones are ignored.
       </p>
 
       <p>
-        <strong>4. Result store:</strong> A dedicated table on disk where each result is saved directly under its job ID.
-      </p>
-
-      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The rules that keep it alive</h3>
-
-      <p>
-        Building the happy path took an afternoon. Getting the failure modes right took much longer. These are the rules that make the whole system survive crashes:
+        <strong>Too many jobs (backpressure).</strong> If the waiting queue is over a limit, the API answers &ldquo;429, try later&rdquo; instead of accepting more.
       </p>
 
       <p>
-        <strong>No double jobs (Idempotency).</strong> Clients retry requests when connections drop. If a client submits a job, doesn't hear back because of a network blip, and sends it again, you do not want two identical jobs queued up. Every submission carries a unique key. If the API sees a key it already knows, it doesn't create a second job. It just returns the existing job ID.
+        <strong>Security.</strong> HTTPS plus a secret token for each worker.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">Tests (the success checklist)</h3>
+
+      <p>
+        To verify that it actually works under failure, every test on this checklist had to pass:
       </p>
 
       <p>
-        <strong>Time limit and leases.</strong> When a worker picks up a job, it does not own it forever. It gets a lease with a strict time limit. If the job takes longer, a healthy worker sends a heartbeat signal saying &ldquo;I am still working&rdquo; to extend it. Crucially, only the coordinator's clock decides when time is up, preventing worker clock drift from breaking the system.
+        &bull; Kill a worker mid-job. The job ends as completed or failed.<br>
+        &bull; Kill a worker after it saved the result but before it told the coordinator. The retry runs, and there is still one result.<br>
+        &bull; Slow worker: it finishes after its time ran out, and a second worker already has the job. There is still one result.<br>
+        &bull; Kill and restart the coordinator. All job states are still correct.<br>
+        &bull; Submit the same job key twice. Only one job exists.<br>
+        &bull; A job that always crashes its worker ends as &ldquo;failed&rdquo; after the max tries.<br>
+        &bull; Send jobs faster than workers finish. The API starts answering 429.
       </p>
 
       <p>
-        <strong>Retries and backoff.</strong> If a worker crashes silently and its lease expires, the coordinator returns the job to the queue. But we don't retry immediately. The wait grows after each attempt. Also, we count an attempt the moment a job is picked up by a worker, not when it fails. If a job fails three times, we stop retrying and mark it &ldquo;failed&rdquo;.
+        Building it confirmed something simple: reliability is not about avoiding crashes. It is about making sure that when crashes happen, the rules keep the state clean.
       </p>
 
-      <p>
-        <strong>No duplicate results.</strong> What if a worker gets slow, its lease runs out, and a second worker picks up the same job? The slow worker might finish a few seconds later and try to submit its result. The rule is simple: marking a job &ldquo;completed&rdquo; only succeeds if the job is not already completed. The first valid result wins, and later submissions are safely ignored.
-      </p>
-
-      <p>
-        <strong>Backpressure.</strong> If thousands of jobs arrive faster than workers can finish them, an unbounded queue will eventually exhaust disk space and memory. When the waiting queue hits its limit, the API stops accepting new jobs and immediately returns HTTP 429 (&ldquo;Too Many Requests, try later&rdquo;). It is much better to reject new work honestly than to let the server crash under load.
-      </p>
-
-      <p>
-        <strong>Security.</strong> Workers talk to the coordinator over HTTPS, and each worker authenticates using a secret token. Only recognized workers can lease jobs or submit results.
-      </p>
-
-      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The chaos checklist</h3>
-
-      <p>
-        Writing the code is only half the work. The fun part was actively trying to break it. I set up automated tests that deliberately pull the rug out from under the system:
-      </p>
-
-      <p>
-        &bull; <strong>Kill a worker mid-job:</strong> The lease expires, the coordinator puts the job back in the queue, another worker picks it up, and the job ends as completed.
-      </p>
-
-      <p>
-        &bull; <strong>Kill a worker after saving the result but before telling the coordinator:</strong> The retry runs, the second worker finishes, and because the write is idempotent, there is still exactly one correct result.
-      </p>
-
-      <p>
-        &bull; <strong>Slow worker race condition:</strong> A worker finishes after its lease expired, while a second worker already started the job. The first result wins, the second is ignored, and no state is corrupted.
-      </p>
-
-      <p>
-        &bull; <strong>Kill and restart the coordinator:</strong> Because state lives in SQLite on disk, when the coordinator boots back up, every job's status is still completely intact.
-      </p>
-
-      <p>
-        &bull; <strong>Submit the same job key twice:</strong> The API returns the original job ID without creating a duplicate task.
-      </p>
-
-      <p>
-        &bull; <strong>A job that always crashes:</strong> A poisoned task that crashes any worker running it gets retried three times, exhausts the max tries, and ends as &ldquo;failed&rdquo; instead of looping forever.
-      </p>
-
-      <p>
-        &bull; <strong>Traffic flood:</strong> Sending jobs faster than workers can finish. The API immediately responds with 429 backpressure without crashing.
-      </p>
-
-      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">What I learned</h3>
-
-      <p>
-        Before building this, distributed systems always felt like an abstract wall of theory and heavy buzzwords.
-      </p>
-
-      <p>
-        Building a small queue from scratch showed me that reliability isn't magic. It is just being honest about how things break. Network packets get dropped. Processes get killed without warning. Machines run out of memory.
-      </p>
-
-      <p>
-        Once you accept that crashes are normal events rather than rare exceptions, designing around them becomes an interesting puzzle. You stop assuming that &ldquo;if I told the worker to run it, it will finish&rdquo;, and you start asking &ldquo;what happens if it dies halfway through?&rdquo;
-      </p>
-
-      <p>
-        I'm still refining the code, but seeing the whole checklist pass while pulling processes down felt really satisfying.
-      </p>
-
-      <p style="font-weight: 500;">
+      <p style="font-weight: 500; margin-top: 2rem;">
         Prem signing off. ✍️
       </p>
     </div>
