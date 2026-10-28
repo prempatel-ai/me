@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A Small Task Queue That Survives Crashes - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Notes on building a fault-tolerant task queue with SQLite, leases, heartbeats, and idempotency so that every job ends cleanly even if workers or the coordinator crash.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261002f">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">A Small Task Queue That Survives Crashes</h1>
+        <p class="hero-date">Oct 24, 2025 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/task_queue_banner.jpg" alt="Minimal watercolor illustration of mechanical conveyor gears moving sturdy task cubes safely through a storm" loading="eager">
+        <p class="hero-caption" style="text-align: center; font-size: 0.8rem; color: var(--surya-muted); margin-top: 0.65rem; font-style: italic;">A system that keeps working even when things break.</p>
+      </div>
+
+      <!-- Subtext -->
+      <div class="hero-subtext-group">
+        <p class="hero-subtext">
+          Most queue tutorials show you how to push a message into memory and pop it in a worker thread. But what happens when the power gets cut midway? Notes on building a small, resilient job queue with SQLite, leases, and idempotency.
+        </p>
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose">
+      <p>
+        Most tutorials on queues make everything look easy. You set up a broker, push a message in, pop it out in a worker, and print &ldquo;job done.&rdquo;
+      </p>
+
+      <p>
+        In practice, that only works when nothing goes wrong. In the real world, servers restart unexpectedly, memory runs out, network calls hang, and worker processes get killed right in the middle of writing a file.
+      </p>
+
+      <p>
+        When that happens, what happens to the job? Does it vanish into thin air? Does a worker wake up, see the job half-finished, and run it again? If that job was charging someone's credit card or writing a transaction to a ledger, running it twice is a serious problem.
+      </p>
+
+      <p>
+        I wanted to see what it actually takes to build a queue that survives crashes without needing a giant distributed setup. Just a simple system where every submitted job always reaches a definitive end: either &ldquo;completed&rdquo; or &ldquo;failed&rdquo;, no matter who crashes along the way. And if a job runs twice, you still get one clean, correct result.
+      </p>
+
+      <blockquote class="article-quote" style="border-left: 3px solid var(--surya-title); padding-left: 1.25rem; margin: 2rem 0; font-style: italic; color: var(--surya-title);">
+        &ldquo;A reliable system is not one where nothing crashes. It is one where crashes do not corrupt the outcome.&rdquo;
+      </blockquote>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The job</h3>
+
+      <p>
+        To test this without getting bogged down in application details, I picked a simple deterministic job:
+      </p>
+
+      <p>
+        <strong>&ldquo;Count the words in a text file and save the count.&rdquo;</strong>
+      </p>
+
+      <p>
+        Deterministic means if you run it ten times on the same input file, you get the exact same word count all ten times. That predictability makes it easy to verify whether a retry gave you the right answer or corrupted something along the way.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The four pieces</h3>
+
+      <p>
+        I kept the architecture down to four straightforward components:
+      </p>
+
+      <p>
+        <strong>1. API:</strong> The front desk. It accepts a job request, assigns a job ID, and returns it to the client immediately.
+      </p>
+
+      <p>
+        <strong>2. Coordinator:</strong> The central brain. It keeps track of every job's status in a SQLite database persisted on disk. Not in temporary memory where a restart wipes everything out.
+      </p>
+
+      <p>
+        <strong>3. Workers:</strong> The hands. They ask the coordinator for an available job, process it, write the result, and report back that they are done.
+      </p>
+
+      <p>
+        <strong>4. Result store:</strong> A dedicated table on disk where each result is saved directly under its job ID.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The rules that keep it alive</h3>
+
+      <p>
+        Building the happy path took an afternoon. Getting the failure modes right took much longer. These are the rules that make the whole system survive crashes:
+      </p>
+
+      <p>
+        <strong>No double jobs (Idempotency).</strong> Clients retry requests when connections drop. If a client submits a job, doesn't hear back because of a network blip, and sends it again, you do not want two identical jobs queued up. Every submission carries a unique key. If the API sees a key it already knows, it doesn't create a second job. It just returns the existing job ID.
+      </p>
+
+      <p>
+        <strong>Time limit and leases.</strong> When a worker picks up a job, it does not own it forever. It gets a lease with a strict time limit. If the job takes longer, a healthy worker sends a heartbeat signal saying &ldquo;I am still working&rdquo; to extend it. Crucially, only the coordinator's clock decides when time is up, preventing worker clock drift from breaking the system.
+      </p>
+
+      <p>
+        <strong>Retries and backoff.</strong> If a worker crashes silently and its lease expires, the coordinator returns the job to the queue. But we don't retry immediately. The wait grows after each attempt. Also, we count an attempt the moment a job is picked up by a worker, not when it fails. If a job fails three times, we stop retrying and mark it &ldquo;failed&rdquo;.
+      </p>
+
+      <p>
+        <strong>No duplicate results.</strong> What if a worker gets slow, its lease runs out, and a second worker picks up the same job? The slow worker might finish a few seconds later and try to submit its result. The rule is simple: marking a job &ldquo;completed&rdquo; only succeeds if the job is not already completed. The first valid result wins, and later submissions are safely ignored.
+      </p>
+
+      <p>
+        <strong>Backpressure.</strong> If thousands of jobs arrive faster than workers can finish them, an unbounded queue will eventually exhaust disk space and memory. When the waiting queue hits its limit, the API stops accepting new jobs and immediately returns HTTP 429 (&ldquo;Too Many Requests, try later&rdquo;). It is much better to reject new work honestly than to let the server crash under load.
+      </p>
+
+      <p>
+        <strong>Security.</strong> Workers talk to the coordinator over HTTPS, and each worker authenticates using a secret token. Only recognized workers can lease jobs or submit results.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">The chaos checklist</h3>
+
+      <p>
+        Writing the code is only half the work. The fun part was actively trying to break it. I set up automated tests that deliberately pull the rug out from under the system:
+      </p>
+
+      <p>
+        &bull; <strong>Kill a worker mid-job:</strong> The lease expires, the coordinator puts the job back in the queue, another worker picks it up, and the job ends as completed.
+      </p>
+
+      <p>
+        &bull; <strong>Kill a worker after saving the result but before telling the coordinator:</strong> The retry runs, the second worker finishes, and because the write is idempotent, there is still exactly one correct result.
+      </p>
+
+      <p>
+        &bull; <strong>Slow worker race condition:</strong> A worker finishes after its lease expired, while a second worker already started the job. The first result wins, the second is ignored, and no state is corrupted.
+      </p>
+
+      <p>
+        &bull; <strong>Kill and restart the coordinator:</strong> Because state lives in SQLite on disk, when the coordinator boots back up, every job's status is still completely intact.
+      </p>
+
+      <p>
+        &bull; <strong>Submit the same job key twice:</strong> The API returns the original job ID without creating a duplicate task.
+      </p>
+
+      <p>
+        &bull; <strong>A job that always crashes:</strong> A poisoned task that crashes any worker running it gets retried three times, exhausts the max tries, and ends as &ldquo;failed&rdquo; instead of looping forever.
+      </p>
+
+      <p>
+        &bull; <strong>Traffic flood:</strong> Sending jobs faster than workers can finish. The API immediately responds with 429 backpressure without crashing.
+      </p>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.15rem; color: var(--surya-title);">What I learned</h3>
+
+      <p>
+        Before building this, distributed systems always felt like an abstract wall of theory and heavy buzzwords.
+      </p>
+
+      <p>
+        Building a small queue from scratch showed me that reliability isn't magic. It is just being honest about how things break. Network packets get dropped. Processes get killed without warning. Machines run out of memory.
+      </p>
+
+      <p>
+        Once you accept that crashes are normal events rather than rare exceptions, designing around them becomes an interesting puzzle. You stop assuming that &ldquo;if I told the worker to run it, it will finish&rdquo;, and you start asking &ldquo;what happens if it dies halfway through?&rdquo;
+      </p>
+
+      <p>
+        I'm still refining the code, but seeing the whole checklist pass while pulling processes down felt really satisfying.
+      </p>
+
+      <p style="font-weight: 500;">
+        Prem signing off. ✍️
+      </p>
+    </div>
+
+    <!-- Bottom navigation -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+      <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Global Scripts (Confetti Easter Egg & Theme Toggle) -->
+  <script src="../script.js"></script>
+</body>
+</html>
