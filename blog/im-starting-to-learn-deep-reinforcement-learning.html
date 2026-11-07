@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>I'm Starting to Learn Deep Reinforcement Learning - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Notes from the first unit of the Hugging Face Deep RL course: core vocabulary, loops, tradeoffs, and how agents learn.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- Fonts: Inter for headings, Source Serif 4 for body, JetBrains Mono for system UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261107a">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body rl-post-body">
+
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress-bar" aria-hidden="true"></div>
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">Résumé</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF résumé">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Article Layout with Desktop TOC -->
+  <div class="rl-layout-container">
+    <main class="rl-article-wrapper">
+      <article class="rl-main-content">
+
+        <!-- Breadcrumb back to blog menu -->
+        <a href="./index.html" class="blog-breadcrumb">
+          <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+          Back to all blogs
+        </a>
+
+        <!-- Header Block -->
+        <header class="rl-post-header">
+          <h1 class="rl-title">I'm Starting to Learn Deep Reinforcement Learning</h1>
+          <div class="rl-meta">
+            <time datetime="2026-11-07">Nov 7, 2026</time>
+            <span class="rl-meta-sep">&middot;</span>
+            <span>5 min read</span>
+          </div>
+          <p class="rl-subtitle">Notes from the first unit of the Hugging Face Deep RL course: core vocabulary, loops, tradeoffs, and how agents learn.</p>
+        </header>
+
+        <!-- Mobile Collapsed TOC Dropdown -->
+        <details class="rl-mobile-toc">
+          <summary>
+            <span>Table of Contents</span>
+            <svg class="rl-chevron" viewBox="0 0 256 256" width="16" height="16"><path fill="currentColor" d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+          </summary>
+          <ul class="rl-mobile-toc-list">
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#what-is-reinforcement-learning">What is Reinforcement Learning?</a></li>
+            <li><a href="#the-reinforcement-learning-framework">The Reinforcement Learning Framework</a></li>
+            <li><a href="#the-type-of-tasks">The type of tasks</a></li>
+            <li><a href="#the-exploration-exploitation-tradeoff">The Exploration/Exploitation tradeoff</a></li>
+            <li><a href="#the-two-main-approaches-for-solving-rl-problems">The two main approaches for solving RL problems</a></li>
+            <li><a href="#the-deep-in-deep-reinforcement-learning">The &ldquo;Deep&rdquo; in Deep Reinforcement Learning</a></li>
+            <li><a href="#where-i-am-now">Where I am now</a></li>
+          </ul>
+        </details>
+
+        <!-- Post Prose Content -->
+        <div class="rl-prose">
+          
+          <h2 id="introduction" class="rl-heading">Introduction</h2>
+          <p>I've been reading about AI for a while, but I always skipped one part: reinforcement learning. I heard the name everywhere and never understood it. So I'm starting from zero now.</p>
+          <p>The best resource I found is the Hugging Face Deep RL course. It's free and it goes step by step. This post is me writing down what I learned in the first unit, in my own words, so I actually understand it and don't just copy it.</p>
+
+          <h2 id="what-is-reinforcement-learning" class="rl-heading">What is Reinforcement Learning?</h2>
+          <blockquote class="rl-analogy">
+            Think about how you learn to ride a bike. Nobody gives you a list of correct movements. You try, you fall, you adjust, and slowly you get better.
+          </blockquote>
+          <p>That's reinforcement learning. A learner tries things, sees what happens, and uses that to do better next time. In the course's words, it's learning from interaction with the <strong>environment</strong>. The learner is called the <strong>agent</strong>. It learns by trial and error, and it gets <strong>rewards</strong> for good results and negative rewards for bad ones.</p>
+          <blockquote class="rl-analogy">
+            The idea behind it is called the reward hypothesis. It says every goal can be described as maximizing the total reward we collect. That sounds too simple to me, and I'm not sure it fits everything in life. But for training an agent, it works.
+          </blockquote>
+
+          <h2 id="the-reinforcement-learning-framework" class="rl-heading">The Reinforcement Learning Framework</h2>
+          <p>This is the part with all the terms. Once I understood each one, the rest became easier.</p>
+          <p>The <strong>agent</strong> is the learner or decision maker. The <strong>environment</strong> is the world the agent lives in. The <strong>state</strong> is what the agent can see about the world right now. An <strong>action</strong> is something the agent can do. A <strong>reward</strong> is the feedback the environment gives after an action.</p>
+          <p>It runs as a loop. The agent sees a state, takes an action, and the environment gives back a new state and a reward. Then it repeats.</p>
+          <p>A small thing I learned: the state and the observation are not always the same. In chess you see the whole board, so state and observation are the same. In a game like Super Mario, you only see part of the level, so you get an observation, not the full state.</p>
+          <p>The agent's goal isn't to get the biggest reward right now. It's to get the biggest total reward over time. That total is called the <strong>return</strong>, or cumulative reward.</p>
+          <p>There's also the discount rate, called <strong>gamma</strong>. Rewards that come sooner count more than rewards that come later, because the future is less certain. A gamma close to 1 means the agent cares about the future. A gamma close to 0 means it only cares about what's right in front of it. I like this idea a lot, because people do the same thing.</p>
+          <p>The <strong>policy</strong> is the agent's brain. It tells the agent which action to take in each state. The whole point of RL is to find the best policy, the one that gives the most reward.</p>
+
+          <!-- Key terms Summary Box -->
+          <div class="rl-keyterms-box">
+            <div class="rl-keyterms-title">Key terms</div>
+            <dl class="rl-keyterms-grid">
+              <div class="rl-keyterm-item">
+                <dt>Agent</dt>
+                <dd>The learner or decision maker.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Environment</dt>
+                <dd>The world the agent lives in.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>State</dt>
+                <dd>What the agent can see about the world right now.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Action</dt>
+                <dd>Something the agent can do.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Reward</dt>
+                <dd>The feedback the environment gives after an action.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Return</dt>
+                <dd>The biggest total reward over time (cumulative reward).</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Gamma</dt>
+                <dd>The discount rate where sooner rewards count more than later rewards.</dd>
+              </div>
+              <div class="rl-keyterm-item">
+                <dt>Policy</dt>
+                <dd>The agent's brain that tells it which action to take in each state.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h2 id="the-type-of-tasks" class="rl-heading">The type of tasks</h2>
+          <p>There are two kinds of tasks.</p>
+          <p>An <strong>episodic</strong> task has a start and an end. A game level is a good example. It begins, it ends, and then you start over.</p>
+          <p>A <strong>continuing</strong> task never ends. Think of an agent trading stocks, which just keeps going. It has to learn without a clear finish line.</p>
+
+          <h2 id="the-exploration-exploitation-tradeoff" class="rl-heading">The Exploration/Exploitation tradeoff</h2>
+          <p>This one is my favourite, and it sounds philosophical to me.</p>
+          <p><strong>Exploration</strong> means trying new things to find out more about the environment. <strong>Exploitation</strong> means using what you already know to get the reward you know about.</p>
+          <blockquote class="rl-analogy">
+            Picture a restaurant. You've found one place you like. You can keep going back, which is exploitation, and you'll always get a good meal. Or you can try new places, which is exploration, and you might find something better or get a bad meal. If you only exploit, you never discover anything better. If you only explore, you never enjoy what you found.
+          </blockquote>
+          <blockquote class="rl-analogy">
+            So the agent has to balance both. I realised this isn't only a machine problem. We all deal with it when we pick a career, a habit, or a path.
+          </blockquote>
+
+          <h2 id="the-two-main-approaches-for-solving-rl-problems" class="rl-heading">The two main approaches for solving RL problems</h2>
+          <p>We want the agent to find the best policy. There are two ways to get there.</p>
+          <p>The first is <strong>policy-based</strong> methods. You teach the agent the policy directly. It learns &ldquo;in this state, take this action.&rdquo; A policy can be deterministic, so the same state always gives the same action, or stochastic, where it gives probabilities for different actions.</p>
+          <p>The second is <strong>value-based</strong> methods. Here the agent learns a <strong>value function</strong>, which says how good it is to be in a state. It doesn't pick actions directly. It moves toward the states with the highest value. So the policy comes from the values.</p>
+          <p>Put simply, policy-based says &ldquo;learn what to do,&rdquo; and value-based says &ldquo;learn what is worth reaching, then act on that.&rdquo;</p>
+
+          <h2 id="the-deep-in-deep-reinforcement-learning" class="rl-heading">The &ldquo;Deep&rdquo; in Deep Reinforcement Learning</h2>
+          <p>So where does &ldquo;deep&rdquo; come from?</p>
+          <p>Plain reinforcement learning can store values in a simple table. That works when there are only a few states. But real problems, like a video game, have a huge number of states, and a table can't hold them all.</p>
+          <p>Deep reinforcement learning replaces the table with a neural network. The network learns to estimate the values or the policy, even for states it hasn't seen. That's the &ldquo;deep&rdquo;: deep learning inside reinforcement learning.</p>
+
+          <h2 id="where-i-am-now" class="rl-heading">Where I am now</h2>
+          <p>I've only finished the first part, so I know the vocabulary and not much more. But it already changed how I think about learning. An agent isn't told the answer. It tries, gets feedback, and slowly gets better. That sounds a lot like us.</p>
+          <p>I'll keep going through the course and write about what I learn.</p>
+
+          <div class="rl-signoff-divider"></div>
+          <p class="rl-signoff">Prem signing off. ✍️</p>
+
+        </div>
+
+        <!-- Bottom navigation -->
+        <div style="margin-top: 50px; padding-top: 24px; border-top: 1px dashed var(--surya-border); display: flex; justify-content: flex-start; align-items: center;">
+          <a href="./index.html" class="blog-breadcrumb" style="margin-bottom: 0;">
+            <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Back to all blogs
+          </a>
+        </div>
+
+      </article>
+
+      <!-- Desktop Sticky Table of Contents -->
+      <aside class="rl-desktop-toc" aria-label="Table of Contents">
+        <div class="rl-toc-sticky-box">
+          <div class="rl-toc-title">On This Page</div>
+          <ul class="rl-toc-list">
+            <li><a href="#introduction" class="rl-toc-link">Introduction</a></li>
+            <li><a href="#what-is-reinforcement-learning" class="rl-toc-link">What is RL?</a></li>
+            <li><a href="#the-reinforcement-learning-framework" class="rl-toc-link">RL Framework</a></li>
+            <li><a href="#the-type-of-tasks" class="rl-toc-link">Type of tasks</a></li>
+            <li><a href="#the-exploration-exploitation-tradeoff" class="rl-toc-link">Exploration vs Exploitation</a></li>
+            <li><a href="#the-two-main-approaches-for-solving-rl-problems" class="rl-toc-link">Two Main Approaches</a></li>
+            <li><a href="#the-deep-in-deep-reinforcement-learning" class="rl-toc-link">The &ldquo;Deep&rdquo; in Deep RL</a></li>
+            <li><a href="#where-i-am-now" class="rl-toc-link">Where I am now</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="surya-footer">
+    <p>&copy; 2026 Prem Patel &middot; <a href="../index.html">Home</a> &middot; <a href="./index.html">Blog</a> &middot; <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../script.js"></script>
+  <script>
+    // Reading Progress Bar Component
+    (function() {
+      var progressBar = document.getElementById('reading-progress-bar');
+      if (!progressBar) return;
+
+      function updateProgress() {
+        var scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollTotal <= 0) {
+          progressBar.style.width = '0%';
+          return;
+        }
+        var scrolled = window.scrollY || document.documentElement.scrollTop;
+        var percentage = Math.min(100, Math.max(0, (scrolled / scrollTotal) * 100));
+        progressBar.style.width = percentage + '%';
+      }
+
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+    })();
+
+    // Table of Contents Active Link Highlight Component
+    (function() {
+      var headings = document.querySelectorAll('.rl-heading');
+      var tocLinks = document.querySelectorAll('.rl-toc-link');
+      if (!headings.length || !tocLinks.length) return;
+
+      var linkMap = {};
+      tocLinks.forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          linkMap[href.slice(1)] = link;
+        }
+      });
+
+      function onScroll() {
+        var scrollPos = (window.scrollY || document.documentElement.scrollTop) + 120;
+        var currentId = null;
+
+        for (var i = 0; i < headings.length; i++) {
+          var h = headings[i];
+          if (h.offsetTop <= scrollPos) {
+            currentId = h.id;
+          } else {
+            break;
+          }
+        }
+
+        if (!currentId && headings.length > 0) {
+          currentId = headings[0].id;
+        }
+
+        tocLinks.forEach(function(l) {
+          l.classList.remove('active');
+        });
+
+        if (currentId && linkMap[currentId]) {
+          linkMap[currentId].classList.add('active');
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
