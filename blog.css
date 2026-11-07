@@ -1312,3 +1312,72 @@ img {
     padding: 0 20px;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Deep RL Unit 1 Post Typography & Layout (Mockup Specification)
+   -------------------------------------------------------------------------- */
+.rl-article p {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--surya-body);
+  margin: 0 0 20px 0;
+}
+
+.rl-article h2 {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--surya-heading);
+  margin-top: 64px;
+  margin-bottom: 20px;
+}
+
+.rl-article .pull-quote {
+  border-left: 2px solid var(--surya-primary, #6366f1);
+  padding-left: 24px;
+  margin: 36px 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.4;
+  color: var(--surya-heading);
+}
+
+.rl-article .figure-caption {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-style: italic;
+  color: #767676;
+  text-align: center;
+  margin-top: 14px;
+}
+
+[data-theme="dark"] .rl-article .figure-caption {
+  color: var(--surya-muted);
+}
+
+.rl-diagram-figure {
+  margin: 44px auto;
+  max-width: 580px;
+  text-align: center;
+}
+
+.rl-diagram-figure svg {
+  display: block;
+  margin: 0 auto;
+  color: var(--surya-heading);
+}
+
+@media (max-width: 640px) {
+  .rl-article .pull-quote {
+    font-size: 20px;
+    padding-left: 16px;
+    margin: 28px 0;
+  }
+  .rl-article h2 {
+    font-size: 28px;
+    margin-top: 48px;
+  }
+}
