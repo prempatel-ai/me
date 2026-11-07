@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>I Trained My First Deep RL Agent to Land on the Moon - Prem Patel &middot; Blog</title>
+  <meta name="description" content="In my last post I wrote down all the theory from Unit 1. This time it's the hands-on: training an agent, a lunar lander, to land on the Moon using PPO and Stable-Baselines3.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261107c">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">R&eacute;sum&eacute;</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF resume">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">I Trained My First Deep RL Agent to Land on the Moon</h1>
+        <p class="hero-date">Nov 7, 2026 &middot; 11 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/lunar-lander-hands-on.png" alt="Watercolour hero image placeholder" width="1024" height="576" loading="eager">
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose rl-article">
+<p>In my last post I wrote down all the theory from Unit 1. This time it’s the hands-on, and this is where reinforcement learning stopped being just words for me. You train an agent, a lunar lander, to land on the Moon. I did it, and the trained model is on the Hugging Face Hub as <a href="https://huggingface.co/prem-ml/LunarLander-v3">prem-ml/LunarLander-v3</a>.</p>
+<p>I want to go through my notebook the way I understood it, every piece of code, and connect each one back to the RL ideas from the first post. If the loop, the policy and the reward felt abstract before, this is the part that made them real.</p>
+
+<h2>First, a fake screen</h2>
+<p>The agent doesn’t need to see the game to learn, but the replay video does. A notebook has no screen, so we create a virtual one. That’s the whole reason for this block of installs.</p>
+<pre><code>!apt install swig cmake
+!pip install -r https://raw.githubusercontent.com/huggingface/deep-rl-class/main/notebooks/unit1/requirements-unit1.txt
+
+!sudo apt-get update
+!sudo apt-get install -y python3-opengl
+!apt install ffmpeg
+!apt install xvfb
+!pip3 install pyvirtualdisplay</code></pre>
+<p><code>swig</code> and <code>cmake</code> are needed to build Box2D, the physics engine behind Lunar Lander. The requirements file installs Gymnasium with Box2D, Stable-Baselines3 and <code>huggingface_sb3</code>. Then <code>xvfb</code> is the fake display, <code>ffmpeg</code> turns the frames into a video, and <code>python3-opengl</code> helps with rendering.</p>
+<pre><code>from pyvirtualdisplay import Display
+
+virtual_display = Display(visible=0, size=(1400, 900))
+virtual_display.start()</code></pre>
+<p>This starts the virtual screen. <code>visible=0</code> means nothing is shown, it just exists in the background so the frames can be captured.</p>
+
+<h2>The imports</h2>
+<pre><code>import gymnasium
+!pip install pygame gymnasium[box2d] stable-baselines3 huggingface_sb3
+from huggingface_sb3 import load_from_hub, package_to_hub
+from huggingface_hub import notebook_login
+
+from stable_baselines3 import PPO
+from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3.common.evaluation import evaluate_policy
+from stable_baselines3.common.monitor import Monitor</code></pre>
+<p>Each import is one job. Gymnasium gives the environment. <code>PPO</code> is the algorithm. <code>make_vec_env</code> runs many copies of the environment at once. <code>evaluate_policy</code> and <code>Monitor</code> test the agent. <code>package_to_hub</code>, <code>load_from_hub</code> and <code>notebook_login</code> are for sharing and loading models on the Hub.</p>
+
+<h2>Meeting the environment</h2>
+<p>Before training anything, the course makes you run the RL loop by hand with random actions. I liked this, because it’s the loop from my last post written as code.</p>
+<pre><code>import gymnasium as gym
+
+env = gym.make("LunarLander-v3")
+observation, info = env.reset()
+
+for _ in range(20):
+  action = env.action_space.sample()
+  print("Action taken:", action)
+
+  observation, reward, terminated, truncated, info = env.step(action)
+
+  if terminated or truncated:
+      print("Environment is reset")
+      observation, info = env.reset()
+
+env.close()</code></pre>
+<p><code>env.reset()</code> gives the first state. <code>env.action_space.sample()</code> picks a random action, so right now the agent knows nothing. <code>env.step(action)</code> does the action and hands back the new observation and the reward, which is state, action, reward, next state, exactly the loop.</p>
+<p>It also returns two flags. <code>terminated</code> means the episode really ended, like the lander landed or crashed. <code>truncated</code> means it was cut off, like a time limit. When either one happens, we reset and start a new episode.</p>
+
+<h2>What the lander sees, and what it can do</h2>
+<pre><code>env = gym.make("LunarLander-v3")
+env.reset()
+print("_____OBSERVATION SPACE_____ \n")
+print("Observation Space Shape", env.observation_space.shape)
+print("Sample observation", env.observation_space.sample())
+
+print("\n _____ACTION SPACE_____ \n")
+print("Action Space Shape", env.action_space.n)
+print("Action Space Sample", env.action_space.sample())</code></pre>
+<p>The observation has shape <code>(8,)</code>, so it’s eight numbers. They are the lander’s horizontal and vertical position, its horizontal and vertical speed, its angle, its angular speed, and two true or false values for whether each leg is touching the ground.</p>
+<p>The action space is discrete with four actions: do nothing, fire the left engine, fire the main engine, fire the right engine. That’s the discrete action space from my last post, now with real numbers.</p>
+<p>Then there’s the reward, and this is the part I kept thinking about. The reward goes up when the lander is closer to the pad, moving slower and sitting level. It goes up by 10 for each leg touching the ground. It goes down a little every frame an engine fires, 0.03 for the side engines and 0.3 for the main one. Crashing costs 100 points and landing safely gives 100. A score of 200 or more counts as solved.</p>
+<p class="q">Nobody tells the lander how to land. We only write down what we care about, and it finds the rest.</p>
+<p>That felt like the reward hypothesis in real life. The engine costs are basically a fuel bill, and the agent has to work out when spending fuel is worth it.</p>
+
+<h2>Sixteen landers at once</h2>
+<pre><code>env = make_vec_env('LunarLander-v3', n_envs=16)</code></pre>
+<p>This creates 16 copies of the environment that run side by side. The agent gets more varied experience from each step of training, because 16 different games are happening at the same time.</p>
+
+<h2>Building the brain</h2>
+<pre><code>model = PPO(
+    policy="MlpPolicy",
+    env=env,
+    learning_rate=3e-4,
+    n_steps=2048,
+    batch_size=64,
+    n_epochs=10,
+    gamma=0.999,
+    gae_lambda=0.98,
+    ent_coef=0.005,
+    clip_range=0.2,
+    verbose=1,
+    seed=42
+)</code></pre>
+<p>This one block is the agent. PPO stands for Proximal Policy Optimization, and the course describes it as a mix of the two approaches from Unit 1, learning a policy and learning values. <code>MlpPolicy</code> means a plain neural network, which fits because the input is just a vector of eight numbers. If the input were game frames, you’d use <code>CnnPolicy</code> instead.</p>
+<p>The settings were the part I had to slow down for. Here is how I understood each one.</p>
+<dl class="gloss">
+<div><dt>learning_rate</dt><dd>How big a step the network takes when it updates itself.</dd></div>
+<div><dt>n_steps</dt><dd>How many steps each environment collects before an update.</dd></div>
+<div><dt>batch_size</dt><dd>How many of those steps are used in one small update.</dd></div>
+<div><dt>n_epochs</dt><dd>How many times it goes over the collected data per update.</dd></div>
+<div><dt>gamma</dt><dd>The discount rate from the first post. 0.999 means it cares a lot about the future.</dd></div>
+<div><dt>gae_lambda</dt><dd>A smoothing setting for estimating how good an action was.</dd></div>
+<div><dt>ent_coef</dt><dd>A bonus for staying a bit random, which is a push toward exploration.</dd></div>
+<div><dt>clip_range</dt><dd>Limits how much the policy can change in one update. That’s the “proximal” in PPO.</dd></div>
+<div><dt>seed</dt><dd>Makes the run repeatable.</dd></div>
+</dl>
+<p>I liked seeing <code>ent_coef</code> in there. The exploration and exploitation tradeoff I wrote about before isn’t only a story, it’s a number you can change.</p>
+
+<h2>Training</h2>
+<pre><code>from stable_baselines3.common.env_util import make_vec_env
+env = make_vec_env('LunarLander-v3', n_envs=16)
+env.reset()
+
+model.set_env(env)
+
+model.learn(total_timesteps=2500000)
+
+model_name = "ppo-LunarLander-v3"
+model.save(model_name)</code></pre>
+<p>I re-create the environment first to release a lock Box2D can hold, then attach it to the model with <code>set_env</code>. After that it’s one line, <code>model.learn</code>, with <code>total_timesteps=2500000</code>. That one line runs the whole RL loop millions of times. At the start the agent is basically random, so it crashes, and over time the rewards push the policy toward actions that land. Then <code>model.save</code> writes the trained agent to a file.</p>
+
+<h2>Reading the training logs</h2>
+<p>Because I set <code>verbose=1</code>, training prints a small table after every iteration. At first it looked like noise to me, but every line tells you something about how the agent is doing. Here is the very first one.</p>
+<pre><code>---------------------------------
+| rollout/           |          |
+|    ep_len_mean     | 91.6     |
+|    ep_rew_mean     | -199     |
+| time/              |          |
+|    fps             | 2407     |
+|    iterations      | 1        |
+|    time_elapsed    | 13       |
+|    total_timesteps | 32768    |
+---------------------------------</code></pre>
+<dl class="gloss wide">
+<div><dt>ep_len_mean</dt><dd>The average length of an episode, in steps. Short episodes early on usually mean the lander crashes quickly.</dd></div>
+<div><dt>ep_rew_mean</dt><dd>The average total reward per episode. It starts very negative, because a random lander crashes.</dd></div>
+<div><dt>fps</dt><dd>Steps per second. It’s a speed check, not a score.</dd></div>
+<div><dt>iterations</dt><dd>How many rounds of collecting data and then updating have happened.</dd></div>
+<div><dt>time_elapsed</dt><dd>Seconds since training started.</dd></div>
+<div><dt>total_timesteps</dt><dd>Total steps taken so far across all environments.</dd></div>
+</dl>
+<p>One thing I noticed is that 32768 is exactly 16 environments times 2048 steps. So one iteration is every environment playing 2048 steps, and my settings show up right there in the log. This first table also has no <code>train/</code> part, because the agent hasn’t been updated yet. It has only collected experience.</p>
+<p>By iteration 2, the table gets longer.</p>
+<pre><code>-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 88.8        |
+|    ep_rew_mean          | -126        |
+| time/                   |             |
+|    fps                  | 2016        |
+|    iterations           | 2           |
+|    time_elapsed         | 32          |
+|    total_timesteps      | 65536       |
+| train/                  |             |
+|    approx_kl            | 0.008190928 |
+|    clip_fraction        | 0.0986      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.38       |
+|    explained_variance   | 0.000366    |
+|    learning_rate        | 0.0003      |
+|    loss                 | 933         |
+|    n_updates            | 10          |
+|    policy_gradient_loss | -0.00772    |
+|    value_loss           | 3.05e+03    |
+-----------------------------------------</code></pre>
+<p>Now there’s a <code>train/</code> part, which is about the learning itself.</p>
+<dl class="gloss wide">
+<div><dt>approx_kl</dt><dd>How much the policy changed in the last update. A small number means a gentle, stable change.</dd></div>
+<div><dt>clip_fraction</dt><dd>The share of samples where PPO had to clip the update. 0.07 would mean about 7%.</dd></div>
+<div><dt>clip_range</dt><dd>The clip limit I mentioned earlier, 0.2.</dd></div>
+<div><dt>entropy_loss</dt><dd>How random the policy still is, shown as a negative number. With 4 actions the most random it can be is about 1.39, so a value near -1.39 means the agent is still almost fully random. It moves toward 0 as the agent gets surer.</dd></div>
+<div><dt>explained_variance</dt><dd>How well the agent predicts the returns it will get. 1 is perfect and 0 is no better than guessing.</dd></div>
+<div><dt>learning_rate</dt><dd>The step size, 0.0003.</dd></div>
+<div><dt>loss</dt><dd>The combined loss. It’s large early on mostly because value_loss is large.</dd></div>
+<div><dt>policy_gradient_loss</dt><dd>The loss on the policy part, how much the policy wants to change.</dd></div>
+<div><dt>value_loss</dt><dd>How wrong the agent’s value estimates are. It’s high early because rewards like -100 and +100 are big numbers.</dd></div>
+<div><dt>n_updates</dt><dd>How many training epochs have been done so far. 10 is 1 finished training round times 10 epochs, which matches <code>n_epochs=10</code>.</dd></div>
+</dl>
+<p>The number I watch most is <code>ep_rew_mean</code>. It went from -199 to -126 after just one round of learning, so the lander was already crashing less, even though it’s still very negative. Around 200 means the lander is landing properly.</p>
+<p>The other numbers say it’s still very early. <code>entropy_loss</code> of -1.38 is almost the most random a 4-action policy can be, and <code>explained_variance</code> near 0 means the value estimates haven’t started working yet. That’s normal at this point.</p>
+<p class="q">Early on the numbers are ugly. That’s fine, they’re supposed to be.</p>
+<h2>Checking if it actually works</h2>
+<pre><code>eval_env = Monitor(gym.make("LunarLander-v3", render_mode='rgb_array'))
+mean_reward, std_reward = evaluate_policy(model, eval_env, n_eval_episodes=10, deterministic=True)
+print(f"mean_reward={mean_reward:.2f} +/- {std_reward}")</code></pre>
+<p>The course says to never evaluate on the training environment, so this makes a fresh one. <code>Monitor</code> tracks the rewards, and <code>evaluate_policy</code> plays 10 full episodes. <code>deterministic=True</code> means the agent always picks its best action instead of drawing from probabilities. That’s the deterministic and stochastic policy idea from the first post, now with a real switch.</p>
+<div class="result"><b>294.11 ± 18.80</b><span>mean reward on the Hub model card</span></div>
+<p>The course counts the result as mean reward minus standard deviation, and it has to be 200 or more to pass. Mine works out to 275.31, which is above the line.</p>
+
+<h2>Sharing it on the Hub</h2>
+<pre><code>notebook_login()
+!git config --global credential.helper store</code></pre>
+<p>You make a token with write access on the Hugging Face site and paste it here. Then comes the upload. This part has my own workaround in it, because I recorded the replay video myself and handed it to the upload function.</p>
+<pre><code>import glob
+from stable_baselines3.common.vec_env import VecEnv, DummyVecEnv, VecVideoRecorder
+
+env_id = "LunarLander-v3"
+model_architecture = "PPO"
+repo_id = "prem-ml/LunarLander-v3"
+commit_message = "Upload PPO LunarLander-v3 trained agent with working video"
+
+base_env = DummyVecEnv([lambda: Monitor(gym.make(env_id, render_mode="rgb_array"))])
+eval_env = VecVideoRecorder(
+    base_env,
+    video_folder="/tmp",
+    record_video_trigger=lambda step: step == 0,
+    video_length=2000,
+    name_prefix="real-lander-replay"
+)
+
+obs = eval_env.reset()
+for _ in range(2000):
+    action, _states = model.predict(obs, deterministic=True)
+    obs, rewards, dones, info = eval_env.step(action)
+eval_env.close()
+
+recorded_videos = glob.glob("/tmp/real-lander-replay-step-0-to-*.mp4")
+actual_video_path = recorded_videos[0] if recorded_videos else ""
+
+class RealVideoRecorder:
+    def __init__(self, path):
+        self.path = path
+
+gym.Env.video_recorder = RealVideoRecorder(actual_video_path)
+VecEnv.video_recorder = RealVideoRecorder(actual_video_path)
+DummyVecEnv.video_recorder = RealVideoRecorder(actual_video_path)
+
+package_to_hub(
+    model=model,
+    model_name=model_name,
+    model_architecture=model_architecture,
+    env_id=env_id,
+    eval_env=eval_env,
+    repo_id=repo_id,
+    commit_message=commit_message
+)</code></pre>
+<p>Here is what it does, step by step. First it records the trained agent playing for 2000 steps into a video file. Then it finds that file on disk and puts its path on the classes that <code>package_to_hub</code> looks at, so the upload picks up the real recording. The last call, <code>package_to_hub</code>, evaluates the agent, writes a model card, and pushes everything to the repo.</p>
+
+<h2>Loading it back</h2>
+<pre><code>!pip install shimmy
+
+from huggingface_sb3 import load_from_hub
+repo_id = "prem-ml/LunarLander-v3"
+filename = "ppo-LunarLander-v2.zip"
+
+custom_objects = {
+            "learning_rate": 0.0,
+            "lr_schedule": lambda _: 0.0,
+            "clip_range": lambda _: 0.0,
+}
+
+checkpoint = load_from_hub(repo_id, filename)
+model = PPO.load(checkpoint, custom_objects=custom_objects, print_system_info=True)</code></pre>
+<p>This is how anyone can download my agent. <code>load_from_hub</code> takes the repo and the file name and fetches the zip. <code>PPO.load</code> rebuilds the model from it. The <code>custom_objects</code> dictionary is a compatibility trick for models saved with a different Python version, and <code>shimmy</code> helps older Gym models run on Gymnasium.</p>
+
+<h2>What I took from it</h2>
+<p>Before this, I knew the words: agent, policy, reward, return. After this, I’ve seen them as lines of code. The environment is <code>gym.make</code>, the policy is the neural network inside <code>PPO</code>, and the reward is that list of rules about legs, engines and crashes.</p>
+<p>The part I keep coming back to is how little I told the agent. I never wrote a single rule about landing. I wrote what counts as good and what counts as bad, and a neural network worked the rest out. I’m still thinking about what that means for everything else we might teach this way.</p>
+<p>The notebook ends with some challenges: train for more steps, try different PPO settings, try another algorithm like DQN, or try a different environment. The course goes on to Q-Learning next, where the table I mentioned last time finally shows up.</p>
+<p>The model is on the Hub at <a href="https://huggingface.co/prem-ml/LunarLander-v3">prem-ml/LunarLander-v3</a> and the full notebook is in my <a href="https://github.com/prempatel-ai/reinforcement-learning/blob/main/notebooks/unit1/unit1.ipynb">GitHub repo</a>.</p>
+<div class="end"><p class="sign">Prem signing off. ✍️</p></div>
+    </div>
+
+    <!-- Bottom back link -->
+    <div style="margin-top: 40px; display: flex; justify-content: flex-start;">
+      <a href="./index.html" class="blog-breadcrumb">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-copy">&copy; 2026 Prem Patel</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://x.com/patelprem_" target="_blank" rel="noopener noreferrer">Twitter (X)</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://github.com/Prem-Patel-1" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://www.linkedin.com/in/prem-patel-847248236" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="nav-pipe">|</span>
+        <a href="mailto:premppatel7740@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Interactions Script -->
+  <script src="../script.js"></script>
+</body>
+</html>

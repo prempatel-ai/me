@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How I Plan to Climb the Lunar Lander Leaderboard - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Thinking out loud about how to move up the Hugging Face Lunar Lander leaderboard, the scoring formula, and the realistic levers to pull.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261107c">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">R&eacute;sum&eacute;</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF resume">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">How I Plan to Climb the Lunar Lander Leaderboard</h1>
+        <p class="hero-date">Nov 7, 2026 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/climbing-lunar-lander-leaderboard.png" alt="Watercolour hero image placeholder" width="1024" height="576" loading="eager">
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose rl-article">
+<p>After I uploaded my first Lunar Lander agent, I went to the Hugging Face leaderboard to see where I stood. My older model, lunar_lander_v3, is at rank 5764, with a mean reward of 258.99, a std of 16.28 and a result of 242.71. It passes the course’s 200 line, but thousands of agents are above it.</p>
+<p>So this post is me thinking out loud about what I can do to move up. No code today, just the options in plain words.</p>
+<div class="result"><b>242.71</b><span>my result at rank 5764, which is mean 258.99 minus std 16.28</span></div>
+
+<h2>What the score really is</h2>
+<p>The result isn’t just the mean reward. It’s the mean minus the std, so 258.99 minus 16.28 gives 242.71. That means there are two ways up: raise the average landing score, or make the landings more consistent.</p>
+<p>The agent at rank 5 on the board has a mean of 370.25 and a std of only 8.94, so its result is 361.31. That agent lands almost the same way every time. I hadn’t thought about it like that.</p>
+<p class="q">One amazing landing doesn’t help much if the next one crashes.</p>
+
+<h2>Train it for longer</h2>
+<p>This is the simplest option. My agent has only seen a limited number of steps, and more steps means more practice. The cost is time, and the gains slow down after a while, so I don’t think this alone fixes everything.</p>
+
+<h2>Keep the best version, not the last one</h2>
+<p>While an agent trains, its score goes up and down. The final model isn’t always the best one it ever was. Stable-Baselines3 can test the agent during training and save the best version, which costs almost nothing, so I like this one a lot.</p>
+
+<h2>Change the settings, but only one at a time</h2>
+<p>There are a few settings I want to look at: a learning rate that shrinks over time, a bigger batch size, fewer epochs, and a smaller entropy bonus. All of them affect how steady the agent is. If I change five things at once I’ll never know which one helped, so it has to be one at a time.</p>
+
+<h2>Test with more episodes</h2>
+<p>I evaluated my agent on only 10 episodes, which is a small test. The score can look better or worse just by luck. Since the std is part of the result, I need a fair number for it, so I’d evaluate on 100 episodes before comparing anything.</p>
+
+<h2>Try different seeds</h2>
+<p>Same settings, different random start, and you get a different agent. I could train a few and keep the best one. It feels like the exploration and exploitation tradeoff again: keep improving one agent, or start fresh and see what happens.</p>
+
+<h2>Try a different algorithm</h2>
+<p>PPO isn’t the only option. The course mentions DQN, for example. I’d keep this for last, because it means learning something new, not just tuning what I already have.</p>
+
+<h2>What I’m not going to chase</h2>
+<p>At the very top of the board there are scores like a mean of 2000. I can’t explain that with a normal evaluation, so I’m not treating it as the target. A realistic goal is the 300 to 400 range, where a lot of regular PPO agents sit.</p>
+<p>Funny thing, this is the RL loop again. I’m the agent, the leaderboard is the reward, and every experiment is an action. I don’t know which action gives the biggest reward yet, and the only way to find out is to try them.</p>
+<div class="end"><p class="sign">Prem signing off. ✍️</p></div>
+    </div>
+
+    <!-- Bottom back link -->
+    <div style="margin-top: 40px; display: flex; justify-content: flex-start;">
+      <a href="./index.html" class="blog-breadcrumb">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-copy">&copy; 2026 Prem Patel</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://x.com/patelprem_" target="_blank" rel="noopener noreferrer">Twitter (X)</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://github.com/Prem-Patel-1" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://www.linkedin.com/in/prem-patel-847248236" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="nav-pipe">|</span>
+        <a href="mailto:premppatel7740@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Interactions Script -->
+  <script src="../script.js"></script>
+</body>
+</html>
