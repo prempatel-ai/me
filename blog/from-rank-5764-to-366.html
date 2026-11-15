@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>From Rank 5764 to Rank 366 on the Lunar Lander Leaderboard - Prem Patel &middot; Blog</title>
+  <meta name="description" content="My Lunar Lander agent jumped from rank 5764 to rank 366 on Hugging Face. Looking at the numbers, what actually improved, and why I am exploring next.">
+  <meta name="author" content="Prem Patel">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=2">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261107c">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">R&eacute;sum&eacute;</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF resume">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">From Rank 5764 to Rank 366 on the Lunar Lander Leaderboard</h1>
+        <p class="hero-date">Nov 15, 2026 &middot; 3 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/from-rank-5764-to-366.png" alt="Watercolour hero image placeholder" width="1024" height="576" loading="eager">
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose rl-article">
+<p>In my last post I wrote down a plan for climbing the Lunar Lander leaderboard. I went back to check, and my rank moved. A lot.</p>
+<p>My first upload was at rank 5764, with a result of 242.71. Now the same leaderboard shows my agent at rank 366.</p>
+<div class="result"><b>5764 &rarr; 366</b><span>my rank on the Lunar Lander leaderboard</span></div>
+
+<h2>The numbers</h2>
+<p>Here they are side by side.</p>
+<dl class="gloss">
+<div><dt>Rank</dt><dd>5764 before, 366 now. That’s a jump of 5398 places.</dd></div>
+<div><dt>Result</dt><dd>242.71 before, 275.31 now.</dd></div>
+<div><dt>Mean reward</dt><dd>258.99 before, 294.11 now.</dd></div>
+<div><dt>Std reward</dt><dd>16.28 before, 18.80 now.</dd></div>
+</dl>
+
+<h2>What actually improved</h2>
+<p>The result is the mean minus the std, so I looked at which part moved. The mean went up by about 35 points, from 258.99 to 294.11. The std went up a little too, from 16.28 to 18.80.</p>
+<p>So I only really improved half of the score. My agent lands better on average, but it isn’t more consistent than before. If the std had stayed where it was, the result would have been a few points higher.</p>
+<p class="q">A better average and a steadier agent are two different goals.</p>
+
+<h2>Which agent this is</h2>
+<p>The agent behind this score is the PPO model from my hands-on post, trained on 16 copies of LunarLander-v3. The same score shows up twice in the table, once for lunar_lander_v3 and once for LunarLander-v3.</p>
+
+<h2>How far there still is to go</h2>
+<p>The agent that was at rank 5 when I last looked had a result of 361.31, from a mean of 370.25 and a std of only 8.94. I’m at 275.31, so there’s still a big gap. To close it I need both things, a higher mean and a lower std.</p>
+
+<h2>What I’m going to do next</h2>
+<p>I don’t want to keep changing settings on the same agent and hoping the number moves. I want to learn more reinforcement learning first, and then come back with better tools. The course goes on to Q-Learning next, and I’m curious what other techniques I can bring back to this leaderboard.</p>
+<p>It’s the exploration and exploitation tradeoff again. I could keep polishing this one agent, which is exploitation, or go learn new things and come back, which is exploration. For now I’m choosing to explore. Then I’ll be back to climb higher.</p>
+<div class="end"><p class="sign">Prem signing off. ✍️</p></div>
+    </div>
+
+    <!-- Bottom back link -->
+    <div style="margin-top: 40px; display: flex; justify-content: flex-start;">
+      <a href="./index.html" class="blog-breadcrumb">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-copy">&copy; 2026 Prem Patel</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://x.com/patelprem_" target="_blank" rel="noopener noreferrer">Twitter (X)</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://github.com/Prem-Patel-1" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://www.linkedin.com/in/prem-patel-847248236" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="nav-pipe">|</span>
+        <a href="mailto:premppatel7740@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Interactions Script -->
+  <script src="../script.js"></script>
+</body>
+</html>
