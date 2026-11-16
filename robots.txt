@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prempatel-ai.github.io/me/sitemap.xml
