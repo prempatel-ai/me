@@ -1513,6 +1513,64 @@ img {
   margin: 0;
 }
 
+.rl-article .versus {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 30px 0;
+}
+
+.rl-article .versus > div {
+  padding: 2px 24px 2px 0;
+}
+
+.rl-article .versus > div + div {
+  padding: 2px 0 2px 24px;
+  border-left: 1px solid var(--surya-border);
+}
+
+.rl-article .versus h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--surya-heading);
+  margin: 0 0 6px;
+}
+
+.rl-article .versus p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--surya-body);
+}
+
+.rl-article .formula {
+  margin: 26px 0;
+  padding: 16px 10px;
+  border-top: 1px solid var(--surya-border);
+  border-bottom: 1px solid var(--surya-border);
+  font-family: var(--font-serif);
+  font-size: 25px;
+  text-align: center;
+  color: var(--surya-heading);
+  overflow-x: auto;
+}
+
+.rl-article .formula sub {
+  font-size: 0.62em;
+}
+
+.rl-article .todo {
+  background: #fff3c4;
+  color: #33332f;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+[data-theme="dark"] .rl-article .todo {
+  background: #3e3818;
+  color: #f7e699;
+}
+
 @media (max-width: 560px) {
   .rl-article h2 {
     font-size: 30px;
@@ -1528,6 +1586,18 @@ img {
   }
   .rl-article .result b {
     font-size: 44px;
+  }
+  .rl-article .versus {
+    grid-template-columns: 1fr;
+  }
+  .rl-article .versus > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--surya-border);
+    padding: 16px 0 0;
+    margin-top: 16px;
+  }
+  .rl-article .formula {
+    font-size: 20px;
   }
 }
 
