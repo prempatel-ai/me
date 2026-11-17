@@ -1,7 +1,6 @@
 /* ==========================================================================
-   Prem Patel — Hybrid Developer Portfolio & Academic Résumé
-   Synthesizing minimal-light-theme.yliu.me (Static Sidebar) &
-   jrosser.co.uk (Isometric 3D Voxel Logo, Confetti Explosion, JetBrains Mono)
+   Prem Patel - Developer Portfolio & Academic Resume
+   Isometric 3D Voxel Logo, Vertical Timeline, JetBrains Mono
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -120,7 +119,7 @@ a:hover {
 }
 
 /* --------------------------------------------------------------------------
-   Top Sticky Header (J Rosser style)
+   Top Sticky Header
    -------------------------------------------------------------------------- */
 #header {
   position: fixed;
@@ -611,7 +610,7 @@ a:hover {
 }
 
 /* --------------------------------------------------------------------------
-   Vertical Connected Timeline (J Rosser Style)
+   Vertical Connected Timeline
    -------------------------------------------------------------------------- */
 .timeline {
   position: relative;

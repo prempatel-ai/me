@@ -1,8 +1,6 @@
-# Prem Patel — Hybrid Developer Portfolio & Academic Résumé
+# Prem Patel - Developer Portfolio & Academic Resume
 
-A clean, high-performance web resume and developer portfolio designed for **Premkumar M. Patel (Prem Patel)**, synthesizing the best aspects of two premier minimalist portfolios:
-- **[Minimal Light Theme](https://minimal-light-theme.yliu.me)**: Scholarly clarity, publication/project cards, honors badges, categorized skills, and ATS-clean print formatting.
-- **[J Rosser Portfolio](https://jrosser.co.uk/)**: Modern `JetBrains Mono` aesthetic, smooth Light/Dark theme toggle with local storage persistence, signature vertical connected timeline, pastel pill badges, and developer polish.
+A clean, high-performance web resume and developer portfolio designed for **Prem Patel**, featuring a modern `JetBrains Mono` aesthetic, smooth Light/Dark theme toggle with local storage persistence, vertical connected timeline, publication/project cards, honors badges, categorized skills, and ATS-clean print formatting.
 
 ---
 

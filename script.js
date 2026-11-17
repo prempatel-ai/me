@@ -10,7 +10,7 @@
   'use strict';
 
   // -------------------------------------------------------------------------
-  // 1. Party Hat & Confetti Explosion on Logo Tap (J Rosser Easter Egg)
+  // 1. Party Hat & Confetti Explosion on Logo Tap (Easter Egg)
   // -------------------------------------------------------------------------
   const voxelLogoBtn = document.getElementById('voxel-logo-btn');
 
