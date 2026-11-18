@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Q-Learning by Hand - Prem Patel &middot; Blog</title>
+  <meta name="description" content="Walking through the Bellman Equation and Q-Learning updates step by step by hand with a tiny mouse in a maze.">
+  <meta name="author" content="Prem Patel">
+  <meta name="keywords" content="Prem Patel, Q-Learning by Hand, Bellman Equation, Q-Learning calculation, Reinforcement Learning, Prem Patel blog, AI">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://prempatel-ai.github.io/me/blog/q-learning-by-hand.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Prem Patel">
+  <meta property="og:title" content="Q-Learning by Hand - Prem Patel &middot; Blog">
+  <meta property="og:description" content="Walking through the Bellman Equation and Q-Learning updates step by step by hand with a tiny mouse in a maze.">
+  <meta property="og:url" content="https://prempatel-ai.github.io/me/blog/q-learning-by-hand.html">
+  <meta property="og:image" content="https://prempatel-ai.github.io/me/assets/q-learning-by-hand.png">
+  <meta property="article:author" content="Prem Patel">
+  <meta property="article:published_time" content="2026-11-18">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@patelprem_">
+  <meta name="twitter:creator" content="@patelprem_">
+  <meta name="twitter:title" content="Q-Learning by Hand - Prem Patel &middot; Blog">
+  <meta name="twitter:description" content="Walking through the Bellman Equation and Q-Learning updates step by step by hand with a tiny mouse in a maze.">
+  <meta name="twitter:image" content="https://prempatel-ai.github.io/me/assets/q-learning-by-hand.png">
+
+  <!-- JSON-LD Structured Data for BlogPosting -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Q-Learning by Hand - Prem Patel &middot; Blog",
+    "description": "Walking through the Bellman Equation and Q-Learning updates step by step by hand with a tiny mouse in a maze.",
+    "image": "https://prempatel-ai.github.io/me/assets/q-learning-by-hand.png",
+    "datePublished": "2026-11-18",
+    "author": {
+      "@type": "Person",
+      "name": "Prem Patel",
+      "url": "https://prempatel-ai.github.io/me/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Prem Patel",
+      "url": "https://prempatel-ai.github.io/me/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://prempatel-ai.github.io/me/blog/q-learning-by-hand.html"
+    }
+  }
+  </script>
+
+  <!-- Favicon with 3D Voxel Logo (Google Search & Multi-device compliant) -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192x192.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=3">
+  <link rel="apple-touch-icon" sizes="192x192" href="../assets/favicon-192x192.png">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261119">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">R&eacute;sum&eacute;</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF resume">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Q-Learning by Hand</h1>
+        <p class="hero-date">Nov 18, 2026 &middot; 4 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/q-learning-by-hand.png" alt="Q-Learning by Hand" width="1024" height="576" loading="eager">
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose rl-article">
+<p>In my last post I wrote about the agent’s notebook, the Q-table. Now let’s use it. This is where the formula stopped looking scary for me. A mouse, a maze, and two steps of Q-Learning done by hand.</p>
+<h2>The setup</h2>
+<p>You’re a mouse in a tiny maze, and you always start at the same spot. You want the big pile of cheese in the bottom right corner, and you want to stay away from the poison.</p>
+<ul>
+<li>The episode ends if you eat the poison, eat the big cheese, or take more than five steps.</li>
+<li>Learning rate is 0.1.</li>
+<li>Gamma, the discount rate, is 0.99.</li>
+</ul>
+<p>The rewards:</p>
+<dl class="gloss">
+<div><dt>+0</dt><dd>going to a spot with no cheese.</dd></div>
+<div><dt>+1</dt><dd>going to a spot with a small cheese.</dd></div>
+<div><dt>+10</dt><dd>going to the big pile of cheese.</dd></div>
+<div><dt>-10</dt><dd>going to the poison, which means you die.</dd></div>
+<div><dt>+0</dt><dd>if you take more than five steps.</dd></div>
+</dl>
+<p>The best path is right, right, down. That’s what Q-Learning should find on its own.</p>
+<h2>Before anything</h2>
+<p>The Q-table starts with a 0 in every cell. The mouse knows nothing. We’ll do two steps and watch what changes.</p>
+<h2>Step 1</h2>
+<p><strong>Choose.</strong> Epsilon is 1.0, which is very high, so the mouse picks a random move. It goes right.</p>
+<p><strong>Act.</strong> It finds a small cheese. Reward is 1, and the mouse is in a new spot.</p>
+<p><strong>Update.</strong> The old number for that spot and move was 0. The new number is:</p>
+<pre><code>Q = 0 + 0.1 * (1 + 0.99 * 0 - 0) = 0.1</code></pre>
+<p>The best number in the next spot is still 0, because the table is empty. So the whole thing is just 0.1 times the reward. The table now knows that going right here is a little good.</p>
+<h2>Step 2</h2>
+<p><strong>Choose.</strong> Epsilon dropped a tiny bit to 0.99, because we want less random moves as training goes on. It’s still high, so the mouse picks random again. This time it goes down, which is a bad move, because it leads straight to the poison.</p>
+<p><strong>Act.</strong> The mouse eats the poison. Reward is -10 and it dies.</p>
+<p><strong>Update.</strong></p>
+<pre><code>Q = 0 + 0.1 * (-10 + 0.99 * 0 - 0) = -1</code></pre>
+<p>Now the table knows that going down from that spot is bad. Because the mouse died, a new episode starts.</p>
+<h2>What I noticed</h2>
+<p>After just two random steps, the table already isn’t blank. One cell is a little positive and another is negative. Before, everything was zero.</p>
+<p>It also showed me why the learning rate matters. The reward was -10, but the number became -1, not -10. The agent doesn’t jump all the way to the new number. It moves one tenth of the way. It’s like not believing one bad experience completely, but also not ignoring it.</p>
+<p>Keep doing this, exploring and then slowly trusting the table, and the numbers get better and better. At the end of training, the table is a good estimate of the best Q-function.</p>
+<p><span class="todo">[ADD: one thing that confused or surprised you in this example]</span></p>
+<div class="end"><p class="sign">Prem signing off. ✍️</p></div>
+    </div>
+
+    <!-- Bottom back link -->
+    <div style="margin-top: 40px; display: flex; justify-content: flex-start;">
+      <a href="./index.html" class="blog-breadcrumb">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-copy">&copy; 2026 Prem Patel</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://x.com/patelprem_" target="_blank" rel="noopener noreferrer">Twitter (X)</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://www.linkedin.com/in/prempatel-ai" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="nav-pipe">|</span>
+        <a href="mailto:prempatel7740@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Interactions Script -->
+  <script src="../script.js"></script>
+</body>
+</html>

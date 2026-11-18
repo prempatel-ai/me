@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Coding Q-Learning From Scratch: FrozenLake and Taxi - Prem Patel &middot; Blog</title>
+  <meta name="description" content="The hands-on part of Unit 2: coding Q-Learning completely from scratch in Python, NumPy, and Gymnasium on FrozenLake-v1 and Taxi-v3.">
+  <meta name="author" content="Prem Patel">
+  <meta name="keywords" content="Prem Patel, Coding Q-Learning From Scratch, FrozenLake, Taxi-v3, Gymnasium, NumPy, Q-Learning, Reinforcement Learning, Prem Patel blog, AI">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://prempatel-ai.github.io/me/blog/coding-q-learning-from-scratch.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Prem Patel">
+  <meta property="og:title" content="Coding Q-Learning From Scratch: FrozenLake and Taxi - Prem Patel &middot; Blog">
+  <meta property="og:description" content="The hands-on part of Unit 2: coding Q-Learning completely from scratch in Python, NumPy, and Gymnasium on FrozenLake-v1 and Taxi-v3.">
+  <meta property="og:url" content="https://prempatel-ai.github.io/me/blog/coding-q-learning-from-scratch.html">
+  <meta property="og:image" content="https://prempatel-ai.github.io/me/assets/coding-q-learning-from-scratch.png">
+  <meta property="article:author" content="Prem Patel">
+  <meta property="article:published_time" content="2026-11-19">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@patelprem_">
+  <meta name="twitter:creator" content="@patelprem_">
+  <meta name="twitter:title" content="Coding Q-Learning From Scratch: FrozenLake and Taxi - Prem Patel &middot; Blog">
+  <meta name="twitter:description" content="The hands-on part of Unit 2: coding Q-Learning completely from scratch in Python, NumPy, and Gymnasium on FrozenLake-v1 and Taxi-v3.">
+  <meta name="twitter:image" content="https://prempatel-ai.github.io/me/assets/coding-q-learning-from-scratch.png">
+
+  <!-- JSON-LD Structured Data for BlogPosting -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Coding Q-Learning From Scratch: FrozenLake and Taxi - Prem Patel &middot; Blog",
+    "description": "The hands-on part of Unit 2: coding Q-Learning completely from scratch in Python, NumPy, and Gymnasium on FrozenLake-v1 and Taxi-v3.",
+    "image": "https://prempatel-ai.github.io/me/assets/coding-q-learning-from-scratch.png",
+    "datePublished": "2026-11-19",
+    "author": {
+      "@type": "Person",
+      "name": "Prem Patel",
+      "url": "https://prempatel-ai.github.io/me/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Prem Patel",
+      "url": "https://prempatel-ai.github.io/me/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://prempatel-ai.github.io/me/blog/coding-q-learning-from-scratch.html"
+    }
+  }
+  </script>
+
+  <!-- Favicon with 3D Voxel Logo (Google Search & Multi-device compliant) -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192x192.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=3">
+  <link rel="apple-touch-icon" sizes="192x192" href="../assets/favicon-192x192.png">
+
+  <!-- JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../blog.css?v=20261119">
+
+  <!-- Immediate Theme Initializer -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved :
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body class="surya-body">
+
+  <!-- Top Sticky Header -->
+  <header id="header">
+    <div class="header-container">
+      <div class="header-brand-group">
+        <!-- 3D Voxel Pixel Logo -->
+        <button id="voxel-logo-btn" class="voxel-logo-btn" title="Click me for a party!" aria-label="Tap Logo">
+          <svg class="voxel-logo-svg" viewBox="0 0 520 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <symbol id="voxelTop"><polygon points="0,50 100,0 200,50 100,100" /></symbol>
+              <symbol id="voxelLeft"><polygon points="0,50 100,100 100,200 0,150" /></symbol>
+              <symbol id="voxelRight"><polygon points="100,100 200,50 200,150 100,200" /></symbol>
+            </defs>
+            <g shape-rendering="crispEdges">
+              <!-- Top loop in purple (#af67ff) -->
+              <g><use href="#voxelTop" x="200" y="50" fill="#af67ff" /><use href="#voxelLeft" x="200" y="50" fill="#c084fc" /><use href="#voxelRight" x="200" y="50" fill="#7c3aed" /></g>
+              <!-- Spine in green (#5ff26b) -->
+              <g><use href="#voxelTop" x="100" y="100" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="100" fill="#98ff9c" /><use href="#voxelRight" x="100" y="100" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="100" fill="#af67ff" /><use href="#voxelLeft" x="300" y="100" fill="#c084fc" /><use href="#voxelRight" x="300" y="100" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="200" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="200" fill="#98ff9c" /><use href="#voxelRight" x="100" y="200" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="300" y="200" fill="#af67ff" /><use href="#voxelLeft" x="300" y="200" fill="#c084fc" /><use href="#voxelRight" x="300" y="200" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="200" y="250" fill="#af67ff" /><use href="#voxelLeft" x="200" y="250" fill="#c084fc" /><use href="#voxelRight" x="200" y="250" fill="#7c3aed" /></g>
+              <g><use href="#voxelTop" x="100" y="300" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="300" fill="#98ff9c" /><use href="#voxelRight" x="100" y="300" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="400" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="400" fill="#98ff9c" /><use href="#voxelRight" x="100" y="400" fill="#0cbe3b" /></g>
+              <g><use href="#voxelTop" x="100" y="500" fill="#5ff26b" /><use href="#voxelLeft" x="100" y="500" fill="#98ff9c" /><use href="#voxelRight" x="100" y="500" fill="#0cbe3b" /></g>
+            </g>
+          </svg>
+        </button>
+        <a href="../index.html" class="header-title">Prem Patel</a>
+      </div>
+
+      <!-- Navigation with Purple Pipe Separators -->
+      <nav class="header-nav">
+        <a href="../index.html#about">About</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#projects">Projects</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#experience">R&eacute;sum&eacute;</a>
+        <span class="nav-pipe">|</span>
+        <a href="../index.html#skills">Skills</a>
+        <span class="nav-pipe">|</span>
+        <a href="./index.html" class="active">Blog</a>
+        <span class="nav-pipe">|</span>
+        <a href="../papers.html">Papers</a>
+      </nav>
+
+      <div class="header-controls">
+        <a href="../resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-minimal" title="Download or view PDF resume">PDF</a>
+        <button id="theme-toggle" class="btn-minimal theme-toggle-btn" aria-label="Toggle theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Essay Container -->
+  <main class="surya-container">
+
+    <!-- Breadcrumb back to blog menu -->
+    <a href="./index.html" class="blog-breadcrumb">
+      <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+      Back to all blogs
+    </a>
+
+    <!-- Starting Hero Section -->
+    <div class="hero-stuff">
+      <div class="hero-title-group">
+        <h1 class="hero-title">Coding Q-Learning From Scratch: FrozenLake and Taxi</h1>
+        <p class="hero-date">Nov 19, 2026 &middot; 10 min read</p>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="hero-banner">
+        <img src="../assets/coding-q-learning-from-scratch.png" alt="Coding Q-Learning From Scratch: FrozenLake and Taxi" width="1024" height="576" loading="eager">
+      </div>
+    </div>
+
+    <!-- Essay Body -->
+    <div class="article-prose rl-article">
+<p>This is the hands-on part of Unit 2. In my last post I did Q-Learning by hand with a mouse in a maze. Now we actually code it.</p>
+<p>No library does the learning here. It’s only Python, NumPy and Gymnasium. We train one agent on FrozenLake, then a harder one on Taxi, and push both to the Hugging Face Hub.</p>
+<h2>Before you start</h2>
+<p>The course recommends Google Colab for this, and that makes sense, because you don’t have to set up anything on your own computer. Open the notebook from the course page and run it cell by cell.</p>
+<p>To pass the hands-on for the certificate, you need to push your Taxi model to the Hub and get a result of 4.5 or more. The result is mean reward minus the standard deviation of the reward. You can see it on the leaderboard.</p>
+<h2>Setup</h2>
+<p>First you install the libraries. Gymnasium has the two games, pygame draws them, and NumPy holds the Q-table.</p>
+<p>Then there is a virtual display. We need it because at the end we record a replay video of the agent, and Colab has no real screen. After this step, the notebook kills the runtime on purpose with <code>os.kill(os.getpid(), 9)</code>. It looks scary but it’s normal. It just restarts so the new libraries get used. Connect again and run from the virtual display cell.</p>
+<p>Then the imports. <code>random</code> is for the epsilon dice, <code>imageio</code> is for the video, <code>tqdm</code> is the progress bar, and <code>pickle</code> is for saving the model.</p>
+<h2>Part 1: FrozenLake</h2>
+<p>The agent has to walk from the start tile S to the goal tile G, only on frozen tiles F, and avoid holes H. It’s a 4x4 map here, but there is an 8x8 one too. You can also make your own map with the <code>desc</code> parameter.</p>
+<p>There are two modes. With <code>is_slippery=False</code> the agent always goes where you tell it (deterministic). With <code>is_slippery=True</code> it can slide in another direction (stochastic). We start with non-slippery.</p>
+<pre><code>env = gym.make("FrozenLake-v1", map_name="4x4", is_slippery=False, render_mode="rgb_array")</code></pre>
+<p>The <code>render_mode="rgb_array"</code> part is there for the video at the end.</p>
+<p>The course says to always check the environment first, so let’s do that.</p>
+<ul>
+<li>Observation space: <code>Discrete(16)</code>. The state is just one number, calculated as <code>row * ncols + col</code>. So the goal is <code>3 * 4 + 3 = 15</code>.</li>
+<li>Action space: 4 actions. 0 is left, 1 is down, 2 is right, 3 is up.</li>
+<li>Rewards: +1 for reaching the goal, and 0 for everything else, even holes.</li>
+</ul>
+<h3>The Q-table</h3>
+<p>Step 1 of the algorithm is making the table. We don’t type 16 and 4 by hand. We ask the environment, so the same code works for other games.</p>
+<pre><code>state_space = env.observation_space.n
+action_space = env.action_space.n
+
+def initialize_q_table(state_space, action_space):
+    return np.zeros((state_space, action_space))
+
+Qtable_frozenlake = initialize_q_table(state_space, action_space)</code></pre>
+<h3>The two policies</h3>
+<p>Q-Learning is off-policy, so we need two policies. One for acting and one for updating.</p>
+<p>The greedy policy takes the action with the highest value in that row. This is also the final policy we get after training.</p>
+<pre><code>def greedy_policy(Qtable, state):
+    return np.argmax(Qtable[state][:])</code></pre>
+<p>The epsilon-greedy policy is for training. It rolls a random number. If the number is bigger than epsilon, it takes the greedy action. If not, it takes a random action.</p>
+<pre><code>def epsilon_greedy_policy(Qtable, state, epsilon):
+    random_num = random.uniform(0, 1)
+    if random_num &gt; epsilon:
+        action = greedy_policy(Qtable, state)
+    else:
+        action = env.action_space.sample()
+    return action</code></pre>
+<h3>Hyperparameters</h3>
+<pre><code>n_training_episodes = 10000
+learning_rate = 0.7
+
+n_eval_episodes = 100
+
+env_id = "FrozenLake-v1"
+max_steps = 99
+gamma = 0.95
+eval_seed = []
+
+max_epsilon = 1.0
+min_epsilon = 0.05
+decay_rate = 0.0005</code></pre>
+<dl class="gloss wide">
+<div><dt>n_training_episodes</dt><dd>how many games the agent plays to learn.</dd></div>
+<div><dt>learning_rate</dt><dd>how big each update is.</dd></div>
+<div><dt>n_eval_episodes</dt><dd>how many games we use to test it at the end.</dd></div>
+<div><dt>max_steps</dt><dd>the max number of steps in one game.</dd></div>
+<div><dt>gamma</dt><dd>the discount rate.</dd></div>
+<div><dt>eval_seed</dt><dd>empty here. We only use it for Taxi.</dd></div>
+<div><dt>max_epsilon and min_epsilon</dt><dd>epsilon starts at 1.0 and goes down to 0.05 at the lowest.</dd></div>
+<div><dt>decay_rate</dt><dd>how fast epsilon goes down.</dd></div>
+</dl>
+<p>The course says the exploration settings are the most important ones. If epsilon goes down too fast (<code>decay_rate</code> too high), the agent doesn’t explore enough and can get stuck.</p>
+<h3>The training loop</h3>
+<p>In simple words, the loop does this:</p>
+<ol>
+<li>For each episode, lower epsilon a little and reset the game.</li>
+<li>For each step, pick an action with epsilon-greedy.</li>
+<li>Do the action, and see the new state and the reward.</li>
+<li>Update the Q-value.</li>
+<li>If the game is over, stop. If not, the new state becomes the current state.</li>
+</ol>
+<pre><code>def train(n_training_episodes, min_epsilon, max_epsilon, decay_rate, env, max_steps, Qtable):
+    for episode in tqdm(range(n_training_episodes)):
+        epsilon = min_epsilon + (max_epsilon - min_epsilon) * np.exp(-decay_rate * episode)
+        state, info = env.reset()
+
+        for step in range(max_steps):
+            action = epsilon_greedy_policy(Qtable, state, epsilon)
+            new_state, reward, terminated, truncated, info = env.step(action)
+
+            Qtable[state][action] = Qtable[state][action] + learning_rate * (
+                reward + gamma * np.max(Qtable[new_state]) - Qtable[state][action]
+            )
+
+            if terminated or truncated:
+                break
+            state = new_state
+    return Qtable</code></pre>
+<p>The epsilon line makes it go down smoothly with an exponential decay. The <code>Qtable</code> line is the update formula from my first Q-Learning post.</p>
+<p>Then we train:</p>
+<pre><code>Qtable_frozenlake = train(n_training_episodes, min_epsilon, max_epsilon, decay_rate, env, max_steps, Qtable_frozenlake)</code></pre>
+<p>After this, you can print the Q-table and look at it. It’s no longer all zeros.</p>
+<h3>Testing the agent</h3>
+<p>For evaluation, the agent plays 100 games using only the greedy policy, no random moves. We get the mean reward and the standard deviation.</p>
+<pre><code>def evaluate_agent(env, max_steps, n_eval_episodes, Q, seed):
+    episode_rewards = []
+    for episode in tqdm(range(n_eval_episodes)):
+        if seed:
+            state, info = env.reset(seed=seed[episode])
+        else:
+            state, info = env.reset()
+        total_rewards_ep = 0
+
+        for step in range(max_steps):
+            action = greedy_policy(Q, state)
+            state, reward, terminated, truncated, info = env.step(action)
+            total_rewards_ep += reward
+            if terminated or truncated:
+                break
+        episode_rewards.append(total_rewards_ep)
+    return np.mean(episode_rewards), np.std(episode_rewards)</code></pre>
+<p>The course says the usual result is a mean reward of 1.0, because the map is small and easy. <span class="todo">[ADD: your FrozenLake result]</span></p>
+<p>If you want a harder version, set <code>is_slippery=True</code> and train again. <span class="todo">[ADD: if you tried slippery, what happened]</span></p>
+<h3>Pushing to the Hub</h3>
+<p>One function does all of this. <code>push_to_hub</code> tests the agent, makes a model card, records a replay video, and uploads everything to the Hub. The model is saved as <code>q-learning.pkl</code>.</p>
+<p>You need three things first:</p>
+<ol>
+<li>A Hugging Face account.</li>
+<li>A token with the write role. Make it in your settings, then run <code>notebook_login()</code> and paste it.</li>
+<li>A model dictionary with the hyperparameters and the Q-table in it.</li>
+</ol>
+<pre><code>model = {
+    "env_id": env_id,
+    "max_steps": max_steps,
+    "n_training_episodes": n_training_episodes,
+    "n_eval_episodes": n_eval_episodes,
+    "eval_seed": eval_seed,
+    "learning_rate": learning_rate,
+    "gamma": gamma,
+    "max_epsilon": max_epsilon,
+    "min_epsilon": min_epsilon,
+    "decay_rate": decay_rate,
+    "qtable": Qtable_frozenlake,
+}
+
+username = "your-hf-username"
+repo_name = "q-FrozenLake-v1-4x4-noSlippery"
+push_to_hub(repo_id=f"{username}/{repo_name}", model=model, env=env)</code></pre>
+<p>The Hub uses git under the hood, so you can push a new version every time you improve the agent. <span class="todo">[ADD: link to your FrozenLake repo]</span></p>
+<h2>Part 2: Taxi</h2>
+<p>Taxi is harder. There are four spots on the grid: Red, Green, Yellow and Blue. The taxi starts at a random square and the passenger is at a random spot. The taxi has to go to the passenger, pick them up, drive to the destination (another one of the four spots), and drop them off. Then the game ends.</p>
+<pre><code>env = gym.make("Taxi-v3", render_mode="rgb_array")</code></pre>
+<ul>
+<li>States: 500. That’s 25 taxi positions, times 5 passenger locations (including inside the taxi), times 4 destinations.</li>
+<li>Actions: 6. South, north, east, west, pickup, drop off.</li>
+<li>Rewards: -1 for every step, +20 for delivering the passenger, and -10 for a pickup or drop off at the wrong place.</li>
+</ul>
+<p>The Q-table is now 500 x 6, and we make it with the same function:</p>
+<pre><code>Qtable_taxi = initialize_q_table(state_space, action_space)</code></pre>
+<p>The hyperparameters change a bit. We train for 25000 episodes, and the decay rate is 0.005 instead of 0.0005. The learning rate (0.7), gamma (0.95), <code>max_steps</code> and the epsilon range stay the same.</p>
+<p>There is also a long <code>eval_seed</code> list. Do not change it. It makes sure every classmate’s agent is tested from the same taxi starting positions, so the leaderboard is fair.</p>
+<p>Then we train with the same function and push the model, using a new repo name:</p>
+<pre><code>Qtable_taxi = train(n_training_episodes, min_epsilon, max_epsilon, decay_rate, env, max_steps, Qtable_taxi)</code></pre>
+<p>The model dictionary is made the same way, but with <code>Qtable_taxi</code>. Then check the leaderboard for your result. <span class="todo">[ADD: your Taxi result and Hub link]</span></p>
+<h2>Part 3: Loading a model from the Hub</h2>
+<p>This part is cool. Anyone can share a Q-Learning model on the Hub, and you can load it in a few lines. You go to the list of q-learning models on the Hub, copy a repo id, and use <code>load_from_hub</code> with that repo id and the file name <code>q-learning.pkl</code>.</p>
+<pre><code>model = load_from_hub(repo_id="ThomasSimonini/q-Taxi-v3", filename="q-learning.pkl")
+env = gym.make(model["env_id"])
+evaluate_agent(env, model["max_steps"], model["n_eval_episodes"], model["qtable"], model["eval_seed"])</code></pre>
+<p>That one is the course author’s Taxi model. You can try other people’s models the same way.</p>
+<h2>Extra challenges</h2>
+<p>The course ends with some things to try.</p>
+<ul>
+<li>Train for more steps. The course says that with 1,000,000 steps they saw great results.</li>
+<li>Try different hyperparameters, and look at what your classmates used.</li>
+<li>Push your new model to the Hub and see where you land on the leaderboard.</li>
+<li>Change the environment, for example the slippery FrozenLake.</li>
+</ul>
+<h2>What’s next</h2>
+<p>A Q-table is a good idea, but it doesn’t scale. For a game like Doom there are millions of states, and a table for that is not practical. That’s why Unit 3 is Deep Q-Learning, where a neural network guesses the Q-values for each action instead of a table.</p>
+<p><span class="todo">[ADD: one thing that confused or surprised you while doing the hands-on]</span></p>
+<p>See you in Unit 3.</p>
+<div class="end"><p class="sign">Prem signing off. ✍️</p></div>
+    </div>
+
+    <!-- Bottom back link -->
+    <div style="margin-top: 40px; display: flex; justify-content: flex-start;">
+      <a href="./index.html" class="blog-breadcrumb">
+        <svg viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        Back to all blogs
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-copy">&copy; 2026 Prem Patel</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://x.com/patelprem_" target="_blank" rel="noopener noreferrer">Twitter (X)</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://github.com/prempatel-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-pipe">|</span>
+        <a href="https://www.linkedin.com/in/prempatel-ai" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="nav-pipe">|</span>
+        <a href="mailto:prempatel7740@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Interactions Script -->
+  <script src="../script.js"></script>
+</body>
+</html>
