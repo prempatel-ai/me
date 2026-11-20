@@ -228,4 +228,39 @@
     }
   }
 
+  // -------------------------------------------------------------------------
+  // 7. Auto-sync Top Featured Blog Hero Preview with Latest Blog Item
+  // -------------------------------------------------------------------------
+  const featuredHero = document.getElementById('blog-featured-hero') || document.querySelector('.blog-featured');
+  const firstBlog = document.querySelector('.blog-menu-list .blog-menu-item');
+  if (featuredHero && firstBlog) {
+    const banner = firstBlog.getAttribute('data-banner');
+    const excerpt = firstBlog.getAttribute('data-excerpt');
+    if (banner && excerpt) {
+      const bannerLink = featuredHero.querySelector('.blog-featured-banner a');
+      const bannerImg = featuredHero.querySelector('.blog-featured-banner img');
+      const titleLink = featuredHero.querySelector('.blog-featured-title a');
+      const dateElem = featuredHero.querySelector('.blog-featured-date');
+      const excerptElem = featuredHero.querySelector('.blog-featured-excerpt');
+      const continueBtn = featuredHero.querySelector('.blog-continue-btn');
+
+      const href = firstBlog.getAttribute('href');
+      const title = (firstBlog.querySelector('.blog-menu-item-title') || {}).textContent || '';
+      const date = (firstBlog.querySelector('.blog-menu-item-date') || {}).textContent || '';
+
+      if (bannerLink && href) bannerLink.href = href;
+      if (bannerImg && banner) {
+        bannerImg.src = banner;
+        bannerImg.alt = title.trim();
+      }
+      if (titleLink && href) {
+        titleLink.href = href;
+        if (title) titleLink.textContent = title.trim();
+      }
+      if (dateElem && date) dateElem.textContent = date.trim();
+      if (excerptElem && excerpt) excerptElem.textContent = excerpt.trim();
+      if (continueBtn && href) continueBtn.href = href;
+    }
+  }
+
 })();
